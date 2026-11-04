@@ -88,7 +88,7 @@ export function WeeklyTimetable() {
             {PROGRAMS.map((program) => (
               <li
                 key={program.id}
-                className={`rounded-xl bg-linear-to-br ${program.color} p-4 text-white`}
+                className={`fb-lift rounded-xl bg-linear-to-br ${program.color} p-4 text-white`}
               >
                 <div className="mb-3">
                   <h3 className="text-lg font-bold">{program.name}</h3>

@@ -387,3 +387,139 @@ html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
     animation: none;
   }
 }
+
+/* ── Motion layer (docs/specs/2026-11-04-motion-redesign.md) ───────────────
+ * Page entrance: content fades and lifts in under the persistent header.
+ * `backwards` (not `both`) so no transform lingers afterwards — a leftover
+ * transform would break the pinned homepage scenes (position: fixed). */
+@keyframes fb-page-in {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+@keyframes fb-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.fb-page-in {
+  animation: fb-page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Hero pre-hide: only when scripts run and motion is welcome, so the GSAP
+ * intro can start from nothing without a flash. If the script never takes
+ * over, the fallback animation shows everything after 2.5s anyway. */
+@keyframes fb-pre-fallback {
+  to {
+    opacity: 1;
+  }
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .fb-pre [data-hero-title],
+  .fb-pre [data-hero-in] {
+    opacity: 0;
+    animation: fb-pre-fallback 0.01s 2.5s forwards;
+  }
+}
+
+/* Video scene stage (desktop, set by the scene while it is pinned). */
+.fb-site [data-video-stage][data-stage="on"] {
+  position: relative;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+.fb-site [data-video-stage][data-stage="on"] [data-video-heading] {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(4rem + 5svh);
+  margin: 0;
+  padding-inline: 1.5rem;
+}
+.fb-site [data-video-stage][data-stage="on"] [data-video-frame] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(76rem, 92vw);
+  translate: -50% -50%;
+}
+.fb-site [data-video-stage][data-stage="on"] [data-video-hint] {
+  display: none;
+}
+
+/* Programs scene stage (desktop): the class cards become one sideways track. */
+.fb-site [data-programs-progress] {
+  display: none;
+}
+.fb-site [data-programs-stage][data-stage="on"] {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 4.5rem 1.5rem;
+  background: white;
+}
+.fb-site [data-programs-stage][data-stage="on"] [data-programs-viewport] {
+  overflow-x: clip;
+  padding-block: 0.5rem;
+}
+.fb-site [data-programs-stage][data-stage="on"] [data-programs-track] {
+  display: flex;
+  width: max-content;
+}
+.fb-site [data-programs-stage][data-stage="on"] [data-program-card] {
+  width: min(24rem, 40vw);
+  flex: none;
+}
+.fb-site [data-programs-stage][data-stage="on"] [data-programs-progress] {
+  display: block;
+}
+
+/* Small interactions: pills press in, cards lift on hover. */
+.fb-site :is(a, button)[class*="rounded-full"]:active:not(:disabled) {
+  scale: 0.96;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .fb-site .fb-lift {
+    transition:
+      translate 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease;
+  }
+  .fb-site .fb-lift:hover {
+    translate: 0 -4px;
+  }
+}
+
+/* "Message Us" nudge: a short wiggle every ~7s until the visitor messages us. */
+@keyframes fb-nudge {
+  0%,
+  86%,
+  100% {
+    transform: none;
+  }
+  89% {
+    transform: translateY(-2px) rotate(-4deg) scale(1.06);
+  }
+  92% {
+    transform: translateY(-2px) rotate(4deg) scale(1.06);
+  }
+  95% {
+    transform: rotate(-2deg) scale(1.03);
+  }
+}
+.fb-nudge {
+  animation: fb-nudge 7s ease-in-out 4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-page-in {
+    animation: fb-fade-in 0.2s ease backwards;
+  }
+  .fb-nudge {
+    animation: none;
+  }
+  .fb-site :is(a, button)[class*="rounded-full"]:active:not(:disabled) {
+    scale: none;
+  }
+}

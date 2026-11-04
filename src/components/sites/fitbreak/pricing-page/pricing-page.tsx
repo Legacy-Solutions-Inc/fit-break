@@ -149,7 +149,7 @@ function PackageCard({ pack }: { pack: PackCard }) {
   return (
     <div
       className={cn(
-        "rounded-2xl p-8 transition-all",
+        "fb-lift rounded-2xl p-8 transition-all",
         best
           ? "relative bg-linear-to-br from-brand-500 to-brand-600 text-white shadow-xl hover:shadow-2xl"
           : "bg-white shadow-lg hover:shadow-xl",

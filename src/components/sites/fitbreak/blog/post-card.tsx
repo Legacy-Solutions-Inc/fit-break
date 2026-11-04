@@ -11,7 +11,7 @@ import { categoryText, shortDate } from "./format";
 /** blog.html `createPostCard()`. */
 export function PostCard({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
   return (
-    <article className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs transition-all hover:shadow-lg">
+    <article className="group fb-lift overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs transition-all hover:shadow-lg">
       <Link href={routes.blogPost(post.id)} className="block">
         <div className="relative aspect-video overflow-hidden bg-linear-to-br from-brand-100 to-accent-100">
           {post.image ? (

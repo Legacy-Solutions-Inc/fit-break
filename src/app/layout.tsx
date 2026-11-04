@@ -37,7 +37,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   // dynamically per request. That lets Next.js apply the per-request CSP nonce
   // (set in src/middleware.ts) to its own framework scripts, which the enforced
   // strict CSP requires. Nonces are per-request, so pages cannot be static.
-  await headers();
+  // next-themes injects an inline script; it must carry the nonce too.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          nonce={nonce}
         >
           {children}
           <Toaster />

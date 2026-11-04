@@ -177,3 +177,30 @@ While parked:
 
 To bring accounts back: set `memberAreaEnabled = true`, then revisit
 How It Works and the account wording against the real flow.
+
+## Motion layer (2026-11-04)
+
+A deliberate departure from the 1:1 clone, in motion only. Content, layout,
+links and the Booking Enquiry flow are unchanged. Sources:
+`docs/specs/2026-11-04-motion-redesign.md` (spec) and
+`docs/adr/0008-fitbreak-motion-two-libraries.md` (why two libraries).
+
+- Code: `src/components/sites/fitbreak/motion/`
+  - `policy.ts`: the full / compact / calm modes
+  - `home-scenes.tsx`: GSAP storyboard
+  - `reveal-scope.tsx`: Motion reveal layer
+- Page entrance plus reveal on every page: `(site)/template.tsx`.
+- Homepage scenes: hero intro; Video pinned (the card grows to full screen);
+  About parallax and lines; Programs pinned (sideways track); Pricing tilt and
+  shine.
+- Phones (below `md`) never pin. Reduce motion gives fades only, with no pins,
+  split text, parallax or loops.
+- Video backdrop: `public/sites/fitbreak/videos/intro-loop.mp4`, 9s, 848 KB,
+  silent. It is cut from 0:45–0:49.5 and 0:54.5–0:59.5 of the intro, with the
+  burned-in subtitles cropped off. Poster: `images/intro-loop-poster.jpg`. The
+  full 26 MB intro now uses `preload="none"`, so it loads only on play.
+- Header slims on scroll. The "Message Us" button nudges until a Messenger link
+  is clicked (sessionStorage only). Pills press in; `.fb-lift` cards rise on
+  hover.
+- Tests: `e2e/motion.spec.ts` (all three modes). `e2e/a11y.spec.ts` now runs
+  with and without reduced motion.

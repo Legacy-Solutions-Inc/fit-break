@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { Icon } from "./icons";
 import { asset } from "./links";
+import { useMotionMode } from "./motion/use-motion-mode";
 
 function formatTime(s: number) {
   const m = Math.floor(s / 60);
@@ -23,11 +24,20 @@ type WebkitVideo = HTMLVideoElement & {
  * first play unmutes, controls fade out 3s after the last mouse move while
  * playing, click-to-seek progress bar, two fullscreen buttons, replay on end,
  * and auto-pause when less than 30% of the video is on screen.
+ *
+ * Until the first play, a short silent loop (~1 MB, cut from the intro) plays
+ * behind the play button as a backdrop — only while on screen, never in calm
+ * (reduced-motion) mode. The full 26 MB video is not fetched until play.
  */
 export function IntroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hideTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const hasUserPlayed = useRef(false);
+  const loopRef = useRef<HTMLVideoElement>(null);
+  const motionMode = useMotionMode();
+  const [started, setStarted] = useState(false);
+  const [loopReady, setLoopReady] = useState(false);
+  const showLoop = !started && motionMode !== null && motionMode !== "calm";
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [ended, setEnded] = useState(false);
@@ -44,6 +54,18 @@ export function IntroVideo() {
   }, []);
 
   useEffect(() => () => clearTimeout(hideTimer.current), []);
+
+  // Backdrop loop: play only while on screen.
+  useEffect(() => {
+    const loop = loopRef.current;
+    if (!showLoop || !loop) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) void loop.play().catch(() => {});
+      else loop.pause();
+    });
+    observer.observe(loop);
+    return () => observer.disconnect();
+  }, [showLoop]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -66,6 +88,7 @@ export function IntroVideo() {
         video.muted = false;
         setMuted(false);
         hasUserPlayed.current = true;
+        setStarted(true);
       }
       void video.play();
     } else {
@@ -94,7 +117,7 @@ export function IntroVideo() {
           // the element ref so play() sees the change synchronously.
           muted
           playsInline
-          preload="auto"
+          preload="none"
           onClick={togglePlay}
           onPlay={() => {
             setPlaying(true);
@@ -120,6 +143,26 @@ export function IntroVideo() {
             }
           }}
         />
+
+        {showLoop && (
+          <video
+            ref={loopRef}
+            data-intro-loop
+            aria-hidden="true"
+            tabIndex={-1}
+            className={cn(
+              "pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-700",
+              loopReady ? "opacity-100" : "opacity-0",
+            )}
+            src={asset("/videos/intro-loop.mp4")}
+            poster={asset("/images/intro-loop-poster.jpg")}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onPlaying={() => setLoopReady(true)}
+          />
+        )}
 
         {/* Subtle vignette */}
         <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.2)]" />

@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import { memberAreaEnabled } from "@/config";
 import { signOut } from "@/lib/auth/actions";
+import { cn } from "@/lib/utils";
 
 import { Icon, type IconName } from "./icons";
 import { asset, contact, routes } from "./links";
@@ -35,6 +36,41 @@ const userLinks: Array<{ label: string; href: string; icon: IconName }> = [
   { label: "Settings", href: routes.member.settings, icon: "cog" },
 ];
 
+const MESSAGED_KEY = "fb-messaged";
+
+/** True once the page has scrolled past a few pixels. */
+function useScrolled(threshold = 8) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > threshold);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [threshold]);
+  return scrolled;
+}
+
+/**
+ * Whether the "Message Us" button should nudge: yes until the visitor clicks
+ * any Messenger link this session (remembered in sessionStorage only).
+ */
+function useMessengerNudge() {
+  const [nudge, setNudge] = useState(false);
+  useEffect(() => {
+    if (sessionStorage.getItem(MESSAGED_KEY)) return;
+    setNudge(true);
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.('a[href^="https://m.me/"]');
+      if (!link) return;
+      sessionStorage.setItem(MESSAGED_KEY, "1");
+      setNudge(false);
+    };
+    document.addEventListener("click", onClick, { capture: true });
+    return () => document.removeEventListener("click", onClick, { capture: true });
+  }, []);
+  return nudge;
+}
+
 /** Closes a popover on an outside click or Escape. */
 function useDismiss(open: boolean, close: () => void, ref: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -60,14 +96,30 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const aboutRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
+  const scrolled = useScrolled();
+  const nudge = useMessengerNudge();
 
   useDismiss(aboutOpen, () => setAboutOpen(false), aboutRef);
   useDismiss(userOpen, () => setUserOpen(false), userRef);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-pink-100 bg-white/90 shadow-xs backdrop-blur-xl">
+    // Slims once scrolled: the bar shrinks 64→56px while an 8px bottom margin
+    // grows, so the header's footprint (and everything measured below it, like
+    // the pinned homepage scenes) never moves.
+    <header
+      data-scrolled={scrolled || undefined}
+      className={cn(
+        "sticky top-0 z-50 border-b border-pink-100 bg-white/90 backdrop-blur-xl transition-[margin,box-shadow] duration-300 motion-reduce:transition-none",
+        scrolled ? "mb-2 shadow-md" : "mb-0 shadow-xs",
+      )}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div
+          className={cn(
+            "flex items-center justify-between transition-[height] duration-300 motion-reduce:transition-none",
+            scrolled ? "h-14" : "h-16",
+          )}
+        >
           <div className="flex items-center gap-3">
             <Link href={routes.home} className="flex items-center">
               <Image
@@ -76,7 +128,10 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
                 width={1444}
                 height={343}
                 priority
-                className="h-10 w-auto"
+                className={cn(
+                  "w-auto transition-[height] duration-300 motion-reduce:transition-none",
+                  scrolled ? "h-8" : "h-10",
+                )}
               />
             </Link>
           </div>
@@ -148,7 +203,11 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
                 href={contact.messenger}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-brand-600 hover:shadow-lg"
+                data-nudge={nudge || undefined}
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-full bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-brand-600 hover:shadow-lg",
+                  nudge && "fb-nudge",
+                )}
               >
                 Message Us
               </a>

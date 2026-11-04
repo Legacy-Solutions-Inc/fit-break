@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { FacebookIcon, Icon, SolidCheck } from "./icons";
 import { asset, cardIn, contact, routes } from "./links";
+import { Scene } from "./motion/home-scenes";
 
 const perks = [
   "Access to member-only class packs",
@@ -71,94 +72,105 @@ function MemberPricing() {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div
-          style={cardIn(16)}
-          className="fb-card-in rounded-2xl border border-gray-100 bg-white p-6 shadow-xs transition-all hover:shadow-lg"
-        >
-          <h3 className="mb-2 text-xl font-bold text-gray-900">Guest Drop-In</h3>
-          <p className="mb-4 text-sm text-gray-600">Try a class • No membership required</p>
-          <p className="mb-2 text-3xl font-bold text-brand-500">
-            ₱350<span className="text-base font-normal text-gray-600">/class</span>
-          </p>
-          <p className="mb-2 text-xs text-gray-500">Next-day booking only</p>
-          <p className="mb-4 text-xs font-medium text-amber-600">Limited to 3 drop-ins</p>
-          <a
-            href={contact.messenger}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${pack} bg-gray-200 text-gray-800 hover:bg-gray-300`}
+      <Scene kind="pricing">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div
+            data-price-card
+            className="fb-lift rounded-2xl border border-gray-100 bg-white p-6 shadow-xs transition-all hover:shadow-lg"
           >
-            Message Us to Book
-          </a>
-        </div>
-
-        <div
-          style={cardIn(17)}
-          className="fb-card-in rounded-2xl border border-gray-100 bg-white p-6 shadow-xs transition-all hover:shadow-lg"
-        >
-          <span className="mb-3 inline-block rounded-full bg-brand-100 px-2 py-1 text-xs font-bold text-brand-700">
-            14% OFF
-          </span>
-          <h3 className="mb-2 text-xl font-bold text-gray-900">Starter Pack</h3>
-          <p className="mb-4 text-sm text-gray-600">6 Classes • Valid 30 days</p>
-          <p className="mb-1 text-3xl font-bold text-brand-500">₱1,800</p>
-          <p className="mb-4 text-sm text-gray-500">₱300/class • 3-day advance booking</p>
-          <a
-            href={contact.messenger}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}
-          >
-            Ask About This Pack
-          </a>
-        </div>
-
-        <div
-          style={cardIn(18)}
-          className="fb-card-in relative overflow-hidden rounded-2xl border-2 border-brand-500 bg-white p-6 shadow-lg transition-all hover:shadow-xl"
-        >
-          <div className="absolute top-0 right-0 rounded-bl-lg bg-brand-500 px-3 py-1 text-xs font-bold text-white">
-            Popular
+            <h3 className="mb-2 text-xl font-bold text-gray-900">Guest Drop-In</h3>
+            <p className="mb-4 text-sm text-gray-600">Try a class • No membership required</p>
+            <p className="mb-2 text-3xl font-bold text-brand-500">
+              ₱350<span className="text-base font-normal text-gray-600">/class</span>
+            </p>
+            <p className="mb-2 text-xs text-gray-500">Next-day booking only</p>
+            <p className="mb-4 text-xs font-medium text-amber-600">Limited to 3 drop-ins</p>
+            <a
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${pack} bg-gray-200 text-gray-800 hover:bg-gray-300`}
+            >
+              Message Us to Book
+            </a>
           </div>
-          <span className="mb-3 inline-block rounded-full bg-brand-100 px-2 py-1 text-xs font-bold text-brand-700">
-            21% OFF
-          </span>
-          <h3 className="mb-2 text-xl font-bold text-gray-900">Standard Pack</h3>
-          <p className="mb-4 text-sm text-gray-600">12 Classes • Valid 30 days</p>
-          <p className="mb-1 text-3xl font-bold text-brand-500">₱3,300</p>
-          <p className="mb-4 text-sm text-gray-500">₱275/class • 5-day advance booking</p>
-          <a
-            href={contact.messenger}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}
-          >
-            Ask About This Pack
-          </a>
-        </div>
 
-        <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-brand-500 to-brand-600 p-6 text-white shadow-xl">
-          <div className="absolute top-0 right-0 rounded-bl-lg bg-yellow-400 px-3 py-1 text-xs font-bold text-gray-900">
-            Best Value
-          </div>
-          <span className="mb-3 inline-block rounded-full bg-white/20 px-2 py-1 text-xs font-bold text-white">
-            29% OFF
-          </span>
-          <h3 className="mb-2 text-xl font-bold">Power Pack</h3>
-          <p className="mb-4 text-sm text-brand-100">20 Classes • Valid 45 days</p>
-          <p className="mb-1 text-3xl font-bold">₱5,000</p>
-          <p className="mb-4 text-sm text-brand-100">₱250/class • 7-day advance booking</p>
-          <a
-            href={contact.messenger}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${pack} bg-white text-brand-600 hover:bg-brand-50`}
+          <div
+            data-price-card
+            className="fb-lift rounded-2xl border border-gray-100 bg-white p-6 shadow-xs transition-all hover:shadow-lg"
           >
-            Ask About This Pack
-          </a>
+            <span className="mb-3 inline-block rounded-full bg-brand-100 px-2 py-1 text-xs font-bold text-brand-700">
+              14% OFF
+            </span>
+            <h3 className="mb-2 text-xl font-bold text-gray-900">Starter Pack</h3>
+            <p className="mb-4 text-sm text-gray-600">6 Classes • Valid 30 days</p>
+            <p className="mb-1 text-3xl font-bold text-brand-500">₱1,800</p>
+            <p className="mb-4 text-sm text-gray-500">₱300/class • 3-day advance booking</p>
+            <a
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}
+            >
+              Ask About This Pack
+            </a>
+          </div>
+
+          <div
+            data-price-card
+            className="fb-lift relative overflow-hidden rounded-2xl border-2 border-brand-500 bg-white p-6 shadow-lg transition-all hover:shadow-xl"
+          >
+            {/* One-time shine sweep across the popular pack (decorative). */}
+            <span
+              data-shine
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-0 z-10 w-1/3 -skew-x-12 bg-linear-to-r from-transparent via-white/70 to-transparent opacity-0"
+            />
+            <div className="absolute top-0 right-0 rounded-bl-lg bg-brand-500 px-3 py-1 text-xs font-bold text-white">
+              Popular
+            </div>
+            <span className="mb-3 inline-block rounded-full bg-brand-100 px-2 py-1 text-xs font-bold text-brand-700">
+              21% OFF
+            </span>
+            <h3 className="mb-2 text-xl font-bold text-gray-900">Standard Pack</h3>
+            <p className="mb-4 text-sm text-gray-600">12 Classes • Valid 30 days</p>
+            <p className="mb-1 text-3xl font-bold text-brand-500">₱3,300</p>
+            <p className="mb-4 text-sm text-gray-500">₱275/class • 5-day advance booking</p>
+            <a
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}
+            >
+              Ask About This Pack
+            </a>
+          </div>
+
+          <div
+            data-price-card
+            className="fb-lift relative overflow-hidden rounded-2xl bg-linear-to-br from-brand-500 to-brand-600 p-6 text-white shadow-xl"
+          >
+            <div className="absolute top-0 right-0 rounded-bl-lg bg-yellow-400 px-3 py-1 text-xs font-bold text-gray-900">
+              Best Value
+            </div>
+            <span className="mb-3 inline-block rounded-full bg-white/20 px-2 py-1 text-xs font-bold text-white">
+              29% OFF
+            </span>
+            <h3 className="mb-2 text-xl font-bold">Power Pack</h3>
+            <p className="mb-4 text-sm text-brand-100">20 Classes • Valid 45 days</p>
+            <p className="mb-1 text-3xl font-bold">₱5,000</p>
+            <p className="mb-4 text-sm text-brand-100">₱250/class • 7-day advance booking</p>
+            <a
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${pack} bg-white text-brand-600 hover:bg-brand-50`}
+            >
+              Ask About This Pack
+            </a>
+          </div>
         </div>
-      </div>
+      </Scene>
 
       <div className="mt-8 rounded-xl bg-gray-50 p-6">
         <h3 className="mb-4 text-lg font-bold text-gray-900">Payment Options</h3>

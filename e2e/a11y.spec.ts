@@ -18,18 +18,24 @@ const BLOCKING_IMPACTS = new Set(["serious", "critical"]);
 // TODO(a11y): re-enable both on "/" once the brand contrast is addressed.
 const HOME_KNOWN_DEBT = ["color-contrast", "link-in-text-block"];
 
-for (const path of ["/", "/schedule"]) {
-  test(`no serious or critical accessibility violations on ${path}`, async ({ page }) => {
-    await page.goto(path);
+// Run with motion as most visitors get it and in calm (reduced-motion) mode.
+for (const reducedMotion of ["no-preference", "reduce"] as const) {
+  for (const path of ["/", "/schedule"]) {
+    test(`no serious or critical accessibility violations on ${path} (${reducedMotion})`, async ({
+      page,
+    }) => {
+      await page.emulateMedia({ reducedMotion });
+      await page.goto(path);
 
-    let builder = new AxeBuilder({ page });
-    if (path === "/") builder = builder.disableRules(HOME_KNOWN_DEBT);
+      let builder = new AxeBuilder({ page });
+      if (path === "/") builder = builder.disableRules(HOME_KNOWN_DEBT);
 
-    const { violations } = await builder.analyze();
-    const blocking = violations.filter((v) => BLOCKING_IMPACTS.has(v.impact ?? ""));
+      const { violations } = await builder.analyze();
+      const blocking = violations.filter((v) => BLOCKING_IMPACTS.has(v.impact ?? ""));
 
-    // Surface the offending rule ids + node counts in the failure message.
-    const summary = blocking.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length }));
-    expect(summary, JSON.stringify(summary, null, 2)).toEqual([]);
-  });
+      // Surface the offending rule ids + node counts in the failure message.
+      const summary = blocking.map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length }));
+      expect(summary, JSON.stringify(summary, null, 2)).toEqual([]);
+    });
+  }
 }
