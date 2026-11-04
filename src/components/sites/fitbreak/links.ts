@@ -83,6 +83,8 @@ export const contact = {
   phoneDisplay: "0965 944 1194",
   phoneHref: "tel:+639659441194",
   facebook: "https://facebook.com/FitBreakPhilippines/",
+  /** Booking Enquiry channel (CONTEXT.md): Messenger chat with the Facebook page. */
+  messenger: "https://m.me/FitBreakPhilippines",
   instagram: "https://instagram.com/FitBreakPhilippines/",
 } as const;
 

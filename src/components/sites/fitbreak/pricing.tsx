@@ -84,10 +84,12 @@ function MemberPricing() {
           <p className="mb-2 text-xs text-gray-500">Next-day booking only</p>
           <p className="mb-4 text-xs font-medium text-amber-600">Limited to 3 drop-ins</p>
           <a
-            href={routes.pricing}
+            href={contact.messenger}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`${pack} bg-gray-200 text-gray-800 hover:bg-gray-300`}
           >
-            Book Drop-In
+            Message Us to Book
           </a>
         </div>
 
@@ -102,8 +104,13 @@ function MemberPricing() {
           <p className="mb-4 text-sm text-gray-600">6 Classes • Valid 30 days</p>
           <p className="mb-1 text-3xl font-bold text-brand-500">₱1,800</p>
           <p className="mb-4 text-sm text-gray-500">₱300/class • 3-day advance booking</p>
-          <a href={routes.pricing} className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}>
-            Choose Pack
+          <a
+            href={contact.messenger}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}
+          >
+            Ask About This Pack
           </a>
         </div>
 
@@ -121,8 +128,13 @@ function MemberPricing() {
           <p className="mb-4 text-sm text-gray-600">12 Classes • Valid 30 days</p>
           <p className="mb-1 text-3xl font-bold text-brand-500">₱3,300</p>
           <p className="mb-4 text-sm text-gray-500">₱275/class • 5-day advance booking</p>
-          <a href={routes.pricing} className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}>
-            Choose Pack
+          <a
+            href={contact.messenger}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${pack} bg-brand-500 text-white hover:bg-brand-600`}
+          >
+            Ask About This Pack
           </a>
         </div>
 
@@ -137,8 +149,13 @@ function MemberPricing() {
           <p className="mb-4 text-sm text-brand-100">20 Classes • Valid 45 days</p>
           <p className="mb-1 text-3xl font-bold">₱5,000</p>
           <p className="mb-4 text-sm text-brand-100">₱250/class • 7-day advance booking</p>
-          <a href={routes.pricing} className={`${pack} bg-white text-brand-600 hover:bg-brand-50`}>
-            Choose Pack
+          <a
+            href={contact.messenger}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${pack} bg-white text-brand-600 hover:bg-brand-50`}
+          >
+            Ask About This Pack
           </a>
         </div>
       </div>
@@ -149,7 +166,7 @@ function MemberPricing() {
           <div className="flex items-start gap-3">
             <SolidCheck className="mt-0.5 h-6 w-6 flex-shrink-0 text-brand-500" />
             <span className="text-base text-gray-700">
-              <strong>GCash:</strong> Send payment and upload proof
+              <strong>GCash:</strong> Send payment and send your receipt on Messenger
             </span>
           </div>
           <div className="flex items-start gap-3">
@@ -160,10 +177,7 @@ function MemberPricing() {
           </div>
         </div>
         <p className="mt-4 text-sm text-gray-500">
-          Credits are added to your account after payment verification.{" "}
-          <a href={routes.howItWorks} className="text-brand-600 hover:underline">
-            Learn how it works
-          </a>
+          Your classes are confirmed once we verify your payment.
         </p>
       </div>
 
@@ -188,8 +202,11 @@ function MemberPricing() {
   );
 }
 
-/** Pricing is members-only on the source: guests see a sign-in gate instead. */
-export function Pricing({ signedIn }: { signedIn: boolean }) {
+/**
+ * Pricing is members-only on the source (guests see a sign-in gate). On the
+ * Information Site prices are public, so `showPrices` is true for everyone.
+ */
+export function Pricing({ showPrices }: { showPrices: boolean }) {
   return (
     <section id="pricing" className="bg-linear-to-br from-pink-50 to-white py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -201,7 +218,7 @@ export function Pricing({ signedIn }: { signedIn: boolean }) {
           </a>
         </p>
 
-        {signedIn ? <MemberPricing /> : <SignInGate />}
+        {showPrices ? <MemberPricing /> : <SignInGate />}
 
         <div className="mt-10 rounded-2xl bg-linear-to-r from-purple-600 to-purple-700 p-8 text-white">
           <div className="grid items-center gap-8 md:grid-cols-2">

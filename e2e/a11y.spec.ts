@@ -18,7 +18,7 @@ const BLOCKING_IMPACTS = new Set(["serious", "critical"]);
 // TODO(a11y): re-enable both on "/" once the brand contrast is addressed.
 const HOME_KNOWN_DEBT = ["color-contrast", "link-in-text-block"];
 
-for (const path of ["/", "/auth/sign-in"]) {
+for (const path of ["/", "/schedule"]) {
   test(`no serious or critical accessibility violations on ${path}`, async ({ page }) => {
     await page.goto(path);
 

@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-import { routes } from "../links";
+import { contact } from "../links";
 
 const rules = [
   {
@@ -85,12 +83,14 @@ export function ClubRules() {
 
       {/* CTA */}
       <div className="mt-8 text-center">
-        <Link
-          href={routes.schedule}
+        <a
+          href={contact.messenger}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-flex items-center rounded-full bg-brand-500 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:bg-brand-600"
         >
-          Book a Class
-        </Link>
+          Message Us to Book
+        </a>
       </div>
     </div>
   );

@@ -54,6 +54,16 @@ export const isAnalyticsConfigured = Boolean(env.NEXT_PUBLIC_POSTHOG_KEY);
 export const analyticsSessionReplay = false;
 
 /**
+ * Toggle: is the FitBreak Member Area switched on? OFF while FitBreak runs as an
+ * Information Site (see CONTEXT.md). When false, every account surface is
+ * parked: /login, /member/*, /how-it-works, and the template's /auth/* and
+ * /dashboard/* redirect to the homepage (src/middleware.ts), and the public
+ * pages show Messenger "Booking Enquiry" calls to action instead of sign-in,
+ * credits or online booking. Flip to true to bring the Member Area back.
+ */
+export const memberAreaEnabled = false;
+
+/**
  * Policy: may the browsable "auth disabled" bypass apply? Only when Supabase is
  * unconfigured AND we are not in production. In production an unconfigured
  * Supabase fails CLOSED (protected routes redirect to sign-in), so a build that

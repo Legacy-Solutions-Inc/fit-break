@@ -151,3 +151,29 @@ Known differences:
 - The GCash number is not published on the live site; checkout says "Need our
   GCash number? Call or text 0965 944 1194" (placeholder wording — confirm).
 - Mobile layouts were not re-checked visually for the new pages.
+
+## Information Site mode (2026-11-04)
+
+Decided with the owner: FitBreak runs as an **Information Site** for now; the
+**Member Area** is parked (terms in `CONTEXT.md`). Switch: `memberAreaEnabled`
+in `src/config.ts` (currently `false`).
+
+While parked:
+
+- `/login`, `/member/*`, `/how-it-works`, `/auth/*`, `/dashboard/*` redirect to
+  `/` (middleware), as do the old `.html` URLs for those pages.
+- Pricing is public on `/` and `/pricing`; the expired "January 2026 Special"
+  banner is removed.
+- Every booking/purchase button is a **Booking Enquiry**: Messenger
+  (`m.me/FitBreakPhilippines`, `contact.messenger`) with "or call" where it fits.
+- `/schedule` is a read-only weekly timetable (`schedule/weekly-timetable.tsx`).
+- Account wording changed only where it would mislead (hero, pricing payment
+  steps + FAQ, Visit Us card, chatbot). Package booking rules stay as studio
+  policy. Privacy/Terms are verbatim.
+- Header: no bell / Sign In / Get Started — one "Message Us" button; no help
+  tour on `/pricing`.
+- Sitemap lists the Information Site pages + blog posts; robots disallows the
+  parked areas.
+
+To bring accounts back: set `memberAreaEnabled = true`, then revisit
+How It Works and the account wording against the real flow.

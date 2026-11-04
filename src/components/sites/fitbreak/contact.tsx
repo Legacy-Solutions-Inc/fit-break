@@ -50,7 +50,7 @@ export function Contact() {
                   <h3 className="mb-1 font-semibold text-gray-900">Get in Touch</h3>
                   <p className="text-gray-600">Email: {contact.email}</p>
                   <p className="text-gray-600">Phone: {contact.phoneDisplay}</p>
-                  <p className="mt-2 text-sm text-gray-500">Book online or visit us!</p>
+                  <p className="mt-2 text-sm text-gray-500">Message us or visit us!</p>
                 </div>
               </div>
             </div>

@@ -2,7 +2,12 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import type { User } from "@supabase/supabase-js";
 
-import { analyticsSessionReplay, authDisabled, isSupabaseConfigured } from "@/config";
+import {
+  analyticsSessionReplay,
+  authDisabled,
+  isSupabaseConfigured,
+  memberAreaEnabled,
+} from "@/config";
 import { env } from "@/env";
 import { hasRole } from "@/lib/authz";
 import { buildCsp } from "@/lib/csp";
@@ -14,6 +19,8 @@ import { paths } from "@/paths";
 const MEMBER_PREFIX = "/member";
 const FITBREAK_LOGIN = "/login";
 const FITBREAK_MEMBER_HOME = "/member/dashboard";
+/** Routes parked while `memberAreaEnabled` is false (see src/config.ts). */
+const PARKED_PREFIXES = ["/login", "/member", "/how-it-works", "/auth", "/dashboard"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -52,6 +59,16 @@ export async function middleware(req: NextRequest) {
     }
     return redirect;
   };
+
+  // Information Site mode: the Member Area is parked, so every account surface
+  // (FitBreak's and the template's) goes to the homepage. Checked first so it
+  // applies with or without Supabase configured.
+  if (
+    !memberAreaEnabled &&
+    PARKED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))
+  ) {
+    return redirectTo("/");
+  }
 
   // Dev-only: no Supabase configured → auth disabled, let every request through.
   if (authDisabled) {

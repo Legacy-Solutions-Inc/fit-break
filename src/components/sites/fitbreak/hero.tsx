@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-import { asset, routes } from "./links";
+import { asset, contact } from "./links";
 
 const bullets: React.ReactNode[] = [
   "Coach-led bootcamp classes",
   "Fully air conditioned fitness studio",
   "Functional circuit training class format",
   <>
-    All classes booked <strong>online only</strong>
+    Book via <strong>Messenger</strong> or call us
   </>,
   <>
     Pay via <strong>GCash</strong> or <strong>bank transfer</strong> only
@@ -35,10 +35,12 @@ export function Hero() {
           <div className="text-center">
             <p className="mb-2 text-2xl font-bold">We are now open!</p>
             <a
-              href={routes.schedule}
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
               className="fb-promo-btn inline-block rounded-full bg-white px-4 py-2 font-bold text-brand-600 transition hover:bg-yellow-300"
             >
-              Book a Class
+              Message Us to Book
             </a>
           </div>
         </div>
@@ -53,10 +55,12 @@ export function Hero() {
           <div className="animate-pulse rounded-2xl border-2 border-brand-400 bg-linear-to-r from-brand-500 to-brand-600 px-5 py-4 text-center text-white shadow-xl">
             <p className="mb-2 text-xl font-bold">We are now open!</p>
             <a
-              href={routes.schedule}
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
               className="fb-promo-btn inline-block rounded-full bg-white px-4 py-2 text-sm font-bold text-brand-600 transition hover:bg-yellow-300"
             >
-              Book a Class
+              Message Us to Book
             </a>
           </div>
         </div>
@@ -85,7 +89,9 @@ export function Hero() {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <a
-              href="#pricing"
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-full bg-brand-500 px-6 py-3 text-center font-semibold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-xl"
             >
               Book Your First Class

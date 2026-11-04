@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { memberAreaEnabled } from "@/config";
 import { cn } from "@/lib/utils";
 import type { ClassPackage } from "@/services/fitbreak/catalog";
 
@@ -8,8 +9,12 @@ import { FacebookIcon, Icon, SolidCheck } from "../icons";
 import { asset, contact, routes } from "../links";
 import { MobileIcon, SolidX } from "./icons";
 
-/** Package purchase → the local payments page (source: `/checkout.html?package=<id>`). */
+/**
+ * Package purchase → the local payments page (source: `/checkout.html?package=<id>`),
+ * or a Messenger Booking Enquiry while the Member Area is parked.
+ */
 function checkoutHref(id: ClassPackage["id"]): string {
+  if (!memberAreaEnabled) return contact.messenger;
   return `${routes.member.payments}?package=${encodeURIComponent(id)}`;
 }
 
@@ -207,6 +212,7 @@ function PackageCard({ pack }: { pack: PackCard }) {
 
       <Link
         href={checkoutHref(pack.id)}
+        {...(memberAreaEnabled ? {} : { target: "_blank", rel: "noopener noreferrer" })}
         className={cn(
           "block w-full rounded-full px-6 py-3 text-center font-semibold transition-all",
           dropIn
@@ -216,7 +222,11 @@ function PackageCard({ pack }: { pack: PackCard }) {
               : "bg-brand-500 text-white shadow-lg hover:bg-brand-600",
         )}
       >
-        {pack.cta}
+        {memberAreaEnabled
+          ? pack.cta
+          : pack.id === "drop-in"
+            ? "Message Us to Book"
+            : "Ask About This Pack"}
       </Link>
       <p
         className={cn(
@@ -287,8 +297,12 @@ function ComparisonTable() {
 const gcashSteps = [
   "Send payment to our GCash number",
   "Take a screenshot of your payment confirmation",
-  "Upload proof of payment in your account",
-  "Credits will be added after verification",
+  memberAreaEnabled
+    ? "Upload proof of payment in your account"
+    : "Send your receipt to us on Messenger",
+  memberAreaEnabled
+    ? "Credits will be added after verification"
+    : "We'll confirm your classes once your payment is verified",
 ];
 
 function HowToPay() {
@@ -336,7 +350,9 @@ function HowToPay() {
             <p className="font-semibold text-gray-900">Iren San Buenaventura</p>
           </div>
           <p className="text-xs text-gray-500">
-            Upload your deposit slip or transaction confirmation as proof of payment.
+            {memberAreaEnabled
+              ? "Upload your deposit slip or transaction confirmation as proof of payment."
+              : "Send your deposit slip or transaction confirmation to us on Messenger."}
           </p>
         </div>
       </div>
@@ -358,8 +374,15 @@ const faqs = [
     a: "Yes! Cancel up to 2 hours before class starts for a full credit refund. Late cancellations or no-shows forfeit the credit.",
   },
   {
-    q: "How do I receive my credits after paying?",
-    a: "After sending payment via GCash or bank transfer, upload your proof of payment in your FitBreak account. Our team will verify your payment and manually add the credits to your account, usually within a few hours during business hours.",
+    ...(memberAreaEnabled
+      ? {
+          q: "How do I receive my credits after paying?",
+          a: "After sending payment via GCash or bank transfer, upload your proof of payment in your FitBreak account. Our team will verify your payment and manually add the credits to your account, usually within a few hours during business hours.",
+        }
+      : {
+          q: "How do I get my classes confirmed after paying?",
+          a: "After sending payment via GCash or bank transfer, send your receipt to us on Messenger. Our team will verify your payment and confirm your classes, usually within a few hours during business hours.",
+        }),
   },
   {
     q: "What's the difference in advance booking privileges?",
@@ -432,25 +455,6 @@ function CorporateCallout() {
 function MemberPricing() {
   return (
     <div>
-      {/* Opening Promo Banner */}
-      <div className="relative mb-8 overflow-hidden rounded-2xl bg-linear-to-r from-brand-500 to-brand-600 p-8 text-white">
-        <div className="absolute top-0 right-0 bg-yellow-400 px-6 py-2 text-sm font-bold text-gray-900 shadow-lg">
-          OPENING PROMO
-        </div>
-        <div className="text-center">
-          <h2 className="mb-2 text-3xl font-bold">January 2026 Special!</h2>
-          <p className="mb-4 text-5xl font-bold">
-            <s className="text-white/50">₱500</s> FREE
-          </p>
-          <p className="text-xl text-brand-100">
-            Annual Membership Fee WAIVED for all sign-ups in January 2026!
-          </p>
-          <p className="mt-2 text-sm text-brand-200">
-            Limited time offer - Sign up now and save ₱500
-          </p>
-        </div>
-      </div>
-
       {/* Annual Membership Banner */}
       <div className="mb-12 rounded-2xl bg-linear-to-r from-accent-500 to-accent-600 p-8 text-white">
         <div className="grid items-center gap-8 md:grid-cols-2">

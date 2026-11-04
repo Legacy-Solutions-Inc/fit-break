@@ -29,3 +29,11 @@ describe("FitBreak assistant reply()", () => {
     expect(reply("tell me a joke")).toMatch(/schedules, pricing/);
   });
 });
+
+describe("FitBreak assistant while the Member Area is parked", () => {
+  it("sends booking enquiries to Messenger, never to an account", () => {
+    const answer = reply("How do I book a class?");
+    expect(answer).toContain("m.me/FitBreakPhilippines");
+    expect(answer).not.toMatch(/create an account|sign in|online only/i);
+  });
+});

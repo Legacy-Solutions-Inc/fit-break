@@ -150,9 +150,14 @@ export function CoachProfile() {
                 well-being.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link href={routes.schedule} className={`${primaryPill} px-6 py-3`}>
+                <a
+                  href={contact.messenger}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${primaryPill} px-6 py-3`}
+                >
                   Book a Class with Iren
-                </Link>
+                </a>
                 <a href="#certifications" className={`${secondaryPill} px-6 py-3`}>
                   View Certifications
                 </a>

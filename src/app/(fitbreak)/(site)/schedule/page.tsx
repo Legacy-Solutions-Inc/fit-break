@@ -4,7 +4,8 @@ import { BookingProvider } from "@/components/sites/fitbreak/booking/booking-pro
 import { Schedule } from "@/components/sites/fitbreak/booking/schedule";
 import { OnboardingTour } from "@/components/sites/fitbreak/member-pages/onboarding-tour";
 import { MemberShell } from "@/components/sites/fitbreak/member-shell/member-shell";
-import { authDisabled } from "@/config";
+import { WeeklyTimetable } from "@/components/sites/fitbreak/schedule/weekly-timetable";
+import { authDisabled, memberAreaEnabled } from "@/config";
 import { getMember, requireMember } from "@/lib/fitbreak/member";
 import { getAccount, getBookingCounts, listBookings } from "@/services/fitbreak/members";
 
@@ -15,8 +16,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/schedule" },
 };
 
-/** Public schedule. Guests see "Sign In" slots; members get the sidebar, credits and booking. */
+/**
+ * Public schedule. With the Member Area on, guests see "Sign In" slots and members
+ * get the sidebar, credits and booking; while it is parked, a weekly timetable.
+ */
 export default async function SchedulePage() {
+  // Information Site: a read-only weekly timetable with Messenger booking.
+  if (!memberAreaEnabled) return <WeeklyTimetable />;
+
   const now = new Date();
   // In dev without Supabase (auth disabled) use the member area's demo member
   // so the booking flow can be exercised locally — same rule as requireMember().

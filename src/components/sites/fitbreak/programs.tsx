@@ -102,9 +102,7 @@ export function Programs() {
               </span>
               <h3 className="mb-2 text-xl font-bold text-gray-900">{c.name}</h3>
               <p className="mb-3 text-sm text-gray-600">{c.blurb}</p>
-              <span className="text-sm font-semibold text-brand-600">
-                View Schedule &amp; Book →
-              </span>
+              <span className="text-sm font-semibold text-brand-600">View Schedule →</span>
             </a>
           ))}
         </div>
@@ -115,7 +113,7 @@ export function Programs() {
             className="relative z-10 inline-flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:bg-brand-600"
           >
             <Icon name="calendar" className="pointer-events-none h-5 w-5" />
-            View Full Schedule &amp; Book Class
+            View Full Schedule
           </a>
         </div>
       </div>

@@ -19,7 +19,8 @@ const audiences = [
   "Employee wellness programs",
 ];
 
-const MESSENGER_URL = "https://m.me/fitbreakstudioph";
+// Booking Enquiry channel shared by the whole site (FitBreakPhilippines page).
+const MESSENGER_URL = contact.messenger;
 
 /** Cloned from fitbreak.ph/corporate.html (main content only). */
 export function Corporate() {

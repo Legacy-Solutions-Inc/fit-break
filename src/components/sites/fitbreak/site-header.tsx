@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { memberAreaEnabled } from "@/config";
 import { signOut } from "@/lib/auth/actions";
 
 import { Icon, type IconName } from "./icons";
-import { asset, routes } from "./links";
+import { asset, contact, routes } from "./links";
 
 export interface SiteUser {
   name: string;
@@ -81,9 +82,11 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
           </div>
 
           <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
-            <a href={routes.howItWorks} className={navLink}>
-              How It Works
-            </a>
+            {memberAreaEnabled && (
+              <a href={routes.howItWorks} className={navLink}>
+                How It Works
+              </a>
+            )}
             <a href={routes.pricing} className={navLink}>
               Pricing
             </a>
@@ -127,8 +130,9 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
 
           <div className="flex items-center gap-3">
             {/* Notifications: the source renders the bell for everyone; it has no
-                guest behaviour, so it is a non-interactive placeholder here too. */}
-            <div className="relative hidden sm:block">
+                guest behaviour, so it is a non-interactive placeholder here too.
+                Hidden entirely while the Member Area is parked. */}
+            <div className={memberAreaEnabled ? "relative hidden sm:block" : "hidden"}>
               <button
                 type="button"
                 aria-label="Notifications"
@@ -138,7 +142,17 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
               </button>
             </div>
 
-            {user ? (
+            {!memberAreaEnabled ? (
+              // Information Site: one Booking Enquiry call to action.
+              <a
+                href={contact.messenger}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-brand-600 hover:shadow-lg"
+              >
+                Message Us
+              </a>
+            ) : user ? (
               <div className="flex items-center gap-3">
                 <a
                   href={routes.schedule}
@@ -234,9 +248,11 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
             className="border-t border-gray-200 bg-white shadow-lg md:hidden"
           >
             <div className="space-y-2 px-4 py-3">
-              <a href={routes.howItWorks} className={mobileItem}>
-                How It Works
-              </a>
+              {memberAreaEnabled && (
+                <a href={routes.howItWorks} className={mobileItem}>
+                  How It Works
+                </a>
+              )}
               <a href={routes.pricing} className={mobileItem}>
                 Pricing
               </a>
@@ -261,7 +277,16 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
                 Blog
               </a>
               <div className="my-2 border-t border-gray-100" />
-              {user ? (
+              {!memberAreaEnabled ? (
+                <a
+                  href={contact.messenger}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-lg px-4 py-3 font-semibold text-brand-600 hover:bg-brand-50"
+                >
+                  Message Us on Messenger
+                </a>
+              ) : user ? (
                 <>
                   <Link href={routes.member.dashboard} className={mobileItem}>
                     My Dashboard

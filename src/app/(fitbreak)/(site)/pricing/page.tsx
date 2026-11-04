@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { routes } from "@/components/sites/fitbreak/links";
 import { PricingPage } from "@/components/sites/fitbreak/pricing-page/pricing-page";
 import { OnboardingTour } from "@/components/sites/fitbreak/member-pages/onboarding-tour";
+import { memberAreaEnabled } from "@/config";
 import { getMember } from "@/lib/fitbreak/member";
 
 export const metadata: Metadata = {
@@ -14,12 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const signedIn = Boolean(await getMember());
+  // Information Site (Member Area parked): prices are public, no help tour.
+  const signedIn = memberAreaEnabled && Boolean(await getMember());
   return (
     <>
-      <PricingPage signedIn={signedIn} />
+      <PricingPage signedIn={!memberAreaEnabled || signedIn} />
       {/* The live pricing page loads onboarding-tour.js (floating "Need Help?" button). */}
-      <OnboardingTour page="pricing" />
+      {memberAreaEnabled && <OnboardingTour page="pricing" />}
     </>
   );
 }

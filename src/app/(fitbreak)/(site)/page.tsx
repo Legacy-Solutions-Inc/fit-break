@@ -9,7 +9,7 @@ import { Newsletter } from "@/components/sites/fitbreak/newsletter";
 import { Pricing } from "@/components/sites/fitbreak/pricing";
 import { Programs } from "@/components/sites/fitbreak/programs";
 import { VideoSection } from "@/components/sites/fitbreak/video-section";
-import { config } from "@/config";
+import { config, memberAreaEnabled } from "@/config";
 import { getMember } from "@/lib/fitbreak/member";
 
 const title = "FitBreak — Women-Only Bootcamp in Calapan | Book Classes, Pay via GCash";
@@ -91,7 +91,8 @@ const jsonLd = {
 };
 
 export default async function HomePage() {
-  const signedIn = Boolean(await getMember());
+  // Information Site (Member Area parked): prices are public, no member stats.
+  const signedIn = memberAreaEnabled && Boolean(await getMember());
 
   return (
     <>
@@ -105,7 +106,7 @@ export default async function HomePage() {
       {signedIn && <MemberMetrics />}
       <About />
       <Programs />
-      <Pricing signedIn={signedIn} />
+      <Pricing showPrices={!memberAreaEnabled || signedIn} />
       <Newsletter />
       <Contact />
     </>

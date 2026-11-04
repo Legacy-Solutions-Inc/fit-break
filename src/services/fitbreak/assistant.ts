@@ -1,4 +1,5 @@
-import { routes } from "@/components/sites/fitbreak/links";
+import { contact, routes } from "@/components/sites/fitbreak/links";
+import { memberAreaEnabled } from "@/config";
 import {
   ANNUAL_MEMBERSHIP_FEE_PHP,
   COACH_NAME,
@@ -43,14 +44,24 @@ const answers = {
     `Starter, Standard and Power packs need the ${peso(ANNUAL_MEMBERSHIP_FEE_PHP)} annual membership.`,
     `Full details: ${routes.pricing}.`,
   ].join("\n"),
-  booking: [
-    "How to book:",
-    "1. Create an account or sign in.",
-    "2. Buy a class package (GCash or bank transfer) and upload your proof of payment.",
-    "3. Once verified, credits appear in your account.",
-    `4. Pick a class on ${routes.schedule} — each class uses 1 credit.`,
-    "All classes are booked online only.",
-  ].join("\n"),
+  booking: (memberAreaEnabled
+    ? [
+        "How to book:",
+        "1. Create an account or sign in.",
+        "2. Buy a class package (GCash or bank transfer) and upload your proof of payment.",
+        "3. Once verified, credits appear in your account.",
+        `4. Pick a class on ${routes.schedule} — each class uses 1 credit.`,
+        "All classes are booked online only.",
+      ]
+    : [
+        "How to book:",
+        `1. Message us on Messenger (${contact.messenger}) or call ${contact.phoneDisplay}.`,
+        "2. Tell us your package and the class and time you'd like.",
+        "3. Pay via GCash or bank transfer and send us your receipt on Messenger.",
+        "4. We'll confirm your class once your payment is verified.",
+        `See the weekly timetable on ${routes.schedule}.`,
+      ]
+  ).join("\n"),
   location: [
     `We're at ${ADDRESS}.`,
     "It's a women-only, fully air-conditioned studio. Male companions are welcome to wait at the coffee shop downstairs.",
@@ -58,7 +69,9 @@ const answers = {
   credits: [
     "1 credit = 1 class. Credits are added after your payment is verified and expire with your package's validity period.",
     `Pay via GCash or ${PAYMENT_DETAILS.bpi.bank} transfer (${PAYMENT_DETAILS.bpi.accountNumber}, ${PAYMENT_DETAILS.bpi.accountName}).`,
-    `Check your balance on ${routes.member.payments}.`,
+    memberAreaEnabled
+      ? `Check your balance on ${routes.member.payments}.`
+      : "Send your receipt on Messenger and we'll confirm your classes once your payment is verified.",
   ].join("\n"),
 };
 
