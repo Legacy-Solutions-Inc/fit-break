@@ -14,9 +14,9 @@ import { MOTION_QUERIES, type MotionConditions } from "./policy";
  *   video    — desktop pins the section while the intro video grows from a card
  *              to fill the screen and the heading falls back; phones play once.
  *   about    — photos drift at different speeds (desktop), text line by line.
- *   programs — desktop pins the stage while the class cards slide past
- *              sideways; phones stagger the cards in once.
- *   pricing  — cards rise in with a slight tilt; the popular card gets a shine.
+ *   programs — each row's rule draws across and its name slides in, once
+ *              (no pin since the editorial redesign, ADR 0009).
+ *   pricing  — the pack columns rise in, staggered.
  *
  * In `calm` mode (reduced motion) the scenes do nothing — content is shown as
  * rendered. Everything a scene changes is reverted when the mode changes or
@@ -65,7 +65,6 @@ const setupVideo: Setup = (root, { full, compact }) => {
 
   if (full) {
     stage.dataset.stage = "on";
-    const surface = frame.firstElementChild as HTMLElement | null;
     // Start: a card that fits below the heading. End: covers the whole stage.
     const metrics = () => {
       const sh = stage.clientHeight;
@@ -94,14 +93,6 @@ const setupVideo: Setup = (root, { full, compact }) => {
       { scale: () => metrics().cover, y: 0, ease: "power2.inOut", duration: 1 },
       0,
     );
-    if (surface) {
-      tl.fromTo(
-        surface,
-        { borderRadius: () => 24 / metrics().s0 },
-        { borderRadius: 0, ease: "power2.inOut", duration: 1 },
-        0,
-      );
-    }
     tl.to(heading, { autoAlpha: 0, y: -70, scale: 0.94, ease: "power1.in", duration: 0.5 }, 0);
     tl.to({}, { duration: 0.25 }); // hold the full-screen frame for a beat
     return () => {
@@ -168,6 +159,8 @@ const setupAbout: Setup = (root, { calm, full }) => {
   const split = copy
     ? SplitText.create(copy, {
         type: "lines",
+        // Whole lines stay readable as-is; aria-label is not allowed on <p>.
+        aria: "none",
         mask: "lines",
         autoSplit: true,
         onSplit: (self) =>
@@ -194,94 +187,36 @@ const setupAbout: Setup = (root, { calm, full }) => {
   return () => split?.revert();
 };
 
-const staggerIn = (cards: HTMLElement[], trigger: Element | undefined) =>
-  gsap.from(cards, {
-    y: 40,
-    autoAlpha: 0,
-    duration: 0.7,
-    stagger: 0.1,
-    ease: EASE,
-    clearProps: "transform,opacity,visibility",
-    scrollTrigger: { trigger, start: "top 85%", once: true },
-  });
-
-const setupPrograms: Setup = (root, { full, compact }) => {
-  const [stage] = select(root, "programs-stage");
-  const [viewport] = select(root, "programs-viewport");
-  const [track] = select(root, "programs-track");
-  const cards = select(root, "program-card");
-  const bar = select(root, "programs-progress-bar");
-  if (!stage || !viewport || !track) return;
-
-  if (full) {
-    stage.dataset.stage = "on";
-    // A stage taller than the screen can't pin cleanly — play it like a phone.
-    if (stage.scrollHeight > window.innerHeight) {
-      delete stage.dataset.stage;
-      staggerIn(cards, track);
-      return;
-    }
-    const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-    const slide = gsap.to(track, {
-      x: () => -distance(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: stage,
-        start: "top top",
-        end: () => `+=${distance()}`,
-        pin: true,
-        scrub: 0.8,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => gsap.set(bar, { scaleX: self.progress }),
-      },
+// Opacity, not autoAlpha: rows are links, and visibility:hidden would drop
+// them from the accessibility tree until they animate in.
+const setupPrograms: Setup = (root, { calm }) => {
+  if (calm) return;
+  for (const card of select(root, "program-card")) {
+    const row = card.parentElement;
+    const rule = row?.querySelector<HTMLElement>("[data-program-rule]");
+    const name = card.querySelector<HTMLElement>("[data-program-name]");
+    const rest = Array.from(card.children).filter((el) => el !== name);
+    const tl = gsap.timeline({
+      defaults: { ease: EASE },
+      scrollTrigger: { trigger: card, start: "top 88%", once: true },
     });
-    cards.forEach((card) => {
-      gsap.from(card, {
-        scale: 0.9,
-        autoAlpha: 0.4,
-        ease: "none",
-        scrollTrigger: {
-          trigger: card,
-          containerAnimation: slide,
-          start: "left 100%",
-          end: "left 70%",
-          scrub: true,
-        },
-      });
-    });
-    return () => {
-      delete stage.dataset.stage;
-    };
+    if (rule) tl.from(rule, { scaleX: 0, duration: 0.9, ease: "power2.inOut" }, 0);
+    if (name) tl.from(name, { xPercent: -6, opacity: 0, duration: 0.8, clearProps: "all" }, 0.15);
+    tl.from(rest, { y: 12, opacity: 0, duration: 0.6, stagger: 0.06, clearProps: "all" }, 0.3);
   }
-
-  if (compact) staggerIn(cards, track);
 };
 
 const setupPricing: Setup = (root, { calm }) => {
   if (calm) return;
-  const cards = select(root, "price-card");
-  const shine = select(root, "shine");
-  const tl = gsap.timeline({ scrollTrigger: { trigger: root, start: "top 82%", once: true } });
-  tl.from(cards, {
-    y: 70,
-    rotationX: -16,
-    transformPerspective: 900,
-    transformOrigin: "50% 100%",
-    autoAlpha: 0,
+  gsap.from(select(root, "price-card"), {
+    y: 48,
+    opacity: 0, // not autoAlpha: links stay in the accessibility tree
     duration: 0.9,
     stagger: 0.12,
     ease: EASE,
-    clearProps: "transform,opacity,visibility",
+    clearProps: "transform,opacity",
+    scrollTrigger: { trigger: root, start: "top 82%", once: true },
   });
-  if (shine.length) {
-    tl.fromTo(
-      shine,
-      { xPercent: -100, autoAlpha: 1 },
-      { xPercent: 320, duration: 1.1, ease: "power2.inOut" },
-      "-=0.2",
-    ).set(shine, { autoAlpha: 0 });
-  }
 };
 
 const setups: Record<SceneKind, Setup> = {

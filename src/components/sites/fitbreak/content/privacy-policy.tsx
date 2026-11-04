@@ -4,7 +4,7 @@ import { ContactBlock, H2, H3, LegalPage, List, P } from "./legal";
 export function PrivacyPolicy() {
   return (
     <LegalPage title="Privacy Policy" updated="January 24, 2025">
-      <P className="mb-6 text-gray-700">
+      <P className="mb-8 text-xl leading-relaxed text-ink">
         FitBreak (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting
         your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your
         information when you visit our website or use our services.
@@ -127,7 +127,7 @@ export function PrivacyPolicy() {
       </P>
       <ContactBlock />
 
-      <P className="mt-8 text-sm text-gray-600">
+      <P className="mt-12 border-t border-ink/15 pt-6 text-sm text-mute">
         This privacy policy complies with the Data Privacy Act of 2012 (Republic Act No. 10173) of
         the Philippines and its implementing rules and regulations.
       </P>

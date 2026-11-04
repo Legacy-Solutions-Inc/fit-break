@@ -4,7 +4,8 @@ Date: 2026-11-04
 
 ## Status
 
-Accepted
+Accepted. Amended by [0009](0009-fitbreak-departs-visually-from-the-clone.md): the
+clone is no longer the layout reference, and Programs is no longer pinned.
 
 ## Context
 

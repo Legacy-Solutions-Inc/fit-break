@@ -43,7 +43,10 @@ const faqs: ReadonlyArray<{ q: string; a: ReactNode }> = [
         FitBreak has 10 house rules to ensure a safe, empowering, and respectful space for every
         woman. These include no video recording during classes, women&apos;s space only (male
         companions may wait at the coffee shop downstairs), and respectful behavior.{" "}
-        <Link href={routes.clubRules} className="font-medium text-brand-500 hover:underline">
+        <Link
+          href={routes.clubRules}
+          className="font-semibold text-ink underline decoration-crimson decoration-2 underline-offset-4 hover:text-crimson-deep"
+        >
           View all Club Rules →
         </Link>
       </>
@@ -51,21 +54,33 @@ const faqs: ReadonlyArray<{ q: string; a: ReactNode }> = [
   },
 ];
 
-/** how-it-works.html FAQ — native `<details>` accordions, as on the source. */
+/**
+ * how-it-works.html FAQ — native `<details>` accordions, as on the source,
+ * set as a ruled list with a plain "+" / "–" marker (ADR 0009).
+ */
 export function HowItWorksFaq() {
   return (
-    <div className="mt-12 rounded-2xl bg-gray-100 p-8">
-      <h2 className="mb-6 text-center text-2xl font-bold text-gray-900">
+    <section className="grid gap-10 border-t border-rule py-20 lg:grid-cols-12 lg:gap-10 lg:py-28">
+      <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)] lg:col-span-4">
         Frequently Asked Questions
       </h2>
-      <div className="mx-auto max-w-3xl space-y-4">
-        {faqs.map((f) => (
-          <details key={f.q} className="rounded-lg bg-white p-4">
-            <summary className="cursor-pointer font-semibold text-gray-900">{f.q}</summary>
-            <p className="mt-2 text-sm text-gray-600">{f.a}</p>
+      <div data-reveal className="border-y-2 border-ink lg:col-span-7 lg:col-start-6">
+        {faqs.map((f, i) => (
+          <details key={f.q} className="group border-b border-ink/15 last:border-b-0">
+            <summary className="flex cursor-pointer list-none items-baseline gap-4 py-5 transition-colors hover:bg-bone/60 [&::-webkit-details-marker]:hidden">
+              <span className="fb-label fb-num w-6 flex-none text-mute">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="flex-1 text-lg font-semibold">{f.q}</span>
+              <span aria-hidden="true" className="fb-display w-6 flex-none text-right text-2xl">
+                <span className="group-open:hidden">+</span>
+                <span className="hidden group-open:inline">–</span>
+              </span>
+            </summary>
+            <p className="pr-10 pb-6 pl-10 text-mute">{f.a}</p>
           </details>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

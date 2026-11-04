@@ -1,6 +1,5 @@
-import { Icon } from "../icons";
+import { wrap } from "../editorial";
 import { contact } from "../links";
-import { HeartIcon, SolidCheckCircle } from "./icons";
 
 const whoTheyAre = [
   "Have spent years putting everyone else first",
@@ -35,209 +34,293 @@ const mindset = [
   "Taking a break from shrinking yourself",
 ];
 
-const card = "mb-6 rounded-xl bg-white p-8 shadow-xs";
+const body = "text-lg leading-relaxed text-ink/80";
+const lead = "text-xl leading-snug font-medium text-ink lg:text-2xl";
+const num = (i: number) => String(i + 1).padStart(2, "0");
+
+/**
+ * A chapter of the page: the heading holds the left columns (sticky on wide
+ * screens), the text runs in the right-hand measure. Rules separate chapters.
+ */
+function Chapter({
+  index,
+  title,
+  children,
+}: {
+  index: number;
+  title: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="border-t border-rule py-16 lg:py-24">
+      <div className={`${wrap} grid gap-8 lg:grid-cols-12 lg:gap-10`}>
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-28">
+            <p aria-hidden="true" className="fb-label fb-num mb-4 text-mute">
+              {num(index)}
+            </p>
+            <h2 className="fb-display text-[clamp(2.25rem,4.5vw,4rem)]">{title}</h2>
+          </div>
+        </div>
+        <div className="max-w-[44rem] lg:col-span-7 lg:col-start-6">{children}</div>
+      </div>
+    </section>
+  );
+}
+
+/** A ruled list with a crimson dash marker (used for the plain bullet lists). */
+function DashList({ items, className }: { items: string[]; className?: string }) {
+  return (
+    <ul className={`border-t border-ink/20 ${className ?? ""}`}>
+      {items.map((item) => (
+        <li
+          key={item}
+          className="grid grid-cols-[1.75rem_1fr] border-b border-ink/20 py-4 text-lg text-ink/85"
+        >
+          <span aria-hidden="true" className="font-semibold text-crimson-deep">
+            —
+          </span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 /** Cloned from fitbreak.ph/fitbreakers.html (main content only). */
 export function Fitbreakers() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      {/* Hero Section */}
-      <div className="mb-8 rounded-2xl bg-linear-to-br from-brand-500 to-brand-700 p-8 text-center text-white md:p-12">
-        <h1 className="mb-4 text-3xl font-bold md:text-4xl">Who Are the FitBreakers?</h1>
-        <p className="text-xl text-brand-100">The Story Behind the Name</p>
-      </div>
-
-      {/* The Meaning Section */}
-      <div className={card}>
-        <p className="mb-6 text-lg leading-relaxed text-gray-700">
-          <strong className="text-brand-600">FitBreak</strong> comes from a simple but powerful
-          idea: a <strong>&quot;Fitness Break.&quot;</strong>
-        </p>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          A FitBreak is a short pause in the middle of life&apos;s hustle—a moment where a woman
-          steps away from her responsibilities, expectations, and pressures to focus on herself.
-        </p>
-        <div className="my-6 rounded-lg bg-brand-50 p-6">
-          <p className="text-center text-brand-700 italic">
-            It&apos;s the break she gives her body to move.
-            <br />
-            The break she gives her mind to breathe.
-            <br />
-            The break she gives her heart to remember who she is.
+    <>
+      {/* Opening */}
+      <header className={`${wrap} pt-16 pb-14 lg:pt-28 lg:pb-20`}>
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <h1 className="fb-display max-w-[12ch] text-[clamp(3rem,8vw,7rem)] lg:col-span-8">
+            Who Are the FitBreakers?
+          </h1>
+          <p className="fb-display text-[clamp(1.75rem,3.2vw,3rem)] text-mute lg:col-span-4 lg:pb-2">
+            The Story Behind the Name
           </p>
         </div>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          In a world where women are constantly expected to give, serve, and show up for everyone
-          else, FitBreak is the reminder that <strong>self-care is not selfish.</strong>
-        </p>
-        <p className="text-lg font-medium text-gray-800">
-          And the women who take that break? They are called{" "}
-          <strong className="text-brand-600">FitBreakers.</strong>
-        </p>
-      </div>
+      </header>
 
-      {/* The FitBreaker Identity */}
-      <div className={card}>
-        <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold text-gray-900">
-          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500">
-            <HeartIcon className="h-5 w-5 text-white" />
-          </span>
-          The FitBreaker Identity
-        </h2>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          FitBreakers are women who choose themselves—sometimes for the first time in their lives.
-        </p>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          They are not defined by a number on the scale, a dress size, or how long they&apos;ve been
-          working out.
-        </p>
-        <div className="my-6 rounded-lg bg-gray-900 p-6 text-white">
-          <p className="text-center text-xl font-bold">
-            They are defined by a decision:
-            <br />
-            <span className="text-brand-400">&quot;Today, I choose me.&quot;</span>
+      {/* The meaning */}
+      <section className="border-t border-rule py-16 lg:py-24">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-10`}>
+          <div className="space-y-6 lg:col-span-6">
+            <p className="text-[clamp(1.4rem,2.2vw,1.9rem)] leading-snug font-medium text-ink">
+              <strong className="font-bold">FitBreak</strong> comes from a simple but powerful idea:
+              a <strong className="font-bold">&quot;Fitness Break.&quot;</strong>
+            </p>
+            <p className={body}>
+              A FitBreak is a short pause in the middle of life&apos;s hustle—a moment where a woman
+              steps away from her responsibilities, expectations, and pressures to focus on herself.
+            </p>
+          </div>
+
+          <blockquote
+            data-reveal
+            className="fb-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[0.98] lg:col-span-5 lg:col-start-8 lg:row-span-2"
+          >
+            <span aria-hidden="true" className="mb-6 block h-1 w-16 bg-crimson" />
+            <p>
+              It&apos;s the break she gives her body to move.
+              <br />
+              The break she gives her mind to breathe.
+              <br />
+              <span className="text-crimson">
+                The break she gives her heart to remember who she is.
+              </span>
+            </p>
+          </blockquote>
+
+          <div className="max-w-[44rem] space-y-6 lg:col-span-6">
+            <p className={body}>
+              In a world where women are constantly expected to give, serve, and show up for
+              everyone else, FitBreak is the reminder that{" "}
+              <strong className="font-semibold text-ink">self-care is not selfish.</strong>
+            </p>
+            <p className={lead}>
+              And the women who take that break? They are called{" "}
+              <strong className="font-bold text-crimson-deep">FitBreakers.</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Chapter index={0} title="The FitBreaker Identity">
+        <div className="space-y-6">
+          <p className={body}>
+            FitBreakers are women who choose themselves—sometimes for the first time in their lives.
+          </p>
+          <p className={body}>
+            They are not defined by a number on the scale, a dress size, or how long they&apos;ve
+            been working out.
           </p>
         </div>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          FitBreakers understand that strength is not just physical—it is mental, emotional, and
-          deeply personal.
-        </p>
-        <p className="leading-relaxed text-gray-600">
-          They are wives, mothers, daughters, sisters, professionals, students. Some are starting
-          their fitness journey again. Some are starting for the very first time.
-        </p>
-        <p className="mt-4 text-lg font-medium text-gray-800">
-          What they have in common is not where they came from—but{" "}
-          <strong>why they showed up.</strong>
-        </p>
-      </div>
 
-      {/* Who FitBreakers Are */}
-      <div className={card}>
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">Who FitBreakers Are</h2>
-        <p className="mb-4 text-gray-600">FitBreakers are women who:</p>
-        <ul className="mb-6 space-y-3">
-          {whoTheyAre.map((item) => (
-            <li key={item} className="flex items-start gap-3">
-              <SolidCheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" />
-              <span className="text-gray-600">{item}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mb-4 text-gray-600">They may feel:</p>
-        <ul className="ml-6 list-disc space-y-2 text-gray-600">
-          {theyMayFeel.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-        <p className="mt-6 text-lg font-medium text-brand-600">
+        <p
+          data-reveal
+          className="fb-display my-12 border-y border-ink/20 py-10 text-[clamp(2rem,4vw,3.5rem)] leading-[0.95]"
+        >
+          They are defined by a decision:
+          <br />
+          <span className="text-crimson">&quot;Today, I choose me.&quot;</span>
+        </p>
+
+        <div className="space-y-6">
+          <p className={body}>
+            FitBreakers understand that strength is not just physical—it is mental, emotional, and
+            deeply personal.
+          </p>
+          <p className={body}>
+            They are wives, mothers, daughters, sisters, professionals, students. Some are starting
+            their fitness journey again. Some are starting for the very first time.
+          </p>
+          <p className={lead}>
+            What they have in common is not where they came from—but{" "}
+            <strong className="font-bold">why they showed up.</strong>
+          </p>
+        </div>
+      </Chapter>
+
+      <Chapter index={1} title="Who FitBreakers Are">
+        <p className="fb-label mb-4 text-mute">FitBreakers are women who:</p>
+        <DashList items={whoTheyAre} className="mb-12" />
+
+        <p className="fb-label mb-4 text-mute">They may feel:</p>
+        <DashList items={theyMayFeel} />
+
+        <p className="fb-display mt-12 text-[clamp(1.75rem,3vw,2.5rem)]">
           But when they step into FitBreak, something changes.
         </p>
-      </div>
+      </Chapter>
 
-      {/* What Makes a FitBreaker Different */}
-      <div className={card}>
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">What Makes a FitBreaker Different</h2>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          A FitBreaker doesn&apos;t wait for the &quot;perfect time.&quot;
-        </p>
-        <p className="mb-4 leading-relaxed text-gray-600">
-          She doesn&apos;t wait to be confident before she starts.
-          <br />
-          <strong className="text-gray-800">She starts to become confident.</strong>
-        </p>
-        <div className="my-6 rounded-lg bg-gray-50 p-6">
-          <p className="mb-2 text-gray-700">A FitBreaker understands that:</p>
-          <ul className="space-y-2 text-gray-600">
-            {understands.map((item) => (
-              <li key={item} className="flex items-center gap-2">
-                <span className="text-brand-500">•</span> {item}
-              </li>
-            ))}
-          </ul>
+      <Chapter index={2} title="What Makes a FitBreaker Different">
+        <div className="space-y-6">
+          <p className={body}>A FitBreaker doesn&apos;t wait for the &quot;perfect time.&quot;</p>
+          <p className={body}>
+            She doesn&apos;t wait to be confident before she starts.
+            <br />
+            <strong className="font-semibold text-ink">She starts to become confident.</strong>
+          </p>
         </div>
-        <p className="leading-relaxed text-gray-600">
+
+        <p className="fb-label mt-12 mb-4 text-mute">A FitBreaker understands that:</p>
+        <ol className="mb-12 border-t border-ink/20">
+          {understands.map((item, i) => (
+            <li
+              key={item}
+              className="grid grid-cols-[3rem_1fr] items-baseline border-b border-ink/20 py-4"
+            >
+              <span aria-hidden="true" className="fb-label fb-num text-mute">
+                {num(i)}
+              </span>
+              <span className="text-xl text-ink">{item}</span>
+            </li>
+          ))}
+        </ol>
+
+        <p className={body}>
           She celebrates effort, not perfection. She supports other women instead of comparing
           herself to them. She grows stronger in a space designed for her, not against her.
         </p>
-      </div>
+      </Chapter>
 
-      {/* FitBreakers Believe */}
-      <div className={card}>
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">FitBreakers Believe That:</h2>
-        <div className="grid gap-4 md:grid-cols-2">
-          {beliefs.map((item) => (
-            <div key={item} className="rounded-lg bg-brand-50 p-5">
-              <p className="font-medium text-brand-700">{item}</p>
-            </div>
+      <Chapter index={3} title="FitBreakers Believe That:">
+        <ol className="border-t border-ink/20">
+          {beliefs.map((item, i) => (
+            <li
+              key={item}
+              data-reveal
+              className="grid grid-cols-[3.5rem_1fr] items-baseline gap-2 border-b border-ink/20 py-6 sm:grid-cols-[4.5rem_1fr]"
+            >
+              <span
+                aria-hidden="true"
+                className="fb-display fb-num text-[clamp(1.6rem,2.6vw,2.25rem)] text-crimson"
+              >
+                {num(i)}
+              </span>
+              <span className="fb-display text-[clamp(1.6rem,2.6vw,2.25rem)] leading-[1]">
+                {item}
+              </span>
+            </li>
           ))}
-        </div>
-        <p className="mt-6 text-center text-gray-700">
+        </ol>
+        <p className="mt-10 text-lg leading-relaxed text-ink/80">
           At FitBreak, FitBreakers are not just members.
           <br />
-          <strong>
+          <strong className="font-semibold text-ink">
             They are a community of women lifting each other up—physically and mentally.
           </strong>
         </p>
-      </div>
+      </Chapter>
 
-      {/* The FitBreaker Mindset */}
-      <div className={card}>
-        <h2 className="mb-6 text-2xl font-bold text-gray-900">The FitBreaker Mindset</h2>
-        <p className="mb-4 text-gray-600">Being a FitBreaker means:</p>
-        <ul className="mb-6 space-y-3">
+      <Chapter index={4} title="The FitBreaker Mindset">
+        <p className="fb-label mb-4 text-mute">Being a FitBreaker means:</p>
+        <ul className="mb-10 border-t border-ink/20">
           {mindset.map((item) => (
-            <li key={item} className="flex items-center gap-3 text-gray-700">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-100">
-                <Icon name="check" className="h-4 w-4 text-brand-600" />
-              </span>
+            <li
+              key={item}
+              className="fb-display border-b border-ink/20 py-5 text-[clamp(1.75rem,3.2vw,2.75rem)]"
+            >
               {item}
             </li>
           ))}
         </ul>
-        <p className="leading-relaxed text-gray-600">
-          It means giving yourself permission to sweat, struggle, laugh, rest, and grow.
-        </p>
-        <p className="mt-4 text-lg font-medium text-gray-800">
-          Because sometimes, stopping—taking a break—is what makes you stronger.
-        </p>
-      </div>
-
-      {/* This Is What It Means */}
-      <div className="mb-6 rounded-xl bg-linear-to-br from-gray-900 to-gray-800 p-8 text-white">
-        <h2 className="mb-6 text-center text-2xl font-bold">
-          This Is What It Means to Be a FitBreaker
-        </h2>
-        <p className="mb-6 text-center leading-relaxed text-gray-300">
-          A FitBreaker is not trying to become someone else.
-          <br />
-          She is reconnecting with who she has always been.
-        </p>
-        <div className="space-y-2 text-center text-xl font-bold">
-          <p className="text-brand-400">Strong.</p>
-          <p className="text-brand-400">Capable.</p>
-          <p className="text-brand-400">Worthy.</p>
+        <div className="space-y-6">
+          <p className={body}>
+            It means giving yourself permission to sweat, struggle, laugh, rest, and grow.
+          </p>
+          <p className={lead}>
+            Because sometimes, stopping—taking a break—is what makes you stronger.
+          </p>
         </div>
-      </div>
+      </Chapter>
 
-      {/* Welcome */}
-      <div className="rounded-xl border border-brand-200 bg-brand-50 p-8 text-center">
-        <p className="mb-2 text-2xl font-bold text-brand-700">Welcome to FitBreak.</p>
-        <p className="mb-2 text-xl text-brand-600">Welcome to the community.</p>
-        <p className="text-lg font-semibold text-brand-800">You are a FitBreaker.</p>
-      </div>
+      {/* What it means: the one dark band on the page */}
+      <section className="fb-grain bg-ink py-20 text-paper lg:py-32">
+        <div className={`${wrap} relative z-10 grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <div className="lg:col-span-5">
+            <h2 className="fb-display mb-8 text-[clamp(2.25rem,4.5vw,4rem)]">
+              This Is What It Means to Be a FitBreaker
+            </h2>
+            <p className="max-w-md text-lg leading-relaxed text-paper/75">
+              A FitBreaker is not trying to become someone else.
+              <br />
+              She is reconnecting with who she has always been.
+            </p>
+          </div>
+          <div
+            data-reveal
+            className="fb-display text-[clamp(4rem,11vw,10rem)] leading-[0.85] lg:col-span-6 lg:col-start-7"
+          >
+            <p>Strong.</p>
+            <p>Capable.</p>
+            <p className="text-crimson">Worthy.</p>
+          </div>
+        </div>
+      </section>
 
-      {/* CTA */}
-      <div className="mt-8 text-center">
-        <a
-          href={contact.messenger}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center rounded-full bg-brand-500 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:bg-brand-600"
-        >
-          Book Your First Class
-        </a>
-      </div>
-    </div>
+      {/* Welcome + booking */}
+      <section className="py-20 lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <div className="fb-display text-[clamp(2.5rem,6vw,5.25rem)] leading-[0.92] lg:col-span-8">
+            <p>Welcome to FitBreak.</p>
+            <p className="text-mute">Welcome to the community.</p>
+            <p className="text-crimson">You are a FitBreaker.</p>
+          </div>
+          <div className="lg:col-span-4 lg:justify-self-end">
+            <a
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fb-btn fb-btn--crimson min-h-14 px-8 text-lg"
+            >
+              Book Your First Class
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

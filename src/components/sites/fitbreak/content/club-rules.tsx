@@ -1,3 +1,4 @@
+import { wrap } from "../editorial";
 import { contact } from "../links";
 
 const rules = [
@@ -43,55 +44,68 @@ const rules = [
   },
 ];
 
-/** Cloned from fitbreak.ph/club-rules.html (main content only). */
+/**
+ * Cloned from fitbreak.ph/club-rules.html (main content only). The ten rules are
+ * a numbered list: very large condensed numerals, hairline rules between them.
+ */
 export function ClubRules() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
-      {/* Hero Section */}
-      <div className="mb-8 rounded-2xl bg-linear-to-br from-brand-500 to-brand-700 p-8 text-center text-white md:p-12">
-        <h1 className="mb-4 text-3xl font-bold md:text-4xl">Club House Rules</h1>
-        <p className="text-xl text-brand-100">
-          A safe, empowering, and respectful space for every woman.
-        </p>
-      </div>
+    <>
+      {/* Opening */}
+      <header className={`${wrap} pt-16 pb-14 lg:pt-28 lg:pb-20`}>
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <h1 className="fb-display text-[clamp(3rem,8vw,7rem)] lg:col-span-8">Club House Rules</h1>
+          <p className="max-w-md text-xl leading-snug text-mute lg:col-span-4 lg:pb-2">
+            A safe, empowering, and respectful space for every woman.
+          </p>
+        </div>
+      </header>
 
-      {/* Rules Cards */}
-      <div className="space-y-4">
-        {rules.map((rule, i) => (
-          <div
-            key={rule.title}
-            className="flex items-start gap-4 rounded-xl bg-white p-6 shadow-xs transition-shadow hover:shadow-md"
-          >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-500">
-              <span className="text-xl font-bold text-white">{i + 1}</span>
-            </div>
-            <div>
-              <h3 className="mb-1 text-lg font-bold text-gray-900">{rule.title}</h3>
-              <p className="text-gray-600">{rule.body}</p>
-            </div>
+      {/* The rules */}
+      <section className={`${wrap} pb-20 lg:pb-28`}>
+        <ol className="border-b border-ink/20">
+          {rules.map((rule, i) => (
+            <li
+              key={rule.title}
+              data-reveal
+              className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-3 border-t border-ink/20 py-8 sm:gap-x-8 lg:grid-cols-12 lg:gap-x-10 lg:py-10"
+            >
+              <span
+                aria-hidden="true"
+                className="fb-display fb-num row-span-2 w-[2.1ch] text-[clamp(3.5rem,9vw,7.5rem)] leading-[0.8] lg:col-span-2 lg:row-span-1"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h2 className="fb-display self-start text-[clamp(1.6rem,3vw,2.75rem)] lg:col-span-5 lg:pt-1">
+                {rule.title}
+              </h2>
+              <p className="max-w-xl text-lg leading-relaxed text-mute lg:col-span-5 lg:pt-1">
+                {rule.body}
+              </p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* Thank-you note + booking */}
+      <section className="border-t border-rule bg-bone/60 py-20 lg:py-28">
+        <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <p className="fb-display max-w-[22ch] text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] lg:col-span-8">
+            Thank you for helping keep FitBreak a safe, supportive, and empowering space for all
+            women!
+          </p>
+          <div className="lg:col-span-4 lg:justify-self-end">
+            <a
+              href={contact.messenger}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fb-btn fb-btn--crimson min-h-14 px-8 text-lg"
+            >
+              Message Us to Book
+            </a>
           </div>
-        ))}
-      </div>
-
-      {/* Thank You Note */}
-      <div className="mt-8 rounded-xl border border-brand-200 bg-brand-50 p-6 text-center">
-        <p className="font-medium text-brand-700">
-          Thank you for helping keep FitBreak a safe, supportive, and empowering space for all
-          women!
-        </p>
-      </div>
-
-      {/* CTA */}
-      <div className="mt-8 text-center">
-        <a
-          href={contact.messenger}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center rounded-full bg-brand-500 px-8 py-3 font-semibold text-white shadow-lg transition-all hover:bg-brand-600"
-        >
-          Message Us to Book
-        </a>
-      </div>
-    </div>
+        </div>
+      </section>
+    </>
   );
 }

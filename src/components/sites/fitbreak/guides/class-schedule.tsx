@@ -14,50 +14,96 @@ const rotation = [
   "Booty & Burn",
 ] as const;
 
-/** "Weekly Class Schedule" table (#classes). The last slot runs all programs. */
+const lastRow = classTimes.length - 1;
+
+/**
+ * "Weekly Class Schedule" (#classes), set as a printed timetable: a ruled grid
+ * of times × days on wide screens, one ruled row per day on phones. The last
+ * slot runs all programs.
+ */
 export function ClassScheduleOverview() {
   return (
-    <div id="classes" className="mt-12 scroll-mt-24 rounded-2xl bg-white p-8 shadow-lg">
-      <h2 className="mb-6 text-center text-2xl font-bold text-gray-900">Weekly Class Schedule</h2>
-      <p className="mb-8 text-center text-gray-600">
-        All classes are 1 hour long and led by Coach Iren
-      </p>
-
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[700px]">
-          <thead>
-            <tr className="bg-brand-50">
-              <th className="px-4 py-3 text-left font-semibold text-gray-900">Time</th>
-              {days.map((d) => (
-                <th key={d} className="px-4 py-3 text-center font-semibold text-gray-900">
-                  {d}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {classTimes.map((time, row) => (
-              <tr key={time}>
-                <td className="px-4 py-4 font-semibold text-gray-700">{time}</td>
-                {rotation.map((program) => (
-                  <td key={program} className="px-4 py-4 text-center text-sm">
-                    {row === classTimes.length - 1 ? "All Programs" : program}
-                  </td>
-                ))}
-                <td className="px-4 py-4 text-center text-gray-400">Closed</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <section id="classes" className="scroll-mt-24 border-t border-rule py-20 lg:py-28">
+      <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
+        <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)] lg:col-span-7">
+          Weekly Class Schedule
+        </h2>
+        <p className="text-lg text-mute lg:col-span-5 lg:pb-2">
+          All classes are 1 hour long and led by Coach Iren
+        </p>
       </div>
 
-      <p className="mt-6 text-center text-sm text-gray-500">
+      {/* Wide screens: times down the side, days across the top. */}
+      <table className="mt-14 hidden w-full table-fixed border-collapse md:table">
+        <thead>
+          <tr className="border-y-2 border-ink">
+            <th
+              scope="col"
+              className="fb-label w-[11rem] py-4 pr-4 text-left text-mute lg:w-[14rem]"
+            >
+              Time
+            </th>
+            {days.map((d) => (
+              <th key={d} scope="col" className="fb-label px-3 py-4 text-left text-ink">
+                {d}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-ink/15 border-b border-ink/15">
+          {classTimes.map((time, row) => (
+            <tr key={time}>
+              <th
+                scope="row"
+                className="fb-display fb-num py-5 pr-4 text-left text-2xl lg:text-3xl"
+              >
+                {time}
+              </th>
+              {rotation.map((program) => (
+                <td key={program} className="fb-display px-3 py-5 text-base lg:text-lg">
+                  {row === lastRow ? "All Programs" : program}
+                </td>
+              ))}
+              <td className="px-3 py-5 text-mute">Closed</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Phones: one ruled row per day. */}
+      <ol className="mt-12 border-y-2 border-ink md:hidden">
+        {days.map((d, i) => {
+          const program = rotation[i];
+          return (
+            <li key={d} className="border-b border-ink/15 py-5 last:border-b-0">
+              <h3 className="fb-display mb-3 text-2xl">{d}</h3>
+              {program ? (
+                <dl className="space-y-2">
+                  {classTimes.map((time, row) => (
+                    <div key={time} className="grid grid-cols-[8.5rem_1fr] gap-3">
+                      <dt className="fb-num font-semibold">{time}</dt>
+                      <dd className="text-mute">{row === lastRow ? "All Programs" : program}</dd>
+                    </div>
+                  ))}
+                </dl>
+              ) : (
+                <p className="text-mute">Closed</p>
+              )}
+            </li>
+          );
+        })}
+      </ol>
+
+      <p className="mt-8 text-sm text-mute">
         Class schedule may vary. Check the{" "}
-        <Link href={routes.schedule} className="text-brand-600 hover:underline">
+        <Link
+          href={routes.schedule}
+          className="font-semibold text-ink underline decoration-crimson decoration-2 underline-offset-4 hover:text-crimson-deep"
+        >
           Schedule page
         </Link>{" "}
         for real-time availability.
       </p>
-    </div>
+    </section>
   );
 }

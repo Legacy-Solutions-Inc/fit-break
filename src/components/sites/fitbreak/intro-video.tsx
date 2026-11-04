@@ -106,7 +106,7 @@ export function IntroVideo() {
   };
 
   return (
-    <div className="group relative overflow-hidden rounded-3xl bg-black shadow-2xl">
+    <div className="group relative overflow-hidden bg-ink">
       <div className="relative aspect-video" onMouseMove={showControls}>
         <video
           ref={videoRef}
@@ -164,14 +164,14 @@ export function IntroVideo() {
           />
         )}
 
-        {/* Subtle vignette */}
-        <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_120px_rgba(0,0,0,0.2)]" />
+        {/* Darken the poster a touch so the play label reads. */}
+        {!started && <div className="pointer-events-none absolute inset-0 bg-ink/25" />}
 
         <button
           type="button"
           aria-label="Fullscreen"
           onClick={goFullscreen}
-          className="absolute right-4 bottom-4 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-black/50 text-white transition-all hover:bg-black/70"
+          className="absolute right-4 bottom-4 z-30 flex h-12 w-12 items-center justify-center bg-ink/60 text-white transition-colors hover:bg-ink/85"
         >
           <Icon name="expand" className="h-6 w-6" />
         </button>
@@ -189,27 +189,29 @@ export function IntroVideo() {
         >
           <div
             className={cn(
-              "relative transition-all duration-500 ease-out hover:scale-110",
-              (playing || ended) && "pointer-events-none scale-50 opacity-0",
+              "flex items-center gap-4 transition-all duration-500 ease-out",
+              (playing || ended) && "pointer-events-none scale-75 opacity-0",
             )}
           >
-            <div className="absolute inset-0 scale-125 animate-pulse rounded-full bg-white/20" />
-            <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-white/95 shadow-[0_20px_60px_rgba(0,0,0,0.4)] backdrop-blur-xl md:h-32 md:w-32">
+            <span className="flex h-20 w-20 items-center justify-center bg-crimson text-white transition-colors group-hover:bg-crimson-deep md:h-28 md:w-28">
               <svg
-                className="ml-1.5 h-10 w-10 text-gray-900 md:ml-2 md:h-14 md:w-14"
+                className="ml-1 h-8 w-8 md:h-11 md:w-11"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
                 <path d="M8 5v14l11-7z" />
               </svg>
-            </div>
+            </span>
+            <span className="fb-display hidden text-4xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] md:block">
+              Play film
+            </span>
           </div>
         </button>
 
         <div
           className={cn(
-            "absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-black/70 via-black/30 to-transparent p-5 transition-all duration-300 md:p-8",
+            "absolute right-0 bottom-0 left-0 z-20 bg-linear-to-t from-ink/80 via-ink/30 to-transparent p-5 transition-all duration-300 md:p-8",
             controlsVisible ? "opacity-100" : "pointer-events-none opacity-0",
           )}
         >
@@ -252,9 +254,9 @@ export function IntroVideo() {
                 if (e.key === "ArrowLeft") v.currentTime = Math.max(0, v.currentTime - 5);
               }}
             >
-              <div className="h-1 overflow-hidden rounded-full bg-white/30 transition-all group-hover/progress:h-1.5">
+              <div className="h-1 overflow-hidden bg-white/30 transition-all group-hover/progress:h-1.5">
                 <div
-                  className="h-full rounded-full bg-white transition-all duration-150"
+                  className="h-full bg-crimson transition-all duration-150"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -280,7 +282,7 @@ export function IntroVideo() {
               type="button"
               aria-label="Fullscreen"
               onClick={goFullscreen}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 hover:text-white"
+              className="flex h-11 w-11 items-center justify-center bg-white/10 text-white transition-colors hover:bg-white/20 hover:text-white"
             >
               <Icon name="expand" className="h-5 w-5" />
             </button>

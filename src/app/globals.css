@@ -144,6 +144,19 @@
   --color-accent-800: #2c6a69;
 }
 
+/* Editorial redesign (ADR 0009): one crimson on warm paper/ink neutrals.
+ * `static` so the variables exist even where only plain CSS uses them. */
+@theme static {
+  --color-ink: #17130f;
+  --color-ink-soft: #2b2620;
+  --color-paper: #f5f1ea;
+  --color-bone: #ebe4d8;
+  --color-rule: #d5ccbd;
+  --color-mute: #5d564c;
+  --color-crimson: #d71e49;
+  --color-crimson-deep: #b3143b;
+}
+
 /*
  * The FitBreak site was built on Tailwind v3. Inside `.fb-site` we re-pin the v3
  * hex palette (v4 ships oklch variants that drift slightly) and the v3 radius
@@ -322,24 +335,6 @@ html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
   background: #c11a41;
 }
 
-@keyframes fb-banner-bounce {
-  0%,
-  100% {
-    transform: rotate(-3deg) scale(1);
-  }
-  50% {
-    transform: rotate(-1deg) scale(1.02);
-  }
-}
-@keyframes fb-button-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
-  }
-}
 /* Page-load card entrance: the source fades every white card up on `load`,
  * staggered by document index (`--fb-i` × 100ms). */
 @keyframes fb-card-in {
@@ -351,15 +346,6 @@ html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
     opacity: 1;
     transform: translateY(0);
   }
-}
-.fb-promo-banner {
-  animation: fb-banner-bounce 2s ease-in-out infinite;
-}
-.fb-promo-banner:hover {
-  animation-play-state: paused;
-}
-.fb-promo-btn {
-  animation: fb-button-pulse 1.5s ease-in-out infinite;
 }
 /* Chatbot typing indicator (source: 1.4s, 4px hop at 30%). */
 @keyframes fb-typing {
@@ -381,8 +367,6 @@ html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fb-promo-banner,
-  .fb-promo-btn,
   .fb-card-in {
     animation: none;
   }
@@ -448,37 +432,12 @@ html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
   display: none;
 }
 
-/* Programs scene stage (desktop): the class cards become one sideways track. */
-.fb-site [data-programs-progress] {
-  display: none;
-}
-.fb-site [data-programs-stage][data-stage="on"] {
-  display: flex;
-  min-height: 100svh;
-  flex-direction: column;
-  justify-content: center;
-  padding-block: 4.5rem 1.5rem;
-  background: white;
-}
-.fb-site [data-programs-stage][data-stage="on"] [data-programs-viewport] {
-  overflow-x: clip;
-  padding-block: 0.5rem;
-}
-.fb-site [data-programs-stage][data-stage="on"] [data-programs-track] {
-  display: flex;
-  width: max-content;
-}
-.fb-site [data-programs-stage][data-stage="on"] [data-program-card] {
-  width: min(24rem, 40vw);
-  flex: none;
-}
-.fb-site [data-programs-stage][data-stage="on"] [data-programs-progress] {
-  display: block;
-}
-
 /* Small interactions: pills press in, cards lift on hover. */
 .fb-site :is(a, button)[class*="rounded-full"]:active:not(:disabled) {
   scale: 0.96;
+}
+.fb-ed .fb-btn:active:not(:disabled) {
+  translate: 0 1px;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .fb-site .fb-lift {
@@ -521,5 +480,158 @@ html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
   }
   .fb-site :is(a, button)[class*="rounded-full"]:active:not(:disabled) {
     scale: none;
+  }
+  .fb-ed .fb-btn:active:not(:disabled) {
+    translate: none;
+  }
+}
+
+/* ── Editorial system (docs/specs/2026-11-05-editorial-redesign.md, ADR 0009) ──
+ * `.fb-ed` wraps the public site; `.fb-legacy` (Member Area) opts back out.
+ * Colours come from the theme tokens above (ink/paper/bone/rule/mute/crimson). */
+@layer components {
+  .fb-ed {
+    font-family: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-feature-settings: "ss01";
+  }
+  .fb-ed .fb-legacy {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+  }
+  .fb-ed ::selection {
+    background: var(--color-crimson);
+    color: white;
+  }
+
+  /* Condensed, heavy display type, echoing the slanted logo. */
+  .fb-display {
+    font-family: var(--font-archivo), "Arial Narrow", sans-serif;
+    font-stretch: 72%;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  /* Small all-caps label (eyebrows, column heads). */
+  .fb-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+  .fb-ed :is(p, li) {
+    text-wrap: pretty;
+  }
+  .fb-num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* Buttons: sharp, condensed caps. */
+  .fb-btn {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 2px;
+    padding-inline: 1.5rem;
+    font-family: var(--font-archivo), "Arial Narrow", sans-serif;
+    font-size: 1rem;
+    font-stretch: 85%;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      translate 0.15s ease;
+  }
+  .fb-btn:focus-visible,
+  .fb-link:focus-visible {
+    outline: 2px solid var(--color-crimson);
+    outline-offset: 3px;
+  }
+  .fb-btn--crimson {
+    background: var(--color-crimson);
+    color: white;
+  }
+  .fb-btn--crimson:hover {
+    background: var(--color-crimson-deep);
+  }
+  .fb-btn--ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .fb-btn--ink:hover {
+    background: var(--color-ink-soft);
+  }
+  .fb-btn--paper {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .fb-btn--paper:hover {
+    background: white;
+  }
+  .fb-btn--line {
+    border: 1px solid currentColor;
+  }
+  .fb-btn--line:hover {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* Text link with an arrow that steps forward on hover. */
+  .fb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.15rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  .fb-link:hover {
+    color: var(--color-crimson-deep);
+  }
+  .fb-link-arrow {
+    transition: translate 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fb-link:hover .fb-link-arrow,
+  .group:hover .fb-link-arrow {
+    translate: 0.25rem 0;
+  }
+
+  /* Fine grain over photos and dark bands, so flat fills don't look sterile. */
+  .fb-grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .fb-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Programs rows: the rule above each row draws in (motion scene sets it). */
+  .fb-ed [data-program-rule] {
+    transform-origin: left center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fb-link-arrow {
+      transition: none;
+    }
   }
 }

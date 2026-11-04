@@ -58,7 +58,7 @@ const pinCount = (page: Page) => page.locator(".pin-spacer").count();
 test.describe("full (desktop)", () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 
-  test("homepage scenes pin while scrolling and leave nothing invisible", async ({ page }) => {
+  test("the video scene pins while scrolling and nothing is left invisible", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: HOME_HEADING })).toBeVisible();
     await page.mouse.move(720, 450);
@@ -77,26 +77,14 @@ test.describe("full (desktop)", () => {
     await page.waitForTimeout(400);
     expect(Math.abs((await stage.boundingBox())!.y)).toBeLessThan(2);
 
-    // Programs scene: same.
-    const programs = page.locator("[data-programs-stage]");
-    await page.evaluate(() => {
-      const el = document.querySelector<HTMLElement>("[data-programs-stage]")!;
-      window.scrollTo({
-        top: el.getBoundingClientRect().top + window.scrollY,
-        behavior: "instant",
-      });
-    });
-    await page.waitForTimeout(300);
-    await page.mouse.wheel(0, 500);
-    await page.waitForTimeout(400);
-    expect(Math.abs((await programs.boundingBox())!.y)).toBeLessThan(2);
-    expect(await pinCount(page)).toBe(2);
+    // Only the video pins since the editorial redesign (ADR 0009): Programs
+    // rows reveal in place instead of sliding sideways.
+    expect(await pinCount(page)).toBe(1);
 
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await scrollThrough(page, { wheel: true });
-    // Checked at the bottom: scrolling back up would rewind the Programs track,
-    // correctly parking its last cards (dimmed) off-screen to the right again.
-    // The video heading is meant to fall back while the video fills the screen.
+    // Checked at the bottom: the video heading is meant to fall back while the
+    // video fills the screen, so it is checked separately after scrolling up.
     expect((await invisible(page)).filter((el) => !el.includes("See FitBreak in Action"))).toEqual(
       [],
     );

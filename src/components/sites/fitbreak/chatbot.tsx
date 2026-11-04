@@ -79,8 +79,7 @@ export function Chatbot() {
     }
   }
 
-  const bubbleText =
-    "max-w-[85%] rounded-2xl px-3.5 py-2.5 text-sm leading-[1.4] whitespace-pre-wrap";
+  const bubbleText = "max-w-[85%] px-3.5 py-2.5 text-sm leading-[1.45] whitespace-pre-wrap";
 
   return (
     <div className="fixed right-4 bottom-20 z-[9999] lg:bottom-4">
@@ -88,12 +87,12 @@ export function Chatbot() {
         role="dialog"
         aria-label="FitBreak Assistant"
         className={cn(
-          "absolute right-0 bottom-[70px] h-[500px] max-h-[calc(100vh-100px)] w-[350px] max-w-[calc(100vw-32px)] flex-col overflow-hidden rounded-2xl bg-white shadow-[0_8px_32px_rgba(0,0,0,0.15)] max-[400px]:h-[calc(100vh-100px)] max-[400px]:w-[calc(100vw-32px)]",
+          "absolute right-0 bottom-[70px] h-[500px] max-h-[calc(100vh-100px)] w-[350px] max-w-[calc(100vw-32px)] flex-col overflow-hidden border border-ink/15 bg-paper text-ink shadow-[0_18px_50px_-12px_rgba(23,19,15,0.35)] max-[400px]:h-[calc(100vh-100px)] max-[400px]:w-[calc(100vw-32px)]",
           open ? "flex" : "hidden",
         )}
       >
-        <div className="flex items-center justify-between bg-[#D71E49] p-4 text-white">
-          <h3 className="m-0 text-base font-semibold">FitBreak Assistant</h3>
+        <div className="flex items-center justify-between bg-ink p-4 text-paper">
+          <h3 className="fb-display m-0 text-2xl">FitBreak Assistant</h3>
           <button
             type="button"
             aria-label="Close chat"
@@ -125,23 +124,20 @@ export function Chatbot() {
               className={cn(
                 bubbleText,
                 m.from === "bot"
-                  ? "self-start rounded-bl-[4px] bg-[#F3F4F6] text-[#1F2937]"
-                  : "self-end rounded-br-[4px] bg-[#D71E49] text-white",
+                  ? "self-start border-l-2 border-crimson bg-bone text-ink"
+                  : "self-end bg-ink text-paper",
               )}
             >
               {m.text}
             </div>
           ))}
           {sending && (
-            <div
-              className={cn(bubbleText, "self-start bg-[#F3F4F6]")}
-              aria-label="Assistant is typing"
-            >
+            <div className={cn(bubbleText, "self-start bg-bone")} aria-label="Assistant is typing">
               <div className="flex gap-1">
                 {[0, 0.2, 0.4].map((delay) => (
                   <span
                     key={delay}
-                    className="fb-typing-dot h-2 w-2 rounded-full bg-[#9CA3AF]"
+                    className="fb-typing-dot h-2 w-2 rounded-full bg-mute"
                     style={{ animationDelay: `${delay}s` }}
                   />
                 ))}
@@ -151,7 +147,7 @@ export function Chatbot() {
         </div>
 
         <form
-          className="flex gap-2 border-t border-[#E5E7EB] px-4 py-3"
+          className="flex gap-2 border-t border-ink/15 px-4 py-3"
           onSubmit={(e) => {
             e.preventDefault();
             void send();
@@ -168,13 +164,13 @@ export function Chatbot() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask something..."
             autoComplete="off"
-            className="flex-1 rounded-3xl border border-[#E5E7EB] px-4 py-2.5 text-sm transition-colors outline-none focus:border-[#D71E49]"
+            className="flex-1 border-b border-ink/30 bg-transparent px-1 py-2.5 text-sm transition-colors outline-none placeholder:text-mute focus:border-crimson"
           />
           <button
             type="submit"
             aria-label="Send message"
             disabled={sending}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#D71E49] text-white transition-colors hover:bg-[#B91C3E] disabled:cursor-not-allowed disabled:bg-[#E5E7EB]"
+            className="flex h-10 w-10 items-center justify-center bg-crimson text-white transition-colors hover:bg-crimson-deep disabled:cursor-not-allowed disabled:bg-rule"
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5" aria-hidden="true">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
@@ -188,9 +184,9 @@ export function Chatbot() {
         aria-label={open ? "Close FitBreak Assistant" : "Open FitBreak Assistant"}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-[#D71E49] shadow-[0_4px_12px_rgba(215,30,73,0.4)] transition-[scale,box-shadow] duration-200 hover:scale-105 hover:shadow-[0_6px_16px_rgba(215,30,73,0.5)]"
+        className="flex h-14 w-14 items-center justify-center rounded-[3px] bg-ink shadow-[0_10px_30px_-8px_rgba(23,19,15,0.55)] transition-colors duration-200 hover:bg-crimson"
       >
-        <svg viewBox="0 0 24 24" className="h-7 w-7 fill-white" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="h-6 w-6 fill-paper" aria-hidden="true">
           <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z" />
         </svg>
       </button>

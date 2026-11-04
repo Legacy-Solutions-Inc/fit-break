@@ -3,6 +3,9 @@
 Status: implemented (2026-11-04) · Source of truth: this spec + [CONTEXT.md](../../CONTEXT.md) +
 [ADR 0004](../adr/0004-rsc-server-actions-first.md) · Decided in a grilling session on 2026-11-04
 
+> **Amended 2026-11-05** by [the editorial redesign](2026-11-05-editorial-redesign.md): Programs is no
+> longer a pinned sideways scene (rows reveal once instead), and the pricing tilt and shine are dropped.
+
 ## Problem Statement
 
 The FitBreak **Information Site** is a faithful 1:1 clone of fitbreak.ph. It is

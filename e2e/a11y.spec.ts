@@ -1,36 +1,60 @@
 import AxeBuilder from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 // Gate accessibility at the "serious"/"critical" impact levels on the public,
 // shadcn/ui-built pages. Lower-impact findings are not failed here (they'd be a
 // separate, dedicated a11y pass), but serious/critical regressions break CI.
 const BLOCKING_IMPACTS = new Set(["serious", "critical"]);
 
-// KNOWN, FLAGGED DEBT (inherited from the live fitbreak.ph design, which "/"
-// clones 1:1 — see docs/research/fitbreak/app.md). Fixing these changes the
-// brand palette, so it is a design decision, not a CI fix:
-//   color-contrast (serious, 3 nodes): brand-600 #d83e7d text on white (promo
-//     "Book a Class", "Coach Iren") and gray-400 "Click to play" on #f5f5f7.
-//   link-in-text-block (serious, 1 node): "Coach Iren" is distinguished from
-//     its paragraph by colour only (1.76:1, no underline).
-// Disabled ONLY on "/"; every other rule — and these rules everywhere else —
-// still gates CI.
-// TODO(a11y): re-enable both on "/" once the brand contrast is addressed.
-const HOME_KNOWN_DEBT = ["color-contrast", "link-in-text-block"];
+// The homepage used to exempt colour-contrast rules as debt inherited from the
+// 1:1 clone. The editorial redesign (ADR 0009) fixed the palette, so every rule
+// now gates every page.
+
+// Every public page of the Information Site. The parked Member Area (and
+// /how-it-works, which redirects home while it is parked) is excluded.
+const PUBLIC_PAGES = [
+  "/",
+  "/pricing",
+  "/schedule",
+  "/our-story",
+  "/calapan1/about",
+  "/fitbreakers",
+  "/club-rules",
+  "/corporate",
+  "/blog",
+  "/blog/kdHl9EbopUVKOpyfAc4e", // a post from the local blog data
+  "/privacy-policy",
+  "/terms-of-service",
+];
+
+/**
+ * Wait for entrance animations (the CSS page fade-in and the homepage hero
+ * intro) to finish, so axe measures contrast on settled text rather than text
+ * caught mid-fade. Infinite loops (the "Message Us" nudge) are ignored.
+ */
+async function entrancesSettled(page: Page) {
+  await page.waitForFunction(() => {
+    const cssDone = document
+      .getAnimations()
+      .every((a) => a.effect?.getTiming().iterations === Infinity || a.playState !== "running");
+    const heroDone = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-hero-title], [data-hero-in]"),
+    ).every((el) => getComputedStyle(el).opacity === "1");
+    return cssDone && heroDone;
+  });
+}
 
 // Run with motion as most visitors get it and in calm (reduced-motion) mode.
 for (const reducedMotion of ["no-preference", "reduce"] as const) {
-  for (const path of ["/", "/schedule"]) {
+  for (const path of PUBLIC_PAGES) {
     test(`no serious or critical accessibility violations on ${path} (${reducedMotion})`, async ({
       page,
     }) => {
       await page.emulateMedia({ reducedMotion });
       await page.goto(path);
+      await entrancesSettled(page);
 
-      let builder = new AxeBuilder({ page });
-      if (path === "/") builder = builder.disableRules(HOME_KNOWN_DEBT);
-
-      const { violations } = await builder.analyze();
+      const { violations } = await new AxeBuilder({ page }).analyze();
       const blocking = violations.filter((v) => BLOCKING_IMPACTS.has(v.impact ?? ""));
 
       // Surface the offending rule ids + node counts in the failure message.

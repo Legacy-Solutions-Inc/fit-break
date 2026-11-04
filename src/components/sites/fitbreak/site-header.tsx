@@ -17,9 +17,11 @@ export interface SiteUser {
   avatarUrl: string;
 }
 
-const navLink = "text-sm font-medium text-gray-700 transition-colors hover:text-brand-500";
-const menuItem = "block px-4 py-2.5 text-sm text-gray-700 transition-colors hover:bg-gray-50";
-const mobileItem = "block rounded-lg px-4 py-3 font-medium text-gray-700 hover:bg-gray-50";
+const navLink =
+  "text-[0.95rem] font-medium text-ink/75 underline-offset-[6px] transition-colors hover:text-ink hover:underline decoration-crimson decoration-2";
+const menuItem =
+  "block px-4 py-2.5 text-sm text-ink/80 transition-colors hover:bg-bone hover:text-ink";
+const mobileItem = "block px-4 py-3 font-medium text-ink hover:bg-bone";
 
 const aboutLinks = [
   { label: "The FitBreak Story", href: routes.ourStory },
@@ -109,11 +111,11 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
     <header
       data-scrolled={scrolled || undefined}
       className={cn(
-        "sticky top-0 z-50 border-b border-pink-100 bg-white/90 backdrop-blur-xl transition-[margin,box-shadow] duration-300 motion-reduce:transition-none",
-        scrolled ? "mb-2 shadow-md" : "mb-0 shadow-xs",
+        "sticky top-0 z-50 border-b bg-paper/90 backdrop-blur-xl transition-[margin,border-color] duration-300 motion-reduce:transition-none",
+        scrolled ? "mb-2 border-ink/15" : "mb-0 border-transparent",
       )}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto w-full max-w-[90rem] px-5 sm:px-8 lg:px-12">
         <div
           className={cn(
             "flex items-center justify-between transition-[height] duration-300 motion-reduce:transition-none",
@@ -136,7 +138,7 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
             </Link>
           </div>
 
-          <nav className="hidden items-center gap-6 md:flex" aria-label="Main">
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
             {memberAreaEnabled && (
               <a href={routes.howItWorks} className={navLink}>
                 How It Works
@@ -155,22 +157,22 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
                 aria-expanded={aboutOpen}
                 aria-haspopup="menu"
                 onClick={() => setAboutOpen((v) => !v)}
-                className="flex items-center gap-1 text-sm font-medium text-gray-700 transition-colors hover:text-brand-500"
+                className="flex items-center gap-1 text-[0.95rem] font-medium text-ink/75 transition-colors hover:text-ink"
               >
                 About Us
                 <Icon name="chevronDown" className="h-4 w-4" />
               </button>
               {aboutOpen && (
-                <div className="absolute left-0 z-50 mt-2 w-48 rounded-xl border border-gray-100 bg-white py-2 shadow-lg">
+                <div className="absolute left-0 z-50 mt-3 w-52 border border-ink/15 bg-paper py-2 shadow-[0_16px_40px_-16px_rgba(23,19,15,0.35)]">
                   {aboutLinks.map((l) => (
                     <a key={l.label} href={l.href} className={menuItem}>
                       {l.label}
                     </a>
                   ))}
-                  <div className="my-1 border-t border-gray-100" />
+                  <div className="my-1 border-t border-ink/10" />
                   <a
                     href={routes.corporate}
-                    className="block px-4 py-2.5 text-sm font-medium text-purple-700 transition-colors hover:bg-purple-50"
+                    className="block px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-bone"
                   >
                     Corporate Program
                   </a>
@@ -204,10 +206,7 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-nudge={nudge || undefined}
-                className={cn(
-                  "inline-flex items-center gap-2 rounded-full bg-brand-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:bg-brand-600 hover:shadow-lg",
-                  nudge && "fb-nudge",
-                )}
+                className={cn("fb-btn fb-btn--crimson min-h-10 px-4 text-sm", nudge && "fb-nudge")}
               >
                 Message Us
               </a>
@@ -294,7 +293,7 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
               aria-expanded={mobileOpen}
               aria-controls="fb-mobile-menu"
               onClick={() => setMobileOpen((v) => !v)}
-              className="flex-shrink-0 rounded-lg border border-gray-200 p-2 hover:bg-gray-100 md:hidden"
+              className="flex-shrink-0 border border-ink/20 p-2 text-ink hover:bg-bone md:hidden"
             >
               <Icon name={mobileOpen ? "close" : "menu"} className="pointer-events-none h-6 w-6" />
             </button>
@@ -302,11 +301,8 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
         </div>
 
         {mobileOpen && (
-          <div
-            id="fb-mobile-menu"
-            className="border-t border-gray-200 bg-white shadow-lg md:hidden"
-          >
-            <div className="space-y-2 px-4 py-3">
+          <div id="fb-mobile-menu" className="border-t border-ink/15 bg-paper md:hidden">
+            <div className="space-y-1 py-3">
               {memberAreaEnabled && (
                 <a href={routes.howItWorks} className={mobileItem}>
                   How It Works
@@ -318,9 +314,7 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
               <a href={routes.schedule} className={mobileItem}>
                 Schedule
               </a>
-              <div className="px-4 py-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">
-                About Us
-              </div>
+              <div className="fb-label px-4 pt-3 pb-1 text-mute">About Us</div>
               {aboutLinks.map((l) => (
                 <a key={l.label} href={l.href} className={`${mobileItem} pl-6`}>
                   {l.label}
@@ -328,20 +322,20 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
               ))}
               <a
                 href={routes.corporate}
-                className="block rounded-lg bg-purple-50 px-4 py-3 pl-6 font-medium text-purple-700 hover:bg-purple-100"
+                className="block px-4 py-3 pl-6 font-semibold text-ink hover:bg-bone"
               >
                 Corporate Program
               </a>
               <a href={routes.blog} className={mobileItem}>
                 Blog
               </a>
-              <div className="my-2 border-t border-gray-100" />
+              <div className="my-2 border-t border-ink/10" />
               {!memberAreaEnabled ? (
                 <a
                   href={contact.messenger}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 rounded-lg px-4 py-3 font-semibold text-brand-600 hover:bg-brand-50"
+                  className="flex items-center gap-3 px-4 py-3 font-semibold text-crimson-deep hover:bg-bone"
                 >
                   Message Us on Messenger
                 </a>

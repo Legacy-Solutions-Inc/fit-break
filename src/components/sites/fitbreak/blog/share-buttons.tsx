@@ -7,7 +7,7 @@ import { ClipboardIcon, FacebookShareIcon, XIcon } from "./blog-icons";
 
 /**
  * blog-post.html "Share this article": Facebook / X intents plus Copy Link,
- * which shows the source's bottom-centre pill toast for 3 s.
+ * which shows a square ink toast at the bottom centre for 3 s.
  */
 export function ShareButtons({ url, title }: { url: string; title: string }) {
   const [toast, setToast] = useState<string | null>(null);
@@ -38,16 +38,19 @@ export function ShareButtons({ url, title }: { url: string; title: string }) {
   const pageUrl = encodeURIComponent(pageHref);
   const pageTitle = encodeURIComponent(title);
 
+  const button =
+    "fb-label inline-flex h-11 items-center gap-2 border border-ink/25 px-4 text-ink transition-colors hover:border-ink hover:bg-ink hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crimson";
+
   return (
-    <div className="mt-10 border-t border-gray-100 pt-8">
+    <div className="mt-10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-semibold text-gray-900">Share this article</p>
-        <div className="flex gap-3">
+        <p className="fb-label text-mute">Share this article</p>
+        <div className="flex flex-wrap gap-2">
           <a
             href={`https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className={button}
           >
             <FacebookShareIcon className="h-4 w-4" />
             Share
@@ -56,16 +59,12 @@ export function ShareButtons({ url, title }: { url: string; title: string }) {
             href={`https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+            className={button}
           >
             <XIcon className="h-4 w-4" />
             Post
           </a>
-          <button
-            type="button"
-            onClick={copyLink}
-            className="flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
-          >
+          <button type="button" onClick={copyLink} className={button}>
             <ClipboardIcon className="h-4 w-4" />
             Copy Link
           </button>
@@ -76,13 +75,13 @@ export function ShareButtons({ url, title }: { url: string; title: string }) {
         role="status"
         className={
           toast
-            ? "fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-white shadow-lg"
+            ? "fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 bg-ink px-6 py-3 text-paper"
             : "sr-only"
         }
       >
         {toast && (
           <>
-            <Icon name="check" className="h-5 w-5 text-green-400" />
+            <Icon name="check" className="h-5 w-5" />
             <span>{toast}</span>
           </>
         )}

@@ -3,48 +3,118 @@ import Link from "next/link";
 
 import type { BlogPost } from "@/services/fitbreak/blog";
 
-import { Icon } from "../icons";
+import { Arrow } from "../editorial";
 import { routes } from "../links";
 import { NewspaperIcon } from "./blog-icons";
 import { categoryText, shortDate } from "./format";
 
-/** blog.html `createPostCard()`. */
-export function PostCard({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
+/** Sharp image frame on bone; a quiet newspaper glyph when a post has no image. */
+function Cover({
+  post,
+  priority,
+  sizes,
+  className,
+}: {
+  post: BlogPost;
+  priority: boolean;
+  sizes: string;
+  className: string;
+}) {
   return (
-    <article className="group fb-lift overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs transition-all hover:shadow-lg">
-      <Link href={routes.blogPost(post.id)} className="block">
-        <div className="relative aspect-video overflow-hidden bg-linear-to-br from-brand-100 to-accent-100">
-          {post.image ? (
-            <Image
-              src={post.image}
-              alt={post.title}
-              fill
-              priority={priority}
-              sizes="(min-width: 1024px) 352px, (min-width: 768px) 50vw, 100vw"
-              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <NewspaperIcon className="h-16 w-16 text-brand-300" />
-            </div>
-          )}
-          <span className="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-brand-600 capitalize backdrop-blur-xs">
-            {categoryText(post.category)}
+    <div className={`relative overflow-hidden bg-bone ${className}`}>
+      {post.image ? (
+        <Image
+          src={post.image}
+          alt={post.title}
+          fill
+          priority={priority}
+          sizes={sizes}
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      ) : (
+        <div className="flex h-full w-full items-center justify-center">
+          <NewspaperIcon className="h-10 w-10 text-ink/25" />
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Date · category, set as small caps. */
+function Meta({ post, stacked = false }: { post: BlogPost; stacked?: boolean }) {
+  return (
+    <p
+      className={
+        stacked
+          ? "fb-label flex flex-wrap gap-x-3 text-mute lg:flex-col lg:gap-y-1"
+          : "fb-label flex flex-wrap gap-x-3 text-mute"
+      }
+    >
+      <span className="fb-num">{shortDate(post.publishedAt)}</span>
+      <span aria-hidden="true" className={stacked ? "lg:hidden" : undefined}>
+        ·
+      </span>
+      <span className="text-ink">{categoryText(post.category)}</span>
+    </p>
+  );
+}
+
+/** The newest post in the list: big photo and a big condensed title, 7/5 split. */
+export function LeadPost({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
+  return (
+    <article>
+      <Link
+        href={routes.blogPost(post.id)}
+        className="group grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10"
+      >
+        <Cover
+          post={post}
+          priority={priority}
+          sizes="(min-width: 1440px) 790px, (min-width: 1024px) 56vw, 100vw"
+          className="aspect-[3/2] lg:col-span-7"
+        />
+        <div className="lg:col-span-5 lg:pb-2">
+          <Meta post={post} />
+          <h2 className="fb-display mt-5 text-[clamp(2.5rem,4.6vw,4.25rem)] transition-colors group-hover:text-crimson-deep">
+            {post.title}
+          </h2>
+          <p className="mt-6 line-clamp-3 max-w-lg text-lg leading-relaxed text-mute">
+            {post.excerpt}
+          </p>
+          <span className="fb-link mt-8">
+            Read More
+            <Arrow />
           </span>
         </div>
-        <div className="p-6">
-          <p className="mb-2 text-sm text-gray-500">{shortDate(post.publishedAt)}</p>
-          <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-brand-600">
+      </Link>
+    </article>
+  );
+}
+
+/** Every other post: a ruled row — meta, title and one-line excerpt, small photo on wide screens. */
+export function PostRow({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
+  return (
+    <article>
+      <Link
+        href={routes.blogPost(post.id)}
+        className="group grid gap-x-10 gap-y-3 py-8 transition-colors hover:bg-bone/60 sm:grid-cols-[1fr_9rem] lg:grid-cols-12 lg:items-start lg:py-9"
+      >
+        <div className="lg:col-span-2 lg:pt-1.5">
+          <Meta post={post} stacked />
+        </div>
+        <div className="sm:col-start-1 sm:row-start-2 lg:col-span-7 lg:col-start-3 lg:row-start-1">
+          <h2 className="fb-display text-[clamp(1.75rem,3.2vw,2.75rem)] transition-[color,translate] duration-300 group-hover:translate-x-1 group-hover:text-crimson-deep">
             {post.title}
-          </h3>
-          <p className="line-clamp-3 text-sm text-gray-600">{post.excerpt}</p>
-          <div className="mt-4 flex items-center text-sm font-semibold text-brand-600">
-            Read More
-            <Icon
-              name="chevronRight"
-              className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
-            />
-          </div>
+          </h2>
+          <p className="mt-3 line-clamp-2 max-w-2xl text-mute lg:line-clamp-1">{post.excerpt}</p>
+        </div>
+        <div className="hidden sm:col-start-2 sm:row-span-2 sm:row-start-1 sm:block lg:col-span-2 lg:col-start-11 lg:row-span-1">
+          <Cover
+            post={post}
+            priority={priority}
+            sizes="(min-width: 1024px) 200px, 144px"
+            className="aspect-[3/2] w-full"
+          />
         </div>
       </Link>
     </article>

@@ -3,14 +3,18 @@ import Link from "next/link";
 
 import type { BlogPost } from "@/services/fitbreak/blog";
 
-import { Icon } from "../icons";
+import { Arrow, wrap } from "../editorial";
 import { routes } from "../links";
 import styles from "./article.module.css";
 import { ChevronLeftIcon } from "./blog-icons";
 import { categoryText, longDate, monthDay } from "./format";
 import { ShareButtons } from "./share-buttons";
 
-/** blog-post.html `#post-content`: gradient hero, article card, CTA, related posts. */
+/**
+ * A blog post as a long-form article (ADR 0009): condensed headline, sharp
+ * hero photo, a ~65ch reading column with the byline in a side rail, then an
+ * ink call-to-action band and ruled related posts.
+ */
 export function PostView({
   post,
   related,
@@ -21,142 +25,132 @@ export function PostView({
   shareUrl: string;
 }) {
   return (
-    // The source's `font-sans` is Inter, which the app body already sets.
     <div>
       <PostHero post={post} />
 
-      <article className="mx-auto -mt-8 max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-2xl bg-white p-6 shadow-xl sm:p-10 md:p-12">
-          {post.image && (
-            <div className="-mx-2 -mt-2 mb-8 sm:-mx-4 md:-mx-6">
-              <Image
-                src={post.image}
-                alt={post.title}
-                width={1200}
-                height={675}
-                priority
-                sizes="(min-width: 768px) 720px, 100vw"
-                className="h-auto w-full rounded-xl"
-              />
-            </div>
-          )}
-
-          {/* Author */}
-          <div className="mb-8 flex items-center gap-4 border-b border-gray-100 pb-8">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-linear-to-br from-brand-500 to-brand-600">
-              <span className="text-lg font-bold text-white">F</span>
-            </div>
-            <div>
-              <p className="font-semibold text-gray-900">FitBreak Team</p>
-              <p className="text-sm text-gray-500">Fitness &amp; Wellness Experts</p>
-            </div>
-          </div>
-
-          <div
-            className={styles.prose}
-            // Sanitized at extraction (semantic tags only, no attributes but
-            // a[href]/img[src|alt]) — see src/services/fitbreak/blog-data.ts.
-            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-          />
-
-          {/* Keywords */}
-          <div className="mt-10 border-t border-gray-100 pt-8">
-            <div className="flex flex-wrap gap-2">
-              {post.keywords.map((keyword) => (
-                <span
-                  key={keyword}
-                  className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-600"
-                >
-                  {`#${keyword.replace(/\s+/g, "")}`}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <ShareButtons url={shareUrl} title={post.title} />
-        </div>
-
-        {/* CTA */}
-        <div className="mt-12 rounded-2xl bg-linear-to-r from-brand-500 to-brand-600 p-8 text-center text-white md:p-10">
-          <h3 className="mb-3 text-2xl font-bold md:text-3xl">
-            Ready to Start Your Fitness Journey?
-          </h3>
-          <p className="mx-auto mb-6 max-w-lg text-white/90">
-            Join FitBreak today and experience the supportive, women-only environment you deserve.
-          </p>
-          <Link
-            href={routes.pricing}
-            className="inline-block rounded-full bg-white px-8 py-3 font-semibold text-brand-600 shadow-lg transition-colors hover:bg-brand-50"
-          >
-            View Our Packages
-          </Link>
-        </div>
-
-        {related.length > 0 && (
-          <div className="mt-12 mb-16">
-            <h3 className="mb-6 text-xl font-bold text-gray-900">More Articles You Might Like</h3>
-            <div className="grid gap-6 md:grid-cols-2">
-              {related.map((r) => (
-                <Link
-                  key={r.id}
-                  href={routes.blogPost(r.id)}
-                  className="group block rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-brand-200 hover:shadow-lg"
-                >
-                  <div className="mb-3 flex items-center gap-2 text-sm text-gray-500">
-                    <span className="rounded-full bg-brand-50 px-2 py-0.5 text-xs font-medium text-brand-600 capitalize">
-                      {categoryText(r.category)}
-                    </span>
-                    <span>•</span>
-                    <span>{monthDay(r.publishedAt)}</span>
-                  </div>
-                  <h4 className="line-clamp-2 font-semibold text-gray-900 transition-colors group-hover:text-brand-600">
-                    {r.title}
-                  </h4>
-                  <p className="mt-2 line-clamp-2 text-sm text-gray-600">{r.excerpt}</p>
-                </Link>
-              ))}
-            </div>
+      <article className={`${wrap} pb-20 lg:pb-28`}>
+        {post.image && (
+          <div className="relative aspect-[16/9] overflow-hidden bg-bone">
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              priority
+              sizes="(min-width: 1440px) 1344px, 100vw"
+              className="object-cover"
+            />
           </div>
         )}
+
+        <div className="mt-12 grid gap-10 lg:mt-20 lg:grid-cols-12">
+          {/* Byline: a side rail on wide screens, above the text on phones. */}
+          <aside className="lg:col-span-3">
+            <div className="lg:sticky lg:top-28 lg:border-t lg:border-ink/20 lg:pt-5">
+              <p className="font-semibold text-ink">FitBreak Team</p>
+              <p className="text-sm text-mute">Fitness &amp; Wellness Experts</p>
+            </div>
+          </aside>
+
+          <div className="max-w-[47rem] min-w-0 lg:col-span-8 lg:col-start-5">
+            <div
+              className={styles.prose}
+              // Sanitized at extraction (semantic tags only, no attributes but
+              // a[href]/img[src|alt]) — see src/services/fitbreak/blog-data.ts.
+              dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+            />
+
+            {/* Keywords */}
+            <div className="mt-14 border-t border-ink/20 pt-6">
+              <ul className="flex flex-wrap gap-x-5 gap-y-2">
+                {post.keywords.map((keyword) => (
+                  <li key={keyword} className="fb-label text-mute">
+                    {`#${keyword.replace(/\s+/g, "")}`}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <ShareButtons url={shareUrl} title={post.title} />
+          </div>
+        </div>
       </article>
+
+      {/* CTA */}
+      <section className="fb-grain bg-ink py-20 text-paper lg:py-28">
+        <div className={`${wrap} relative z-[2] grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <h2 className="fb-display text-[clamp(2.5rem,5.5vw,4.75rem)] lg:col-span-7">
+            Ready to Start Your Fitness Journey?
+          </h2>
+          <div className="lg:col-span-4 lg:col-start-9 lg:pb-2">
+            <p className="mb-8 max-w-md text-lg text-paper/80">
+              Join FitBreak today and experience the supportive, women-only environment you deserve.
+            </p>
+            <Link href={routes.pricing} className="fb-btn fb-btn--paper">
+              View Our Packages
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {related.length > 0 && (
+        <section className="py-20 lg:py-28">
+          <div className={wrap}>
+            <h2 className="fb-display text-[clamp(2rem,4vw,3.25rem)]">
+              More Articles You Might Like
+            </h2>
+            <ul className="mt-10 grid border-t border-ink/20 md:grid-cols-2 md:gap-x-10 lg:mt-14">
+              {related.map((r) => (
+                <li key={r.id} data-reveal className="border-b border-ink/15">
+                  <Link
+                    href={routes.blogPost(r.id)}
+                    className="group block py-8 transition-colors hover:bg-bone/60"
+                  >
+                    <p className="fb-label flex gap-3 text-mute">
+                      <span className="text-ink">{categoryText(r.category)}</span>
+                      <span aria-hidden="true">·</span>
+                      <span className="fb-num">{monthDay(r.publishedAt)}</span>
+                    </p>
+                    <h3 className="fb-display mt-4 text-[clamp(1.75rem,2.8vw,2.5rem)] transition-colors group-hover:text-crimson-deep">
+                      {r.title}
+                    </h3>
+                    <p className="mt-3 line-clamp-2 max-w-xl text-mute">{r.excerpt}</p>
+                    <span className="fb-label mt-5 inline-flex items-center gap-2 text-ink">
+                      Read More
+                      <Arrow />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
 
 function PostHero({ post }: { post: BlogPost }) {
   return (
-    <div className="bg-linear-to-br from-brand-500 via-brand-600 to-brand-500">
-      <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 md:py-20 lg:px-8">
-        <div className="mb-6 flex items-center justify-between">
-          <Link
-            href={routes.blog}
-            className="inline-flex items-center font-medium text-white/80 transition-colors hover:text-white"
-          >
-            <ChevronLeftIcon className="mr-2 h-5 w-5" />
-            Back to Blog
-          </Link>
-          <span className="rounded-full bg-white/20 px-4 py-1.5 text-sm font-semibold text-white capitalize backdrop-blur-xs">
-            {categoryText(post.category)}
-          </span>
-        </div>
+    <header className={`${wrap} pt-10 pb-12 lg:pt-14 lg:pb-16`}>
+      <Link
+        href={routes.blog}
+        className="fb-label inline-flex items-center gap-2 text-mute transition-colors hover:text-ink"
+      >
+        <ChevronLeftIcon className="h-4 w-4" />
+        Back to Blog
+      </Link>
 
-        {/* v3: responsive text-* also reset line-height and beat leading-tight. */}
-        <h1 className="mb-6 text-3xl leading-tight font-bold text-white md:text-4xl md:leading-10 lg:text-5xl lg:leading-none">
-          {post.title}
-        </h1>
+      <h1 className="fb-display mt-12 max-w-[18ch] text-[clamp(2.75rem,6.5vw,6.25rem)] lg:mt-16">
+        {post.title}
+      </h1>
 
-        <div className="flex flex-wrap items-center gap-4 text-white/80">
-          <div className="flex items-center gap-2">
-            <Icon name="calendar" className="h-5 w-5" />
-            <span>{longDate(post.publishedAt)}</span>
-          </div>
-          <span className="hidden sm:inline">•</span>
-          <div className="flex items-center gap-2">
-            <Icon name="clock" className="h-5 w-5" />
-            <span>{post.readMinutes} min read</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      <p className="fb-label mt-8 flex flex-wrap gap-x-3 gap-y-1 text-mute">
+        <span className="text-ink">{categoryText(post.category)}</span>
+        <span aria-hidden="true">·</span>
+        <span className="fb-num">{longDate(post.publishedAt)}</span>
+        <span aria-hidden="true">·</span>
+        <span className="fb-num">{post.readMinutes} min read</span>
+      </p>
+    </header>
   );
 }

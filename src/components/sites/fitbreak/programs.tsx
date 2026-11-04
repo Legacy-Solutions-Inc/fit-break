@@ -1,8 +1,9 @@
 import Image from "next/image";
 
-import { Icon } from "./icons";
-import { asset, classTimes, routes } from "./links";
+import { Arrow, ArrowLink, SectionHead, wrap } from "./editorial";
+import { asset, routes } from "./links";
 import { Scene } from "./motion/home-scenes";
+import { TimetableStrip } from "./timetable-strip";
 
 const classes = [
   {
@@ -25,117 +26,86 @@ const classes = [
   { id: "booty-and-burn", name: "BOOTY & BURN", blurb: "Glutes-focused endurance training." },
 ];
 
+/** Class formats as numbered rows (ADR 0009) — the rule draws in, the name slides in. */
 export function Programs() {
   return (
-    <section id="programs" className="bg-white py-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-8 grid items-center gap-8 lg:grid-cols-2">
-          <div>
-            <h2 className="mb-4 text-3xl font-bold text-gray-900">Class Formats &amp; Schedule</h2>
-            <p className="mb-4 text-gray-600">
+    <section id="programs" className="scroll-mt-16 border-t border-rule bg-paper py-20 lg:py-32">
+      <div className={wrap}>
+        <SectionHead
+          label="Six formats, every day"
+          title={<>Class Formats &amp; Schedule</>}
+          aside={
+            <p>
               All sessions are one-hour, coach-led bootcamps led by{" "}
-              <a href={routes.coach} className="text-brand-600 hover:underline">
+              <a
+                href={routes.coach}
+                className="font-semibold text-ink underline decoration-crimson decoration-2 underline-offset-4 hover:text-crimson-deep"
+              >
                 Coach Iren
               </a>
               . Classes run in circuit stations using functional equipment only – no big machines.
             </p>
+          }
+        />
+
+        <div className="mt-16 grid gap-12 lg:mt-20 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-7">
+            <TimetableStrip />
+            <p className="mt-10">
+              <ArrowLink href={routes.clubRules}>Read the 10 club house rules</ArrowLink>
+            </p>
           </div>
-          <div className="relative hidden h-80 overflow-hidden rounded-2xl shadow-lg lg:block">
+          <div className="relative hidden aspect-[4/3] overflow-hidden bg-bone lg:col-span-5 lg:block">
             <Image
               src={asset("/images/fitbreak2.jpg")}
-              alt="FitBreak workout session"
+              alt="A FitBreak circuit class in session"
               fill
-              sizes="(min-width: 1280px) 600px, 50vw"
+              sizes="(min-width: 1440px) 560px, 40vw"
               className="object-cover object-center"
             />
           </div>
         </div>
 
         <Scene kind="programs">
-          <div data-programs-stage>
-            <div className="mb-8 rounded-xl bg-brand-50 p-4">
-              <p className="mb-2 font-semibold text-gray-900">
-                Daily Class Times (Monday - Saturday):
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {classTimes.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-white px-3 py-1 text-sm font-medium text-gray-700"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-2 text-sm text-gray-600">Closed every Sunday</p>
-            </div>
-
-            <a
-              href={routes.clubRules}
-              className="group mb-8 block rounded-xl bg-linear-to-r from-gray-900 to-gray-800 p-6 transition-all hover:from-gray-800 hover:to-gray-700"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-brand-500">
-                    <Icon name="checkCircle" className="h-6 w-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="mb-1 text-lg font-bold text-white">Club House Rules</h3>
-                    <p className="text-sm text-gray-300">
-                      10 rules to keep FitBreak safe, empowering, and respectful for every woman.
-                    </p>
-                  </div>
-                </div>
-                <Icon
-                  name="chevronRight"
-                  className="h-6 w-6 flex-shrink-0 text-gray-400 transition-all group-hover:translate-x-1 group-hover:text-brand-400"
+          <ol className="mt-20 border-b border-ink/20 lg:mt-28">
+            {classes.map((c, i) => (
+              <li key={c.id} className="relative">
+                <span
+                  data-program-rule
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-ink/20"
                 />
-              </div>
-            </a>
-
-            <div data-programs-viewport>
-              <div data-programs-track className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {classes.map((c) => (
-                  <a
-                    key={c.id}
-                    id={c.id}
-                    data-program-card
-                    href={routes.schedule}
-                    className="block scroll-mt-24 rounded-2xl border border-gray-100 bg-white p-6 shadow-xs transition-all hover:-translate-y-1 hover:shadow-lg"
+                <a
+                  id={c.id}
+                  data-program-card
+                  href={routes.schedule}
+                  className="group grid scroll-mt-24 grid-cols-[2.5rem_1fr] items-baseline gap-x-4 gap-y-2 py-7 transition-colors hover:bg-bone/60 sm:grid-cols-[3.5rem_1fr] lg:grid-cols-12 lg:gap-x-10 lg:py-9"
+                >
+                  <span className="fb-label fb-num text-mute lg:col-span-1">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3
+                    data-program-name
+                    className="fb-display text-[clamp(2.25rem,6vw,5.25rem)] transition-[color,translate] duration-300 group-hover:translate-x-2 group-hover:text-crimson lg:col-span-6"
                   >
-                    <span className="mb-3 inline-block rounded-full bg-green-100 px-3 py-1 text-xs font-bold text-green-700">
-                      Daily
-                    </span>
-                    <h3 className="mb-2 text-xl font-bold text-gray-900">{c.name}</h3>
-                    <p className="mb-3 text-sm text-gray-600">{c.blurb}</p>
-                    <span className="text-sm font-semibold text-brand-600">View Schedule →</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-            {/* Scroll progress for the pinned desktop scene (hidden otherwise). */}
-            <div
-              data-programs-progress
-              aria-hidden="true"
-              className="mt-6 h-1 overflow-hidden rounded-full bg-gray-100"
-            >
-              <span
-                data-programs-progress-bar
-                className="block h-full origin-left scale-x-0 rounded-full bg-brand-500"
-              />
-            </div>
-
-            <div className="mt-8 text-center">
-              <a
-                href={routes.schedule}
-                className="relative z-10 inline-flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3 font-semibold text-white shadow-lg transition-all hover:bg-brand-600"
-              >
-                <Icon name="calendar" className="pointer-events-none h-5 w-5" />
-                View Full Schedule
-              </a>
-            </div>
-          </div>
+                    {c.name}
+                  </h3>
+                  <p className="col-start-2 text-mute lg:col-span-3 lg:col-start-auto">{c.blurb}</p>
+                  <span className="fb-label col-start-2 inline-flex items-center gap-2 whitespace-nowrap text-ink lg:col-span-2 lg:col-start-auto lg:justify-self-end">
+                    <span className="text-mute">Daily ·</span> View Schedule
+                    <Arrow />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
         </Scene>
+
+        <div className="mt-12">
+          <a href={routes.schedule} className="fb-btn fb-btn--ink">
+            View Full Schedule
+          </a>
+        </div>
       </div>
     </section>
   );

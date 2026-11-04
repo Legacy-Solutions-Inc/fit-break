@@ -4,7 +4,7 @@ import { ContactBlock, H2, H3, LegalPage, List, P } from "./legal";
 export function TermsOfService() {
   return (
     <LegalPage title="Terms of Service" updated="January 24, 2025">
-      <P className="mb-6 text-gray-700">
+      <P className="mb-8 text-xl leading-relaxed text-ink">
         Welcome to FitBreak! These Terms of Service (&quot;Terms&quot;) govern your use of our
         website and services. By accessing or using FitBreak, you agree to be bound by these Terms.
       </P>
@@ -160,7 +160,7 @@ export function TermsOfService() {
       <H2>13. Contact Information</H2>
       <ContactBlock />
 
-      <P className="mt-8 text-sm text-gray-600">
+      <P className="mt-12 border-t border-ink/15 pt-6 text-sm text-mute">
         By using FitBreak services, you acknowledge that you have read, understood, and agree to be
         bound by these Terms of Service.
       </P>

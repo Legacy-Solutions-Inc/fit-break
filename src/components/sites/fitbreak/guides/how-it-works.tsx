@@ -2,14 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { FacebookIcon, Icon } from "../icons";
+import { cn } from "@/lib/utils";
+
+import { ArrowLink, wrap } from "../editorial";
 import { asset, contact, routes } from "../links";
-import { MobileIcon } from "../pricing-page/icons";
 import { ClassScheduleOverview } from "./class-schedule";
 import { HowItWorksFaq } from "./faq";
 
-const pill =
-  "inline-flex items-center rounded-full bg-brand-500 px-6 py-3 font-semibold text-white transition-all hover:bg-brand-600";
+const inlineLink =
+  "font-semibold text-ink underline decoration-crimson decoration-2 underline-offset-4 hover:text-crimson-deep";
 
 const overview = [
   { title: "Create Account", text: "Sign up online" },
@@ -18,19 +19,23 @@ const overview = [
   { title: "Book Classes", text: "Start your journey" },
 ];
 
+const two = (n: number) => String(n).padStart(2, "0");
+
+/** One numbered step row: a big condensed number, then the step's content. */
 function Step({ n, title, children }: { n: number; title: string; children: ReactNode }) {
   return (
-    <div className="rounded-2xl bg-white p-8 shadow-lg">
-      <div className="flex items-start gap-6">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-500">
-          <span className="text-xl font-bold text-white">{n}</span>
-        </div>
-        <div className="flex-1">
-          <h2 className="mb-4 text-2xl font-bold text-gray-900">{title}</h2>
-          {children}
-        </div>
+    <section
+      data-reveal
+      className="grid gap-6 border-t-2 border-ink py-14 lg:grid-cols-12 lg:gap-10 lg:py-20"
+    >
+      <p className="fb-display fb-num text-[clamp(4.5rem,10vw,9rem)] text-crimson lg:col-span-3">
+        {two(n)}
+      </p>
+      <div className="lg:col-span-8 lg:col-start-5">
+        <h2 className="fb-display mb-6 text-[clamp(2.25rem,4.5vw,3.75rem)]">{title}</h2>
+        {children}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -43,14 +48,12 @@ function Checklist({
 }) {
   return (
     <>
-      <h3 className="font-semibold text-gray-900">{heading}</h3>
-      <ol className="space-y-3">
+      <h3 className="fb-label mb-3 text-ink">{heading}</h3>
+      <ol className="divide-y divide-ink/15 border-y border-ink/15">
         {items.map(([marker, text]) => (
-          <li key={marker} className="flex gap-3">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-100 text-sm font-bold text-brand-700">
-              {marker}
-            </span>
-            <span className="text-gray-700">{text}</span>
+          <li key={marker} className="grid grid-cols-[2rem_1fr] gap-3 py-4">
+            <span className="fb-label fb-num pt-0.5 text-mute">{marker}</span>
+            <span>{text}</span>
           </li>
         ))}
       </ol>
@@ -58,27 +61,30 @@ function Checklist({
   );
 }
 
+/** A short titled note: hairline above, small condensed heading. */
+function Note({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="border-t border-ink/20 pt-5">
+      <h4 className="fb-display mb-2 text-xl">{title}</h4>
+      <div className="text-mute [&_strong]:font-semibold [&_strong]:text-ink">{children}</div>
+    </div>
+  );
+}
+
 function PricingSignInRequired() {
   return (
-    <div className="rounded-xl bg-gray-50 p-6 text-center">
-      <Icon name="lock" className="mx-auto mb-4 h-12 w-12 text-gray-400" />
-      <h3 className="mb-2 text-lg font-semibold text-gray-900">Want to See Our Pricing?</h3>
-      <p className="mb-4 text-gray-600">
+    <div className="border-y border-ink/20 py-10">
+      <h3 className="fb-display mb-3 text-3xl">Want to See Our Pricing?</h3>
+      <p className="mb-8 max-w-xl text-mute">
         Sign in to your account or follow us on Facebook for pricing, promos, and updates!
       </p>
-      <div className="flex flex-wrap justify-center gap-3">
-        <Link href={routes.login} className={pill}>
+      <div className="flex flex-wrap items-center gap-6">
+        <Link href={routes.login} className="fb-btn fb-btn--ink">
           Sign In / Create Account
         </Link>
-        <a
-          href={contact.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center rounded-full bg-blue-600 px-6 py-3 font-semibold text-white transition-all hover:bg-blue-700"
-        >
-          <FacebookIcon className="mr-2 h-5 w-5" />
+        <ArrowLink href={contact.facebook} external>
           Follow on Facebook
-        </a>
+        </ArrowLink>
       </div>
     </div>
   );
@@ -110,37 +116,34 @@ const packages = [
 function PricingForMembers() {
   return (
     <div>
-      <p className="mb-6 text-gray-600">
+      <p className="mb-8 text-mute">
         Select a class package that fits your fitness goals and schedule. Package members need to
         pay a one-time annual membership fee of ₱500.
       </p>
 
-      <div className="mb-6 grid gap-4 md:grid-cols-2">
+      <ul className="mb-8 divide-y divide-ink/15 border-y border-ink/15">
         {packages.map((p) => (
-          <div
+          <li
             key={p.title}
-            className={
-              p.featured
-                ? "rounded-xl border border-brand-200 bg-brand-50 p-4"
-                : "rounded-xl bg-gray-50 p-4"
-            }
+            className={cn(
+              "grid gap-1 py-4 sm:grid-cols-[16rem_1fr] sm:gap-6",
+              p.featured && "border-l-2 border-l-crimson pl-4",
+            )}
           >
-            <h4 className="mb-2 font-semibold text-gray-900">{p.title}</h4>
-            <p className="text-sm text-gray-600">{p.text}</p>
-          </div>
+            <h3 className="fb-num font-semibold">{p.title}</h3>
+            <p className="text-mute">{p.text}</p>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <div className="rounded-xl border border-accent-200 bg-accent-50 p-4">
-        <p className="text-sm text-gray-700">
-          <strong>Note:</strong> Package members (Starter, Standard, Power) must pay a ₱500 annual
-          membership fee before purchasing packages. This fee gives you access to member perks and
-          discounts.
-        </p>
-      </div>
+      <p className="text-mute">
+        <strong className="font-semibold text-ink">Note:</strong> Package members (Starter,
+        Standard, Power) must pay a ₱500 annual membership fee before purchasing packages. This fee
+        gives you access to member perks and discounts.
+      </p>
 
-      <div className="mt-6">
-        <Link href={routes.pricing} className={pill}>
+      <div className="mt-8">
+        <Link href={routes.pricing} className="fb-btn fb-btn--line">
           View All Packages
         </Link>
       </div>
@@ -148,59 +151,76 @@ function PricingForMembers() {
   );
 }
 
+const gcashSteps = [
+  "Open your GCash app",
+  "Send payment to our GCash number",
+  "Take a screenshot of the confirmation",
+  "Upload in your FitBreak account",
+];
+
 /**
- * how-it-works.html. Step 2 is auth-gated on the source (Firebase
- * `onAuthStateChanged`); here the page passes `getMember()` server-side.
+ * how-it-works.html, as numbered editorial rows (ADR 0009). Step 2 is
+ * auth-gated on the source (Firebase `onAuthStateChanged`); here the page
+ * passes `getMember()` server-side.
  */
 export function HowItWorks({ signedIn }: { signedIn: boolean }) {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <>
       {/* Header */}
-      <div className="mb-12 grid items-center gap-8 lg:grid-cols-2">
-        <div className="text-center lg:text-left">
-          <h1 className="mb-4 text-4xl font-bold text-gray-900">How FitBreak Works</h1>
-          <p className="text-xl text-gray-600">
-            Your complete guide to setting up your account, buying credits, and booking classes
-            online.
-          </p>
+      <section className="bg-paper pt-16 pb-16 lg:pt-24 lg:pb-24">
+        <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <div className="lg:col-span-7">
+            <p className="fb-label mb-4 text-mute">Guide</p>
+            <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">How FitBreak Works</h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
+              Your complete guide to setting up your account, buying credits, and booking classes
+              online.
+            </p>
+          </div>
+          <div className="relative hidden aspect-[3/2] overflow-hidden bg-bone lg:col-span-5 lg:block">
+            <Image
+              src={asset("/images/fitbreak6.jpg")}
+              alt="FitBreak workout"
+              fill
+              sizes="(min-width: 1440px) 560px, 40vw"
+              priority
+              className="object-cover object-top"
+            />
+          </div>
         </div>
-        <div className="hidden lg:block">
-          <Image
-            src={asset("/images/fitbreak6.jpg")}
-            alt="FitBreak workout"
-            width={1430}
-            height={953}
-            sizes="(min-width: 1024px) 400px, 100vw"
-            priority
-            className="h-64 w-full rounded-2xl object-cover object-top shadow-lg"
-          />
-        </div>
-      </div>
+      </section>
 
       {/* Quick Overview */}
-      <div className="mb-12 rounded-2xl bg-linear-to-r from-brand-500 to-brand-600 p-8 text-white">
-        <h2 className="mb-6 text-center text-2xl font-bold">Quick Overview</h2>
-        <div className="grid gap-6 md:grid-cols-4">
-          {overview.map((o, i) => (
-            <div key={o.title} className="text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
-                <span className="text-2xl font-bold">{i + 1}</span>
-              </div>
-              <p className="font-semibold">{o.title}</p>
-              <p className="mt-1 text-sm text-brand-100">{o.text}</p>
-            </div>
-          ))}
+      <section className="fb-grain bg-ink py-16 text-paper lg:py-24">
+        <div className={wrap}>
+          <h2 className="fb-display mb-10 text-[clamp(2.25rem,5vw,4rem)] lg:mb-14">
+            Quick Overview
+          </h2>
+          <ol className="grid grid-cols-2 border-t border-paper/20 lg:grid-cols-4">
+            {overview.map((o, i) => (
+              <li
+                key={o.title}
+                className="border-b border-paper/20 py-6 pr-4 lg:border-b-0 lg:border-l lg:px-6 lg:first:border-l-0 lg:first:pl-0"
+              >
+                <span className="fb-display fb-num block text-[clamp(3.5rem,6vw,5.5rem)] text-crimson">
+                  {two(i + 1)}
+                </span>
+                <p className="fb-display mt-4 text-2xl">{o.title}</p>
+                <p className="mt-1 text-paper/70">{o.text}</p>
+              </li>
+            ))}
+          </ol>
         </div>
-      </div>
+      </section>
 
-      {/* Step-by-Step Guide */}
-      <div className="space-y-8">
-        <Step n={1} title="Create Your FitBreak Account">
-          <p className="mb-6 text-gray-600">
-            All classes at FitBreak are booked online only. You need to create an account first
-            before you can book classes or purchase packages.
-          </p>
-          <div className="space-y-4 rounded-xl bg-gray-50 p-6">
+      <div className={`${wrap} bg-paper`}>
+        {/* Step-by-Step Guide */}
+        <div className="pt-6 lg:pt-12">
+          <Step n={1} title="Create Your FitBreak Account">
+            <p className="mb-8 max-w-2xl text-lg text-mute">
+              All classes at FitBreak are booked online only. You need to create an account first
+              before you can book classes or purchase packages.
+            </p>
             <Checklist
               heading="How to Sign Up:"
               items={[
@@ -219,155 +239,143 @@ export function HowItWorks({ signedIn }: { signedIn: boolean }) {
                 ["d", "Your account is now active! You can now purchase credits and book classes."],
               ]}
             />
-          </div>
-          <div className="mt-6 flex gap-4">
-            <Link href={routes.signup} className={pill}>
-              Create Account Now
-            </Link>
-          </div>
-        </Step>
-
-        <Step n={2} title="Choose Your Package">
-          {signedIn ? <PricingForMembers /> : <PricingSignInRequired />}
-        </Step>
-
-        <Step n={3} title="Pay & Get Your Credits">
-          <p className="mb-6 text-gray-600">
-            We accept <strong>GCash or bank transfer only</strong> — no cash payments. After
-            payment, upload your proof of payment and we&apos;ll add credits to your account.
-          </p>
-
-          <div className="mb-6 grid gap-6 md:grid-cols-2">
-            <div className="rounded-xl border border-blue-200 bg-blue-50 p-6">
-              <h3 className="mb-4 flex items-center gap-2 font-bold text-gray-900">
-                <MobileIcon className="h-6 w-6 text-blue-600" />
-                Pay via GCash
-              </h3>
-              <ol className="space-y-2 text-sm text-gray-600">
-                <li>1. Open your GCash app</li>
-                <li>2. Send payment to our GCash number</li>
-                <li>3. Take a screenshot of the confirmation</li>
-                <li>4. Upload in your FitBreak account</li>
-              </ol>
+            <div className="mt-8">
+              <Link href={routes.signup} className="fb-btn fb-btn--ink">
+                Create Account Now
+              </Link>
             </div>
+          </Step>
 
-            <div className="rounded-xl border border-green-200 bg-green-50 p-6">
-              <h3 className="mb-4 flex items-center gap-2 font-bold text-gray-900">
-                <Icon name="card" className="h-6 w-6 text-green-600" />
-                Pay via BPI Bank Transfer
-              </h3>
-              <div className="mb-4 rounded-lg bg-white p-3">
-                <p className="text-sm text-gray-600">Account Number:</p>
-                <p className="text-lg font-bold text-gray-900">8969-3458-85</p>
-                <p className="mt-1 text-sm text-gray-600">Iren San Buenaventura</p>
+          <Step n={2} title="Choose Your Package">
+            {signedIn ? <PricingForMembers /> : <PricingSignInRequired />}
+          </Step>
+
+          <Step n={3} title="Pay & Get Your Credits">
+            <p className="mb-10 max-w-2xl text-lg text-mute">
+              We accept{" "}
+              <strong className="font-semibold text-ink">GCash or bank transfer only</strong> — no
+              cash payments. After payment, upload your proof of payment and we&apos;ll add credits
+              to your account.
+            </p>
+
+            <div className="mb-12 grid gap-10 md:grid-cols-2 md:gap-8">
+              <div className="border-t-2 border-ink pt-5">
+                <h3 className="fb-display mb-4 text-2xl">Pay via GCash</h3>
+                <ol className="divide-y divide-ink/15">
+                  {gcashSteps.map((s, i) => (
+                    <li key={s} className="grid grid-cols-[2rem_1fr] gap-3 py-3">
+                      <span className="fb-label fb-num pt-0.5 text-mute">{i + 1}.</span>
+                      <span>{s}</span>
+                    </li>
+                  ))}
+                </ol>
               </div>
-              <p className="text-sm text-gray-600">
-                Upload your deposit slip or transaction confirmation.
-              </p>
-            </div>
-          </div>
 
-          <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-4">
-            <h4 className="mb-2 font-semibold text-yellow-800">
-              How Credits Appear in Your Account
-            </h4>
-            <p className="text-sm text-yellow-700">
-              After you upload your proof of payment, our team will verify it. Once approved,
-              credits are <strong>automatically added</strong> to your account — no manual steps
-              needed! This usually takes <strong>a few hours during business hours</strong>. Your
-              payment page will update in real-time when approved.
+              <div className="border-t-2 border-ink pt-5">
+                <h3 className="fb-display mb-4 text-2xl">Pay via BPI Bank Transfer</h3>
+                <dl className="mb-4 border-y border-ink/15 py-4">
+                  <dt className="fb-label text-mute">Account Number:</dt>
+                  <dd className="fb-display fb-num mt-2 text-4xl">8969-3458-85</dd>
+                  <dd className="mt-2 font-semibold">Iren San Buenaventura</dd>
+                </dl>
+                <p className="text-mute">Upload your deposit slip or transaction confirmation.</p>
+              </div>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2">
+              <Note title="How Credits Appear in Your Account">
+                <p>
+                  After you upload your proof of payment, our team will verify it. Once approved,
+                  credits are <strong>automatically added</strong> to your account — no manual steps
+                  needed! This usually takes <strong>a few hours during business hours</strong>.
+                  Your payment page will update in real-time when approved.
+                </p>
+              </Note>
+              <Note title="Credit Expiry">
+                <p>
+                  Credits expire based on your package: <strong>Guest (7 days)</strong>,{" "}
+                  <strong>Starter/Standard (30 days)</strong>, or <strong>Power (45 days)</strong>{" "}
+                  from the date your payment is approved. Check your dashboard to see your expiry
+                  date!
+                </p>
+              </Note>
+            </div>
+          </Step>
+
+          <Step n={4} title="Book Your Classes">
+            <p className="mb-8 max-w-2xl text-lg text-mute">
+              Once you have credits in your account, you can start booking classes!
+            </p>
+
+            <div className="mb-12">
+              <Checklist
+                heading="How to Book:"
+                items={[
+                  [
+                    "1",
+                    <>
+                      Go to the{" "}
+                      <Link href={routes.schedule} className={inlineLink}>
+                        Schedule page
+                      </Link>{" "}
+                      to see available classes
+                    </>,
+                  ],
+                  ["2", "Click on the class you want to attend"],
+                  ["3", "Confirm your booking — 1 credit will be deducted from your account"],
+                  ["4", "Show up on time and enjoy your class!"],
+                ]}
+              />
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2">
+              <Note title="Advance Booking Privileges">
+                <ul className="space-y-1">
+                  <li>Guest Drop-In: Next day only</li>
+                  <li>Starter (3 days): Book up to 3 days ahead</li>
+                  <li>Standard (5 days): Book up to 5 days ahead</li>
+                  <li>Power (7 days): Book up to 7 days ahead</li>
+                </ul>
+              </Note>
+              <Note title="Cancellation Policy">
+                <p>
+                  Cancel up to <strong>2 hours before</strong> class for a full credit refund. Late
+                  cancellations or no-shows forfeit the credit.
+                </p>
+              </Note>
+            </div>
+
+            <div className="mt-10">
+              <Link href={routes.schedule} className="fb-btn fb-btn--ink">
+                View Class Schedule
+              </Link>
+            </div>
+          </Step>
+        </div>
+
+        <ClassScheduleOverview />
+        <HowItWorksFaq />
+
+        {/* CTA */}
+        <section className="grid gap-8 border-t border-rule py-20 lg:grid-cols-12 lg:items-end lg:gap-10 lg:py-28">
+          <div className="lg:col-span-7">
+            <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)]">
+              Ready to Start Your Fitness Journey?
+            </h2>
+            <p className="mt-6 max-w-xl text-lg text-mute">
+              Join the FitBreak community and transform your life, one class at a time.
             </p>
           </div>
-
-          <div className="mt-4 rounded-xl border border-green-200 bg-green-50 p-4">
-            <h4 className="mb-2 font-semibold text-green-800">Credit Expiry</h4>
-            <p className="text-sm text-green-700">
-              Credits expire based on your package: <strong>Guest (7 days)</strong>,{" "}
-              <strong>Starter/Standard (30 days)</strong>, or <strong>Power (45 days)</strong> from
-              the date your payment is approved. Check your dashboard to see your expiry date!
-            </p>
-          </div>
-        </Step>
-
-        <Step n={4} title="Book Your Classes">
-          <p className="mb-6 text-gray-600">
-            Once you have credits in your account, you can start booking classes!
-          </p>
-
-          <div className="mb-6 space-y-4 rounded-xl bg-gray-50 p-6">
-            <Checklist
-              heading="How to Book:"
-              items={[
-                [
-                  "1",
-                  <>
-                    Go to the{" "}
-                    <Link href={routes.schedule} className="text-brand-600 hover:underline">
-                      Schedule page
-                    </Link>{" "}
-                    to see available classes
-                  </>,
-                ],
-                ["2", "Click on the class you want to attend"],
-                ["3", "Confirm your booking — 1 credit will be deducted from your account"],
-                ["4", "Show up on time and enjoy your class!"],
-              ]}
-            />
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="rounded-xl bg-brand-50 p-4">
-              <h4 className="mb-2 font-semibold text-gray-900">Advance Booking Privileges</h4>
-              <ul className="space-y-1 text-sm text-gray-600">
-                <li>Guest Drop-In: Next day only</li>
-                <li>Starter (3 days): Book up to 3 days ahead</li>
-                <li>Standard (5 days): Book up to 5 days ahead</li>
-                <li>Power (7 days): Book up to 7 days ahead</li>
-              </ul>
-            </div>
-            <div className="rounded-xl bg-red-50 p-4">
-              <h4 className="mb-2 font-semibold text-gray-900">Cancellation Policy</h4>
-              <p className="text-sm text-gray-600">
-                Cancel up to <strong>2 hours before</strong> class for a full credit refund. Late
-                cancellations or no-shows forfeit the credit.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <Link href={routes.schedule} className={pill}>
-              View Class Schedule
+          <div className="flex flex-wrap items-center gap-4 lg:col-span-5 lg:justify-end lg:pb-2">
+            <Link href={routes.signup} className="fb-btn fb-btn--crimson">
+              Get Started Now
+            </Link>
+            <Link href={routes.pricing} className="fb-btn fb-btn--line">
+              View Packages
             </Link>
           </div>
-        </Step>
+        </section>
       </div>
-
-      <ClassScheduleOverview />
-      <HowItWorksFaq />
-
-      {/* CTA */}
-      <div className="mt-12 text-center">
-        <h2 className="mb-4 text-2xl font-bold text-gray-900">
-          Ready to Start Your Fitness Journey?
-        </h2>
-        <p className="mb-6 text-gray-600">
-          Join the FitBreak community and transform your life, one class at a time.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link
-            href={routes.signup}
-            className="rounded-full bg-brand-500 px-8 py-4 font-semibold text-white shadow-lg transition-all hover:bg-brand-600 hover:shadow-xl"
-          >
-            Get Started Now
-          </Link>
-          <Link
-            href={routes.pricing}
-            className="rounded-full border border-gray-200 bg-white px-8 py-4 font-semibold text-gray-700 transition-all hover:border-gray-300 hover:bg-gray-50"
-          >
-            View Packages
-          </Link>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }

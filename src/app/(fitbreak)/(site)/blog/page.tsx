@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { PostGrid } from "@/components/sites/fitbreak/blog/post-grid";
+import { wrap } from "@/components/sites/fitbreak/editorial";
 import { routes } from "@/components/sites/fitbreak/links";
 import { Newsletter } from "@/components/sites/fitbreak/newsletter";
 import { listPosts } from "@/services/fitbreak/blog";
@@ -26,14 +27,17 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
 
   return (
     <>
-      <section className="bg-linear-to-br from-brand-500 to-brand-700 py-16 text-white">
-        <div className="mx-auto max-w-6xl px-4 text-center sm:px-6 lg:px-8">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">FitBreak Blog</h1>
-          <p className="mx-auto max-w-2xl text-xl text-white/90">
+      <div className={`${wrap} pt-16 pb-12 lg:pt-24 lg:pb-16`}>
+        <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
+          <div className="lg:col-span-8">
+            <p className="fb-label mb-4 text-mute">Journal</p>
+            <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">FitBreak Blog</h1>
+          </div>
+          <p className="max-w-md text-lg leading-relaxed text-mute lg:col-span-4 lg:pb-3">
             Fitness tips, wellness articles, and workout guides to keep you motivated
           </p>
         </div>
-      </section>
+      </div>
 
       <PostGrid list={list} />
 

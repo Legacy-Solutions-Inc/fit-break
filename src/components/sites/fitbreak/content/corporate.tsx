@@ -1,6 +1,6 @@
-import { Icon } from "../icons";
+import { Arrow, ArrowLink, wrap } from "../editorial";
 import { asset, contact } from "../links";
-import { DocumentDownloadIcon, MessengerIcon, SolidCheckCircle } from "./icons";
+import { DocumentDownloadIcon, MessengerIcon } from "./icons";
 
 const reasons = [
   "Women-only fitness studio",
@@ -22,234 +22,266 @@ const audiences = [
 // Booking Enquiry channel shared by the whole site (FitBreakPhilippines page).
 const MESSENGER_URL = contact.messenger;
 
-/** Cloned from fitbreak.ph/corporate.html (main content only). */
+const h2 = "fb-display text-[clamp(2.5rem,6vw,5rem)]";
+const num = (i: number) => String(i + 1).padStart(2, "0");
+
+/** fitbreak.ph/corporate.html content, set in the editorial system (ADR 0009). */
 export function Corporate() {
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative bg-linear-to-br from-brand-500 to-brand-600 py-20">
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="relative mx-auto max-w-4xl px-4 text-center text-white sm:px-6 lg:px-8">
-          <span className="mb-4 inline-block rounded-full bg-white/20 px-4 py-1 text-sm font-medium">
-            Corporate Group Program
-          </span>
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">Stronger Women. Healthier Teams.</h1>
-          <p className="text-xl text-white/90">
-            Invest in your team&apos;s wellness with exclusive group rates
-          </p>
-        </div>
-      </section>
-
-      <div className="py-16">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <article className="max-w-none">
-            <p className="mb-8 text-xl leading-relaxed text-gray-700">
+      {/* Opening: big left-aligned headline, the pitch on the right. */}
+      <section className="bg-paper pt-16 pb-20 lg:pt-24 lg:pb-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <div className="lg:col-span-8">
+            <p className="fb-label mb-5 text-mute">Corporate Group Program</p>
+            <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">
+              Stronger Women. <span className="text-crimson">Healthier Teams.</span>
+            </h1>
+            <p className="mt-8 max-w-xl text-xl text-ink/80">
+              Invest in your team&apos;s wellness with exclusive group rates
+            </p>
+          </div>
+          <div className="space-y-6 border-t-2 border-ink pt-6 lg:col-span-4">
+            <p className="text-xl leading-relaxed">
               At FitBreak, we believe that when women are supported in prioritizing their health,
               confidence, and well-being—everyone benefits.
             </p>
-
-            <p className="mb-8 leading-relaxed text-gray-700">
+            <p className="leading-relaxed text-mute">
               The FitBreak Corporate Group Program is designed for companies, schools, and
               organizations that want to invest in women&apos;s wellness through a safe, supportive,
               and results-driven fitness environment—while enjoying significant group savings.
             </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Why Organizations Choose FitBreak */}
-            <div className="my-10 rounded-2xl bg-brand-50 p-8">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">
-                Why Organizations Choose FitBreak
-              </h2>
-              <p className="mb-6 text-gray-700">
-                FitBreak is proudly the <strong>first women-only fitness studio in Mindoro</strong>,
-                created specifically for women who may feel intimidated, unsafe, or uncomfortable in
-                traditional gyms.
-              </p>
-              <p className="mb-6 text-gray-700">
-                Our members include beginners, working professionals, mothers, educators, and
-                leaders—many of whom are starting their fitness journey for the first time.
-              </p>
-              <ul className="space-y-3 text-gray-700">
-                {reasons.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <SolidCheckCircle className="mt-0.5 h-6 w-6 shrink-0 text-brand-500" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 font-semibold text-brand-600 italic">
-                This is fitness designed for women, by women.
-              </p>
-            </div>
+      {/* Why Organizations Choose FitBreak: numbered ruled rows. */}
+      <section className="border-t border-rule bg-paper py-20 lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:gap-10`}>
+          <div className="lg:col-span-5">
+            <h2 className={`${h2} mb-8`}>Why Organizations Choose FitBreak</h2>
+            <p className="mb-5 max-w-lg text-lg leading-relaxed text-ink/80">
+              FitBreak is proudly the{" "}
+              <strong className="font-semibold text-ink">
+                first women-only fitness studio in Mindoro
+              </strong>
+              , created specifically for women who may feel intimidated, unsafe, or uncomfortable in
+              traditional gyms.
+            </p>
+            <p className="max-w-lg leading-relaxed text-mute">
+              Our members include beginners, working professionals, mothers, educators, and
+              leaders—many of whom are starting their fitness journey for the first time.
+            </p>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <ol className="divide-y divide-ink/15 border-y border-ink/20">
+              {reasons.map((item, i) => (
+                <li
+                  key={item}
+                  data-reveal
+                  className="grid grid-cols-[3rem_1fr] items-baseline gap-4 py-5 text-lg"
+                >
+                  <span className="fb-label fb-num text-mute">{num(i)}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+            <p className="fb-display mt-10 text-[clamp(1.75rem,3vw,2.5rem)]">
+              This is fitness designed for women, <span className="text-crimson">by women.</span>
+            </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Corporate Rate Highlight */}
-            <div className="my-10 rounded-2xl bg-gray-900 p-8 text-center text-white">
-              <h2 className="mb-2 text-2xl font-bold">Corporate Group Rate</h2>
-              <p className="mb-6 text-gray-300">
-                Organizations that enroll at least 5 women and maintain 5 active package-paying
-                members qualify for our exclusive corporate rate:
-              </p>
-              <div className="mb-2 text-5xl font-bold text-brand-400">&#8369;200</div>
-              <p className="mb-4 text-xl text-gray-300">per class, per person</p>
-              <span className="inline-block rounded-full bg-brand-500 px-4 py-2 font-bold text-white">
+      {/* Corporate Rate: the one big number on the page. */}
+      <section className="fb-grain bg-ink py-20 text-paper lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <div className="lg:col-span-5">
+            <h2 className={`${h2} mb-6`}>Corporate Group Rate</h2>
+            <p className="max-w-md text-lg leading-relaxed text-paper/80">
+              Organizations that enroll at least 5 women and maintain 5 active package-paying
+              members qualify for our exclusive corporate rate:
+            </p>
+          </div>
+          <div data-reveal className="lg:col-span-6 lg:col-start-7">
+            <p className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
+              <span className="fb-display fb-num text-[clamp(7rem,20vw,16rem)] leading-[0.8]">
+                &#8369;200
+              </span>
+              <span className="fb-label text-paper/70">per class, per person</span>
+            </p>
+            <p className="mt-8">
+              <span className="fb-label inline-block bg-crimson px-2 py-1 text-white">
                 42% OFF the regular drop-in rate
               </span>
-              <p className="mt-6 text-sm text-gray-400">
-                This special rate encourages accountability, consistency, and team motivation—key
-                drivers of long-term wellness success.
-              </p>
-            </div>
+            </p>
+            <p className="mt-8 max-w-md border-t border-paper/15 pt-6 text-sm leading-relaxed text-paper/70">
+              This special rate encourages accountability, consistency, and team motivation—key
+              drivers of long-term wellness success.
+            </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Eligible Packages */}
-            <h2 className="mt-12 mb-6 text-2xl font-bold text-gray-900">Eligible Packages</h2>
-            <p className="mb-6 text-gray-700">
+      {/* Eligible Packages: the two qualifying packs side by side. */}
+      <section className="bg-paper py-20 lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:gap-10`}>
+          <div className="lg:col-span-5">
+            <h2 className={`${h2} mb-6`}>Eligible Packages</h2>
+            <p className="max-w-md text-lg leading-relaxed text-mute">
               To qualify for the Corporate Group Program, all group members must purchase one of the
               following packages:
             </p>
-
-            <div className="mb-6 grid gap-4 md:grid-cols-2">
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <div className="grid grid-cols-2 divide-x divide-ink/20 border-y-2 border-ink">
               {["12", "20"].map((count) => (
-                <div
-                  key={count}
-                  className="rounded-xl border-2 border-brand-500 bg-white p-6 text-center"
-                >
-                  <div className="text-3xl font-bold text-brand-600">{count}</div>
-                  <p className="font-medium text-gray-700">Class Package</p>
+                <div key={count} data-reveal className="py-8 pl-6 first:pl-0">
+                  <p className="fb-display fb-num text-[clamp(4.5rem,9vw,7rem)] leading-[0.85]">
+                    {count}
+                  </p>
+                  <p className="fb-label mt-3 text-mute">Class Package</p>
                 </div>
               ))}
             </div>
-
             {/* `mb-10` in the source is absent from its compiled CSS, so it is dropped. */}
-            <div className="rounded-r-xl border-l-4 border-red-500 bg-red-50 p-4">
-              <p className="text-red-700">
-                <strong>Note:</strong> 6-Class Packages and Drop-In Classes are not eligible for
-                this program.
-              </p>
-            </div>
+            <p className="mt-6 flex gap-4">
+              <span className="text-crimson" aria-hidden="true">
+                —
+              </span>
+              <span>
+                <strong className="font-semibold">Note:</strong> 6-Class Packages and Drop-In
+                Classes are not eligible for this program.
+              </span>
+            </p>
+          </div>
+        </div>
+      </section>
 
-            {/* Program Requirements */}
-            <h2 className="mt-12 mb-6 text-2xl font-bold text-gray-900">
-              Program Requirements &amp; Conditions
-            </h2>
-            <p className="mb-6 text-gray-700">
+      {/* Program Requirements: numbered conditions. */}
+      <section className="border-t border-rule bg-bone py-20 lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:gap-10`}>
+          <div className="lg:col-span-5">
+            <h2 className={`${h2} mb-6`}>Program Requirements &amp; Conditions</h2>
+            <p className="max-w-md text-lg leading-relaxed text-mute">
               To ensure fairness and sustainability of the program, the following conditions apply:
             </p>
-
-            <ul className="mb-6 space-y-4 text-gray-700">
-              <li className="flex items-start gap-3">
-                <Step n={1} />
-                <span>
-                  A minimum of <strong>5 members</strong> must sign up together
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Step n={2} />
-                <span>
-                  The group must <strong>maintain at least 5 active, package-paying members</strong>{" "}
-                  at all times
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Step n={3} />
-                <span>If the group falls below the minimum requirement:</span>
-              </li>
-            </ul>
-
-            {/* Source's `border-amber-500` / `mb-10` are absent from its compiled CSS, so the
-                left border falls back to the v3 default border colour (gray-200). */}
-            <div className="ml-9 rounded-r-xl border-l-4 border-gray-200 bg-amber-50 p-4">
-              <ul className="space-y-2 text-amber-800">
-                <li>• Corporate group discount will be removed</li>
-                <li>• Regular FitBreak rates will automatically apply</li>
-                <li>
-                  • Group discount may be reinstated once the minimum number of members is met again
+          </div>
+          <ol className="divide-y divide-ink/15 border-y border-ink/20 lg:col-span-6 lg:col-start-7">
+            <Step n={1}>
+              A minimum of <strong className="font-semibold">5 members</strong> must sign up
+              together
+            </Step>
+            <Step n={2}>
+              The group must{" "}
+              <strong className="font-semibold">
+                maintain at least 5 active, package-paying members
+              </strong>{" "}
+              at all times
+            </Step>
+            <Step n={3}>
+              If the group falls below the minimum requirement:
+              <ul className="mt-4 space-y-2 text-base text-mute">
+                <li className="flex gap-3">
+                  <span aria-hidden="true">—</span>Corporate group discount will be removed
+                </li>
+                <li className="flex gap-3">
+                  <span aria-hidden="true">—</span>Regular FitBreak rates will automatically apply
+                </li>
+                <li className="flex gap-3">
+                  <span aria-hidden="true">—</span>Group discount may be reinstated once the minimum
+                  number of members is met again
                 </li>
               </ul>
-            </div>
-
-            {/* Who This Program Is For */}
-            <div className="my-10 rounded-2xl bg-brand-50 p-8">
-              <h2 className="mb-6 text-2xl font-bold text-gray-900">Who This Program Is For</h2>
-              <p className="mb-6 text-gray-700">
-                The FitBreak Corporate Group Program is ideal for:
-              </p>
-              <div className="grid gap-4 md:grid-cols-2">
-                {audiences.map((item) => (
-                  <div key={item} className="flex items-center gap-3">
-                    <SolidCheckCircle className="h-5 w-5 text-brand-500" />
-                    <span className="text-gray-700">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-6 text-gray-600 italic">
-                Whether you&apos;re promoting health, boosting morale, or building stronger
-                teams—this program makes it easy.
-              </p>
-            </div>
-
-            {/* A Smarter Wellness Benefit */}
-            <div className="my-10 rounded-2xl bg-linear-to-br from-brand-500 to-brand-600 p-8 text-white">
-              <h2 className="mb-4 text-2xl font-bold">A Smarter Wellness Benefit</h2>
-              <p className="mb-4 leading-relaxed text-white/90">
-                Instead of one-time wellness events or unused gym memberships, FitBreak offers a
-                community-driven fitness experience that women actually enjoy and stick with.
-              </p>
-              <p className="text-lg font-semibold text-white">
-                When women feel safe, supported, and confident, they show up stronger—at work and in
-                life.
-              </p>
-            </div>
-
-            {/* CTA Section (source `py-10` is absent from its compiled CSS, so dropped) */}
-            <div className="my-12 border-t border-b border-gray-200 text-center">
-              <h2 className="mb-4 text-2xl font-bold text-gray-900">Get Your Group Started</h2>
-              <p className="mb-8 text-gray-600">
-                Contact FitBreak today to register your group and start packages together for easy
-                tracking and accountability.
-              </p>
-              <p className="mb-8 font-semibold text-brand-600 italic">
-                Because investing in women&apos;s health is an investment that lasts.
-              </p>
-
-              <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <a
-                  href={MESSENGER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-brand-500 px-8 py-4 font-bold text-white shadow-lg transition-all hover:bg-brand-600 hover:shadow-xl"
-                >
-                  <MessengerIcon className="h-5 w-5" />
-                  Inquire via Messenger
-                </a>
-                <a
-                  href={contact.phoneHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-brand-500 bg-white px-8 py-4 font-bold text-brand-600 transition-all hover:bg-brand-50"
-                >
-                  <Icon name="phone" className="h-5 w-5" />
-                  Talk to Our Team
-                </a>
-              </div>
-              <div className="mt-6">
-                <a
-                  href={asset("/fitbreak-corporate-flyer.pdf")}
-                  download
-                  className="inline-flex items-center gap-2 text-sm text-gray-500 transition-colors hover:text-brand-600"
-                >
-                  <DocumentDownloadIcon className="h-4 w-4" />
-                  Download Corporate Flyer (PDF)
-                </a>
-              </div>
-            </div>
-          </article>
+            </Step>
+          </ol>
         </div>
-      </div>
+      </section>
+
+      {/* Who This Program Is For: a plain ruled list. */}
+      <section className="border-t border-rule bg-paper py-20 lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:gap-10`}>
+          <div className="lg:col-span-5">
+            <h2 className={`${h2} mb-6`}>Who This Program Is For</h2>
+            <p className="max-w-md text-lg text-mute">
+              The FitBreak Corporate Group Program is ideal for:
+            </p>
+          </div>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <ul className="divide-y divide-ink/15 border-y border-ink/20">
+              {audiences.map((item) => (
+                <li key={item} className="fb-display py-4 text-[clamp(1.5rem,2.6vw,2.25rem)]">
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-8 max-w-lg text-mute italic">
+              Whether you&apos;re promoting health, boosting morale, or building stronger teams—this
+              program makes it easy.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* A Smarter Wellness Benefit */}
+      <section className="fb-grain bg-ink py-20 text-paper lg:py-32">
+        <div className={`${wrap} grid gap-10 lg:grid-cols-12`}>
+          <h2 className={`${h2} lg:col-span-5`}>A Smarter Wellness Benefit</h2>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <p className="mb-8 text-lg leading-relaxed text-paper/80">
+              Instead of one-time wellness events or unused gym memberships, FitBreak offers a
+              community-driven fitness experience that women actually enjoy and stick with.
+            </p>
+            <p className="fb-display text-[clamp(1.75rem,3.2vw,2.75rem)] leading-[0.95]">
+              When women feel safe, supported, and confident, they show up stronger—at work and in
+              life.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA (source `py-10` is absent from its compiled CSS, so dropped) */}
+      <section className="bg-paper py-20 lg:py-32">
+        <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
+          <div className="lg:col-span-7">
+            <h2 className="fb-display mb-8 text-[clamp(3rem,8vw,7rem)]">Get Your Group Started</h2>
+            <p className="mb-5 max-w-xl text-lg leading-relaxed text-ink/80">
+              Contact FitBreak today to register your group and start packages together for easy
+              tracking and accountability.
+            </p>
+            <p className="max-w-xl text-mute italic">
+              Because investing in women&apos;s health is an investment that lasts.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-start gap-6 border-t-2 border-ink pt-8 lg:col-span-4 lg:col-start-9">
+            <a
+              href={MESSENGER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="fb-btn fb-btn--ink"
+            >
+              <MessengerIcon className="h-5 w-5" />
+              Inquire via Messenger
+              <Arrow />
+            </a>
+            <ArrowLink href={contact.phoneHref}>Talk to Our Team</ArrowLink>
+            <a href={asset("/fitbreak-corporate-flyer.pdf")} download className="fb-link text-sm">
+              <DocumentDownloadIcon className="h-4 w-4" />
+              Download Corporate Flyer (PDF)
+            </a>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
 
-function Step({ n }: { n: number }) {
+function Step({ n, children }: { n: number; children: React.ReactNode }) {
   return (
-    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-500 text-sm font-bold text-white">
-      {n}
-    </span>
+    <li data-reveal className="grid grid-cols-[3rem_1fr] items-baseline gap-4 py-6 text-lg">
+      <span className="fb-label fb-num text-mute">{num(n - 1)}</span>
+      <div>{children}</div>
+    </li>
   );
 }
