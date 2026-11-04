@@ -1,0 +1,212 @@
+  <!-- Top Header -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-pink-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div id="header-logo" class="flex items-center gap-3">
+          <a href="/app.html" class="flex items-center">
+            <img src="/images/fitbreak-landscape-logo.png" alt="FitBreak" class="h-10" />
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/how-it-works.html" class="text-sm font-medium text-gray-700 hover:text-brand-500 transition-colors">How It Works</a>
+          <a href="/pricing.html" class="text-sm font-medium text-gray-700 hover:text-brand-500 transition-colors">Pricing</a>
+          <a href="/schedule.html" class="text-sm font-medium text-gray-700 hover:text-brand-500 transition-colors">Schedule</a>
+
+          <!-- About Us Dropdown -->
+          <div class="relative" id="about-dropdown-container">
+            <button id="about-dropdown-btn" class="flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-brand-500 transition-colors">
+              About Us
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div id="about-dropdown-menu" class="hidden absolute left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+              <a href="/our-story.html" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">The FitBreak Story</a>
+              <a href="/calapan1/about.html" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">The Owner</a>
+              <a href="/fitbreakers.html" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">The FitBreakers</a>
+              <a href="/club-rules.html" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">Club Rules</a>
+              <div class="border-t border-gray-100 my-1"></div>
+              <a href="/corporate.html" class="block px-4 py-2.5 text-sm text-purple-700 font-medium hover:bg-purple-50 transition-colors">Corporate Program</a>
+            </div>
+          </div>
+
+          <a href="/blog.html" class="text-sm font-medium text-gray-700 hover:text-brand-500 transition-colors">Blog</a>
+        </nav>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-3">
+          <!-- Notifications -->
+          <div class="hidden sm:block relative">
+            <button id="notifications-btn" class="relative inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+              </svg>
+              <!-- Notification Badge -->
+              <span id="notification-badge" class="hidden absolute top-1 right-2 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">0</span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div id="notifications-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 overflow-hidden z-50">
+              <div class="p-4 bg-gradient-to-r from-brand-500 to-brand-600 text-white">
+                <h3 class="font-bold text-lg">Notifications</h3>
+              </div>
+              <div id="notifications-list" class="max-h-96 overflow-y-auto">
+                <!-- Notifications will be inserted here -->
+                <div class="p-6 text-center text-gray-500">
+                  <svg class="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                  </svg>
+                  <p class="text-sm">No notifications yet</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Auth Buttons (shown when not logged in) -->
+          <div id="auth-buttons" class="flex items-center gap-2">
+            <button id="btn-sign-in" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
+              Sign In
+            </button>
+            <button id="btn-sign-up" class="inline-flex items-center gap-2 px-4 py-2.5 bg-brand-500 text-white text-sm font-semibold rounded-full hover:bg-brand-600 transition-all shadow-md hover:shadow-lg">
+              Get Started
+            </button>
+          </div>
+
+          <!-- User Profile (shown when logged in) -->
+          <div id="user-profile" class="hidden flex items-center gap-3">
+            <!-- Admin Dashboard Button (only shown for admins on desktop, mobile uses menu) -->
+            <a href="/admin.html" id="admin-nav-link" class="hidden items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm font-semibold rounded-full hover:from-purple-700 hover:to-purple-800 transition-all shadow-md hover:shadow-lg">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+              Admin Dashboard
+            </a>
+
+            <a href="/schedule.html" class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 bg-brand-500 text-white text-sm font-semibold rounded-full hover:bg-brand-600 transition-all shadow-md hover:shadow-lg">
+              Book Class
+            </a>
+
+            <!-- User Profile Dropdown -->
+            <div class="relative" style="z-index: 100;">
+              <button class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors cursor-pointer" id="user-profile-btn" type="button" onclick="document.getElementById('user-dropdown').classList.toggle('hidden');">
+                <img id="user-avatar" src="https://ui-avatars.com/api/?name=Guest+User&background=E64A8A&color=fff&size=128" alt="Profile" class="w-9 h-9 rounded-full border-2 border-white shadow-sm pointer-events-none" />
+                <svg class="w-4 h-4 text-gray-600 hidden sm:block pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+
+              <!-- Dropdown Menu -->
+              <div class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 hidden z-50" id="user-dropdown">
+                <div class="p-4 border-b border-gray-100">
+                  <p id="user-name" class="text-sm font-semibold text-gray-900">Guest User</p>
+                  <p id="user-email" class="text-xs text-gray-500 mt-0.5">guest@fitbreak.ph</p>
+                </div>
+                <div class="py-2">
+                  <!-- Admin Dashboard Link (only shown for admins) -->
+                  <a href="/admin.html" id="admin-dropdown-link" class="hidden items-center gap-3 px-4 py-2.5 text-sm font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 transition-colors border-l-4 border-purple-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                    Admin Dashboard
+                  </a>
+
+                  <a href="/dashboard.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    My Dashboard
+                  </a>
+                  <a href="/profile.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    My Profile
+                  </a>
+                  <a href="/bookings.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    My Bookings
+                  </a>
+                  <a href="/payments.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                    Payments
+                  </a>
+                  <a href="/settings.html" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Settings
+                  </a>
+                </div>
+                <div class="border-t border-gray-100 py-2">
+                  <button id="btn-sign-out" class="flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors w-full text-left">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    Sign Out
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button class="md:hidden p-2 rounded-lg hover:bg-gray-100 border border-gray-200 flex-shrink-0" id="mobile-menu-btn" aria-label="Toggle menu">
+            <svg id="menu-icon" class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            <svg id="close-icon" class="w-6 h-6 hidden pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Dropdown -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200 shadow-lg">
+        <div class="px-4 py-3 space-y-2">
+          <a href="/how-it-works.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium">
+            How It Works
+          </a>
+          <a href="/pricing.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium">
+            Pricing
+          </a>
+          <a href="/schedule.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium">
+            Schedule
+          </a>
+          <!-- About Us Section -->
+          <div class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">About Us</div>
+          <a href="/our-story.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium pl-6">
+            The FitBreak Story
+          </a>
+          <a href="/calapan1/about.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium pl-6">
+            The Owner
+          </a>
+          <a href="/fitbreakers.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium pl-6">
+            The FitBreakers
+          </a>
+          <a href="/club-rules.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium pl-6">
+            Club Rules
+          </a>
+          <a href="/corporate.html" class="block px-4 py-3 text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-lg font-medium pl-6">
+            Corporate Program
+          </a>
+          <a href="/blog.html" class="block px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium">
+            Blog
+          </a>
+          <div class="border-t border-gray-100 my-2"></div>
+          <!-- Sign In link (shown when not logged in) -->
+          <a href="/login.html" id="mobile-signin-link" class="flex items-center gap-3 px-4 py-3 text-brand-600 hover:bg-brand-50 rounded-lg font-semibold">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+            </svg>
+            Sign In
+          </a>
+          <a href="/dashboard.html" id="mobile-dashboard-link" class="hidden px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium">
+            My Dashboard
+          </a>
+          <a href="/bookings.html" id="mobile-bookings-link" class="hidden px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-lg font-medium">
+            My Bookings
+          </a>
+          <a href="/admin.html" id="mobile-admin-link" class="hidden px-4 py-3 text-purple-700 bg-purple-50 hover:bg-purple-100 rounded-lg font-semibold">
+            Admin Dashboard
+          </a>
+        </div>
+      </div>
+
+      </div>
+  </header>

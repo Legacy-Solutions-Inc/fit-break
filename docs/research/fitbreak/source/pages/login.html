@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign In — FitBreak</title>
+  <meta name="description" content="Sign in to your FitBreak account to book classes and track your fitness journey." />
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css?v=20260101">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-brand-50 via-white to-brand-50">
+
+  <!-- Main Container -->
+  <div class="min-h-screen flex">
+
+    <!-- Left Side - Branding (hidden on mobile) -->
+    <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-brand-500 to-brand-600 p-12 flex-col justify-between relative overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img src="/images/fitbreak4.jpg" alt="" class="w-full h-full object-cover opacity-20" />
+      </div>
+      <div class="relative z-10 flex flex-col justify-between h-full">
+      <div>
+        <a href="/app.html">
+          <img src="/images/fitbreak-logo-white.png" alt="FitBreak" class="h-14" />
+        </a>
+      </div>
+
+      <div class="text-white">
+        <h1 class="text-4xl font-bold mb-4">Strong Women,<br/>Strong Lives.</h1>
+        <p class="text-xl text-white/80 mb-8">Join the women-only fitness community in Calapan City.</p>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-lg">Coach-led bootcamp classes</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-lg">Small group sessions (8-12 women)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </div>
+            <span class="text-lg">Pay via GCash - no hassle</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-white/60 text-sm">
+        2nd Floor Roxas Drive, Brgy Ilaya, Calapan City
+      </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Login Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+      <div class="w-full max-w-md">
+
+        <!-- Mobile Logo -->
+        <div class="lg:hidden text-center mb-8">
+          <a href="/app.html">
+            <img src="/images/fitbreak-landscape-logo.png" alt="FitBreak" class="h-14 mx-auto" />
+          </a>
+        </div>
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <h2 id="auth-title" class="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+          <p id="auth-subtitle" class="text-gray-600">Sign in to continue your fitness journey</p>
+        </div>
+
+        <!-- Social Sign In -->
+        <div class="flex gap-3 mb-6">
+          <button
+            type="button"
+            id="btn-google-signin"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border-2 border-gray-200 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all font-semibold text-gray-700 shadow-sm"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Google
+          </button>
+
+          <button
+            type="button"
+            id="btn-facebook-signin"
+            class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#1877F2] text-white rounded-xl hover:bg-[#166FE5] transition-all font-semibold shadow-sm"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            Facebook
+          </button>
+        </div>
+
+        <!-- Divider -->
+        <div class="relative my-8">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-200"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-4 bg-gradient-to-br from-brand-50 via-white to-brand-50 text-gray-500 font-medium">Or continue with email</span>
+          </div>
+        </div>
+
+        <!-- Email/Password Form -->
+        <form id="auth-form" class="space-y-4">
+          <input type="hidden" id="auth-mode" value="signin" />
+
+          <!-- Name Field (only for signup) -->
+          <div id="auth-name-field" class="hidden">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+            <input
+              type="text"
+              name="auth-name"
+              id="auth-name"
+              placeholder="Jane Dela Cruz"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <!-- Phone Field (only for signup) -->
+          <div id="auth-phone-field" class="hidden">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+            <input
+              type="tel"
+              name="auth-phone"
+              id="auth-phone"
+              placeholder="09XX XXX XXXX"
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+            />
+            <p class="text-xs text-gray-500 mt-1">So we can contact you about bookings</p>
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+            <input
+              type="email"
+              name="auth-email"
+              id="auth-email"
+              placeholder="you@email.com"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+            <input
+              type="password"
+              name="auth-password"
+              id="auth-password"
+              placeholder="••••••••"
+              required
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all"
+            />
+          </div>
+
+          <!-- Forgot Password (sign in only) -->
+          <div id="forgot-password-link" class="text-right">
+            <button type="button" id="btn-forgot-password" class="text-sm text-brand-600 hover:text-brand-700 font-semibold">
+              Forgot password?
+            </button>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            id="auth-submit-btn"
+            class="w-full px-6 py-3.5 bg-brand-500 text-white font-semibold rounded-xl hover:bg-brand-600 transition-all shadow-md hover:shadow-lg"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <!-- Toggle Sign In / Sign Up -->
+        <div class="mt-8 text-center">
+          <p class="text-gray-600">
+            <span id="toggle-auth-question">Don't have an account?</span>
+            <button
+              type="button"
+              id="btn-toggle-auth-mode"
+              class="ml-1 text-brand-600 hover:text-brand-700 font-semibold"
+            >
+              <span id="toggle-auth-action">Sign Up</span>
+            </button>
+          </p>
+        </div>
+
+        <!-- Back to Home -->
+        <div class="mt-6 text-center">
+          <a href="/app.html" class="text-sm text-gray-500 hover:text-gray-700">
+            ← Back to home
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50 transition-all">
+    Action completed
+  </div>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      signInWithPopup,
+      GoogleAuthProvider,
+      FacebookAuthProvider,
+      onAuthStateChanged,
+      updateProfile,
+      sendPasswordResetEmail
+    } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc,
+      serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { firebaseConfig } from './firebase-config.js';
+
+    // Initialize Firebase
+    const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app, 'asia-db');
+    const googleProvider = new GoogleAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
+    facebookProvider.addScope('email');
+    facebookProvider.addScope('public_profile');
+
+    // Detect in-app browsers (Messenger, Instagram, Facebook, etc.)
+    function isInAppBrowser() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera;
+      return [/FBAN|FBAV/i, /Instagram/i, /Messenger/i, /Line/i, /KAKAOTALK/i, /Twitter/i, /Snapchat/i, /WeChat|MicroMessenger/i].some(p => p.test(ua));
+    }
+
+    function showInAppBrowserWarning() {
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      const isAndroid = /Android/.test(navigator.userAgent);
+      const instructions = isIOS ? 'Tap the ··· menu and select "Open in Safari"' :
+        isAndroid ? 'Tap the ⋮ menu and select "Open in Chrome"' :
+        'Copy the link and open it in your browser';
+
+      const existing = document.getElementById('inapp-browser-modal');
+      if (existing) existing.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'inapp-browser-modal';
+      modal.className = 'fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-[100]';
+
+      const container = document.createElement('div');
+      container.className = 'bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl';
+
+      const title = document.createElement('h3');
+      title.className = 'text-xl font-bold text-gray-900 mb-2';
+      title.textContent = 'Open in Browser';
+      container.appendChild(title);
+
+      const desc = document.createElement('p');
+      desc.className = 'text-gray-600 mb-4';
+      desc.textContent = "Google sign-in doesn't work in this app's browser. Please open FitBreak in Safari or Chrome.";
+      container.appendChild(desc);
+
+      const hint = document.createElement('p');
+      hint.className = 'text-sm text-gray-500 mb-4';
+      hint.textContent = instructions;
+      container.appendChild(hint);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'w-full py-3 bg-brand-500 text-white rounded-xl font-semibold hover:bg-brand-600 transition mb-2';
+      copyBtn.textContent = 'Copy Link';
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.textContent = 'Copy Link'; }, 2000);
+      });
+      container.appendChild(copyBtn);
+
+      const cancelBtn = document.createElement('button');
+      cancelBtn.className = 'w-full py-2 text-gray-600 hover:text-gray-800 transition';
+      cancelBtn.textContent = 'Cancel';
+      cancelBtn.addEventListener('click', () => modal.remove());
+      container.appendChild(cancelBtn);
+
+      modal.appendChild(container);
+      document.body.appendChild(modal);
+    }
+
+    // Check if already logged in
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Cache user for instant sidebar display
+        localStorage.setItem('fitbreak_user', JSON.stringify({
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid
+        }));
+        // Check for redirect after login (URL param takes priority)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlRedirect = urlParams.get('redirect');
+        const sessionRedirect = sessionStorage.getItem('redirectAfterLogin');
+
+        if (urlRedirect) {
+          window.location.href = urlRedirect;
+        } else if (sessionRedirect) {
+          sessionStorage.removeItem('redirectAfterLogin');
+          window.location.href = sessionRedirect;
+        } else {
+          window.location.href = '/dashboard.html';
+        }
+      }
+    });
+
+    // Toast notification
+    function toast(message, type = 'info') {
+      const toastEl = document.getElementById('toast');
+      if (!toastEl) return;
+      toastEl.textContent = message;
+      toastEl.classList.remove('hidden', 'bg-gray-900', 'bg-green-600', 'bg-red-600');
+      if (type === 'success') toastEl.classList.add('bg-green-600');
+      else if (type === 'error') toastEl.classList.add('bg-red-600');
+      else toastEl.classList.add('bg-gray-900');
+      setTimeout(() => toastEl.classList.add('hidden'), 3000);
+    }
+
+    // Cache user for instant sidebar display on dashboard
+    function cacheUser(user) {
+      if (user) {
+        localStorage.setItem('fitbreak_user', JSON.stringify({
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          uid: user.uid
+        }));
+      }
+    }
+
+    // Create or update user document in Firestore (triggers welcome email)
+    async function ensureUserDocument(user, isNewUser = false, phone = null) {
+      console.log('[Login] ensureUserDocument called for:', user.email, 'isNewUser:', isNewUser, 'phone:', phone);
+      try {
+        const userRef = doc(db, 'users', user.uid);
+        console.log('[Login] Getting user document...');
+        const userSnap = await getDoc(userRef);
+        console.log('[Login] Document exists:', userSnap.exists());
+
+        if (!userSnap.exists()) {
+          console.log('[Login] Creating new Firestore document...');
+          await setDoc(userRef, {
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName || user.email.split('@')[0],
+            photoURL: user.photoURL || null,
+            role: 'member',
+            membershipStatus: 'inactive',
+            membershipType: null,
+            membershipStartDate: null,
+            membershipEndDate: null,
+            classesRemaining: 0,
+            totalClassesAttended: 0,
+            phone: phone || null,
+            address: null,
+            birthdate: null,
+            emergencyContact: null,
+            fitnessGoals: [],
+            preferences: {
+              notifications: true,
+              emailReminders: true,
+              smsReminders: false
+            },
+            createdAt: serverTimestamp(),
+            lastLoginAt: serverTimestamp(),
+            signupSource: 'login-page'
+          });
+          console.log('[Login] Firestore document CREATED successfully!');
+        } else {
+          console.log('[Login] User document already exists, updating lastLoginAt');
+          await setDoc(userRef, { lastLoginAt: serverTimestamp() }, { merge: true });
+        }
+      } catch (error) {
+        console.error('[Login] Error in ensureUserDocument:', error);
+        toast('Error saving profile: ' + error.message, 'error');
+        throw error; // Re-throw to see in caller
+      }
+    }
+
+    // Google Sign In
+    document.getElementById('btn-google-signin').addEventListener('click', async () => {
+      if (isInAppBrowser()) { showInAppBrowserWarning(); return; }
+      try {
+        googleProvider.setCustomParameters({ prompt: 'select_account' });
+        const result = await signInWithPopup(auth, googleProvider);
+        cacheUser(result.user);
+        // Create Firestore document if it doesn't exist
+        await ensureUserDocument(result.user);
+        toast(`Welcome, ${result.user.displayName}!`, 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 500);
+      } catch (error) {
+        console.error('Google sign in error:', error);
+        if (error.code !== 'auth/popup-closed-by-user') {
+          toast('Failed to sign in with Google.', 'error');
+        }
+      }
+    });
+
+    // Facebook Sign In
+    document.getElementById('btn-facebook-signin').addEventListener('click', async () => {
+      if (isInAppBrowser()) { showInAppBrowserWarning(); return; }
+      const btn = document.getElementById('btn-facebook-signin');
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> Connecting...';
+
+      try {
+        console.log('[FB Auth] Starting Facebook sign-in...');
+        const result = await signInWithPopup(auth, facebookProvider);
+        console.log('[FB Auth] Sign-in successful:', result.user.email);
+        cacheUser(result.user);
+        // Create Firestore document if it doesn't exist
+        await ensureUserDocument(result.user);
+        toast(`Welcome, ${result.user.displayName}!`, 'success');
+        setTimeout(() => window.location.href = '/dashboard.html', 500);
+      } catch (error) {
+        console.error('[FB Auth] Facebook sign in error:', error);
+        console.error('[FB Auth] Error code:', error.code);
+        console.error('[FB Auth] Error message:', error.message);
+
+        let message = 'Failed to sign in with Facebook. ';
+        switch (error.code) {
+          case 'auth/popup-closed-by-user':
+            // User closed the popup, no need to show error
+            break;
+          case 'auth/account-exists-with-different-credential':
+            message = 'An account already exists with this email. Try Google or email sign-in.';
+            toast(message, 'error');
+            break;
+          case 'auth/operation-not-allowed':
+            message = 'Facebook sign-in is not enabled. Please contact support.';
+            toast(message, 'error');
+            console.error('[FB Auth] Facebook provider not enabled in Firebase Console');
+            break;
+          case 'auth/invalid-oauth-client-id':
+            message = 'Facebook configuration error. Please contact support.';
+            toast(message, 'error');
+            console.error('[FB Auth] Invalid Facebook App ID configured');
+            break;
+          case 'auth/unauthorized-domain':
+            message = 'This domain is not authorized for Facebook login.';
+            toast(message, 'error');
+            console.error('[FB Auth] Domain not in authorized domains list:', window.location.hostname);
+            break;
+          case 'auth/popup-blocked':
+            message = 'Popup was blocked. Please allow popups for this site.';
+            toast(message, 'error');
+            break;
+          default:
+            toast(message + error.message, 'error');
+        }
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+      }
+    });
+
+    // Email/Password Form
+    document.getElementById('auth-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const mode = document.getElementById('auth-mode').value;
+      const email = document.getElementById('auth-email').value;
+      const password = document.getElementById('auth-password').value;
+      const name = document.getElementById('auth-name').value;
+      const phone = document.getElementById('auth-phone').value;
+
+      try {
+        let user;
+        if (mode === 'signup') {
+          console.log('[Login] Creating new account for:', email);
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          if (name) {
+            await updateProfile(userCredential.user, { displayName: name });
+          }
+          user = userCredential.user;
+          // Create Firestore document (triggers welcome email)
+          console.log('[Login] Auth user created, now creating Firestore document...');
+          await ensureUserDocument(user, true, phone);
+          toast('Account created successfully!', 'success');
+        } else {
+          console.log('[Login] Signing in existing user:', email);
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          user = userCredential.user;
+          // Update lastLoginAt
+          await ensureUserDocument(user, false);
+          toast('Welcome back!', 'success');
+        }
+        cacheUser(user);
+        setTimeout(() => window.location.href = '/dashboard.html', 500);
+      } catch (error) {
+        console.error('Auth error:', error);
+        let message = 'Authentication failed. ';
+        switch (error.code) {
+          case 'auth/email-already-in-use': message = 'This email is already registered.'; break;
+          case 'auth/invalid-email': message = 'Invalid email address.'; break;
+          case 'auth/weak-password': message = 'Password should be at least 6 characters.'; break;
+          case 'auth/user-not-found': message = 'No account found with this email.'; break;
+          case 'auth/wrong-password': message = 'Incorrect password.'; break;
+          case 'auth/invalid-credential': message = 'Invalid email or password. If you signed up with Google, please use the Google button.'; break;
+          case 'auth/too-many-requests': message = 'Too many failed attempts. Please try again later.'; break;
+          default: message += error.message;
+        }
+        toast(message, 'error');
+      }
+    });
+
+    // Toggle Sign In / Sign Up
+    document.getElementById('btn-toggle-auth-mode').addEventListener('click', () => {
+      const mode = document.getElementById('auth-mode');
+      const title = document.getElementById('auth-title');
+      const subtitle = document.getElementById('auth-subtitle');
+      const nameField = document.getElementById('auth-name-field');
+      const phoneField = document.getElementById('auth-phone-field');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const forgotLink = document.getElementById('forgot-password-link');
+      const toggleQuestion = document.getElementById('toggle-auth-question');
+      const toggleAction = document.getElementById('toggle-auth-action');
+
+      if (mode.value === 'signin') {
+        mode.value = 'signup';
+        title.textContent = 'Create Account';
+        subtitle.textContent = 'Join the FitBreak community today';
+        nameField.classList.remove('hidden');
+        phoneField.classList.remove('hidden');
+        submitBtn.textContent = 'Create Account';
+        forgotLink.classList.add('hidden');
+        toggleQuestion.textContent = 'Already have an account?';
+        toggleAction.textContent = 'Sign In';
+      } else {
+        mode.value = 'signin';
+        title.textContent = 'Welcome Back';
+        subtitle.textContent = 'Sign in to continue your fitness journey';
+        nameField.classList.add('hidden');
+        phoneField.classList.add('hidden');
+        submitBtn.textContent = 'Sign In';
+        forgotLink.classList.remove('hidden');
+        toggleQuestion.textContent = "Don't have an account?";
+        toggleAction.textContent = 'Sign Up';
+      }
+    });
+
+    // Forgot Password - with debounce to prevent multiple emails
+    let isResettingPassword = false;
+    document.getElementById('btn-forgot-password').addEventListener('click', async (e) => {
+      // Prevent multiple clicks
+      if (isResettingPassword) {
+        console.log('Password reset already in progress, ignoring click');
+        return;
+      }
+
+      const email = document.getElementById('auth-email').value;
+      if (!email) {
+        toast('Please enter your email address first.', 'error');
+        return;
+      }
+
+      isResettingPassword = true;
+      const btn = e.target;
+      const originalText = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        toast('Password reset email sent! Check your inbox.', 'success');
+        // Keep button disabled for 30 seconds to prevent spam
+        setTimeout(() => {
+          isResettingPassword = false;
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 30000);
+      } catch (error) {
+        console.error('Password reset error:', error);
+        toast('Failed to send reset email. Check your email address.', 'error');
+        isResettingPassword = false;
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    });
+
+    // Check URL parameter for signup mode (must be after handlers are set up)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('mode') === 'signup') {
+      const mode = document.getElementById('auth-mode');
+      const title = document.getElementById('auth-title');
+      const subtitle = document.getElementById('auth-subtitle');
+      const nameField = document.getElementById('auth-name-field');
+      const phoneField = document.getElementById('auth-phone-field');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const forgotLink = document.getElementById('forgot-password-link');
+      const toggleQuestion = document.getElementById('toggle-auth-question');
+      const toggleAction = document.getElementById('toggle-auth-action');
+
+      mode.value = 'signup';
+      title.textContent = 'Create Account';
+      subtitle.textContent = 'Join the FitBreak community today';
+      nameField.classList.remove('hidden');
+      phoneField.classList.remove('hidden');
+      submitBtn.textContent = 'Create Account';
+      forgotLink.classList.add('hidden');
+      toggleQuestion.textContent = 'Already have an account?';
+      toggleAction.textContent = 'Sign In';
+    }
+  </script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+</body>
+</html>

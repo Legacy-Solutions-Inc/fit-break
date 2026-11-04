@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+import { legacyRedirects } from "./src/components/sites/fitbreak/links";
+
 // Static security response headers applied to every route. CSP is intentionally
 // NOT here — it needs a per-request nonce and is set in src/middleware.ts.
 const securityHeaders = [
@@ -29,6 +31,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Opt-in separate build dir (e.g. NEXT_DIST_DIR=.next-preview) so a second
+  // dev/preview server never clobbers the main `.next` of a running `pnpm dev`.
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+  // Payment proof uploads (member/payments) are validated to ≤5 MB in the action;
+  // allow that through the Server Action body limit (default 1 MB).
+  experimental: { serverActions: { bodySizeLimit: "6mb" } },
   // Don't advertise the framework via the X-Powered-By header.
   poweredByHeader: false,
   // PostHog same-origin reverse proxy. `/relay` is ONE base path that MUST stay
@@ -47,6 +55,25 @@ const nextConfig: NextConfig = {
         destination: "https://us-assets.i.posthog.com/array/:path*",
       },
       { source: "/relay/:path*", destination: "https://us.i.posthog.com/:path*" },
+    ];
+  },
+  // The live site's homepage path; keep old links and bookmarks working.
+  // Old fitbreak.ph URLs (`/schedule.html`, `/blog-post.html?id=…`, …) map onto
+  // the cloned routes so existing links and bookmarks keep working.
+  async redirects() {
+    return [
+      ...legacyRedirects.map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
+      {
+        source: "/blog-post.html",
+        has: [{ type: "query" as const, key: "id", value: "(?<id>.+)" }],
+        destination: "/blog/:id",
+        permanent: true,
+      },
+      { source: "/blog-post.html", destination: "/blog", permanent: true },
     ];
   },
   // PostHog's ingestion API relies on trailing slashes (/e/, /s/) — don't redirect.

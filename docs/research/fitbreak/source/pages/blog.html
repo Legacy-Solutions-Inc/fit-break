@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — FitBreak | Fitness Tips & Wellness Articles</title>
+  <meta name="description" content="Read the latest fitness tips, wellness articles, and workout guides from FitBreak. Stay motivated and informed on your fitness journey.">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+  <main class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-brand-500 to-brand-700 text-white py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">FitBreak Blog</h1>
+        <p class="text-xl text-white/90 max-w-2xl mx-auto">
+          Fitness tips, wellness articles, and workout guides to keep you motivated
+        </p>
+      </div>
+    </section>
+
+    <!-- Blog Posts Grid -->
+    <section class="py-12">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-2 mb-8 justify-center">
+          <button class="category-btn active px-4 py-2 rounded-full text-sm font-semibold transition-all" data-category="all">
+            All Posts
+          </button>
+          <button class="category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all" data-category="fitness-tips">
+            Fitness Tips
+          </button>
+          <button class="category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all" data-category="nutrition">
+            Nutrition
+          </button>
+          <button class="category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all" data-category="motivation">
+            Motivation
+          </button>
+          <button class="category-btn px-4 py-2 rounded-full text-sm font-semibold transition-all" data-category="wellness">
+            Wellness
+          </button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="text-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-4 border-brand-500 border-t-transparent mx-auto"></div>
+          <p class="mt-4 text-gray-600">Loading posts...</p>
+        </div>
+
+        <!-- Blog Grid -->
+        <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
+          <!-- Posts will be loaded here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="text-center py-12 hidden">
+          <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2"></path>
+          </svg>
+          <h3 class="mt-4 text-lg font-semibold text-gray-900">No posts yet</h3>
+          <p class="mt-2 text-gray-600">Check back soon for fitness tips and wellness articles!</p>
+        </div>
+
+        <!-- Load More Button -->
+        <div id="load-more-container" class="text-center mt-8 hidden">
+          <button id="load-more-btn" class="px-6 py-3 bg-brand-500 text-white font-semibold rounded-xl hover:bg-brand-600 transition-all">
+            Load More Posts
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="bg-gray-900 text-white py-16">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold mb-4">Get Fitness Tips in Your Inbox</h2>
+        <p class="text-gray-400 mb-8">Subscribe to our newsletter for weekly workout tips, nutrition advice, and exclusive offers.</p>
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <input
+            type="email"
+            id="newsletter-email"
+            placeholder="Enter your email"
+            required
+            class="flex-1 px-4 py-3 rounded-xl text-gray-900 focus:ring-2 focus:ring-brand-500"
+          >
+          <button type="submit" class="px-6 py-3 bg-brand-500 text-white font-semibold rounded-xl hover:bg-brand-600 transition-all">
+            Subscribe
+          </button>
+        </form>
+        <p id="newsletter-success" class="mt-4 text-green-400 hidden">Thanks for subscribing! 🎉</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50"></div>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Modals Component -->
+  <div id="modals-placeholder"></div>
+
+  <style>
+    .category-btn {
+      background: white;
+      color: #374151;
+      border: 1px solid #E5E7EB;
+    }
+    .category-btn:hover {
+      background: #F3F4F6;
+    }
+    .category-btn.active {
+      background: #D71E49;
+      color: white;
+      border-color: #D71E49;
+    }
+  </style>
+
+  <script type="module">
+    import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, collection, query, where, orderBy, limit, startAfter, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { firebaseConfig } from './firebase-config.js';
+
+    const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    const db = getFirestore(app, 'asia-db');
+
+    let lastDoc = null;
+    let currentCategory = 'all';
+    const POSTS_PER_PAGE = 9;
+
+    // Load blog posts
+    async function loadPosts(category = 'all', loadMore = false) {
+      const loadingState = document.getElementById('loading-state');
+      const blogGrid = document.getElementById('blog-grid');
+      const emptyState = document.getElementById('empty-state');
+      const loadMoreContainer = document.getElementById('load-more-container');
+
+      if (!loadMore) {
+        loadingState.classList.remove('hidden');
+        blogGrid.classList.add('hidden');
+        blogGrid.innerHTML = '';
+        lastDoc = null;
+      }
+
+      try {
+        const postsRef = collection(db, 'blog_posts');
+        let snapshot;
+
+        // Try ordered query first
+        try {
+          let postsQuery;
+          if (category === 'all') {
+            postsQuery = query(
+              postsRef,
+              where('status', '==', 'published'),
+              orderBy('publishedAt', 'desc'),
+              limit(POSTS_PER_PAGE)
+            );
+          } else {
+            postsQuery = query(
+              postsRef,
+              where('status', '==', 'published'),
+              where('category', '==', category),
+              orderBy('publishedAt', 'desc'),
+              limit(POSTS_PER_PAGE)
+            );
+          }
+
+          if (loadMore && lastDoc) {
+            if (category === 'all') {
+              postsQuery = query(
+                postsRef,
+                where('status', '==', 'published'),
+                orderBy('publishedAt', 'desc'),
+                startAfter(lastDoc),
+                limit(POSTS_PER_PAGE)
+              );
+            } else {
+              postsQuery = query(
+                postsRef,
+                where('status', '==', 'published'),
+                where('category', '==', category),
+                orderBy('publishedAt', 'desc'),
+                startAfter(lastDoc),
+                limit(POSTS_PER_PAGE)
+              );
+            }
+          }
+
+          snapshot = await getDocs(postsQuery);
+        } catch (indexError) {
+          console.warn('Index may not be ready, trying simple query:', indexError.message);
+          // Fallback: fetch all and filter/sort client-side
+          const simpleQuery = query(postsRef, limit(50));
+          const allDocs = await getDocs(simpleQuery);
+          const publishedPosts = [];
+          allDocs.forEach(doc => {
+            const data = doc.data();
+            // Filter by status AND category
+            if (data.status === 'published' && (category === 'all' || data.category === category)) {
+              publishedPosts.push({ id: doc.id, ...data, ref: doc });
+            }
+          });
+          // Sort by publishedAt descending
+          publishedPosts.sort((a, b) => {
+            const dateA = a.publishedAt?.toDate?.() || new Date(0);
+            const dateB = b.publishedAt?.toDate?.() || new Date(0);
+            return dateB - dateA;
+          });
+          // Create a mock snapshot
+          snapshot = {
+            empty: publishedPosts.length === 0,
+            docs: publishedPosts.slice(0, POSTS_PER_PAGE).map(p => ({
+              id: p.id,
+              data: () => p,
+              ref: p.ref
+            })),
+            forEach: function(cb) { this.docs.forEach(cb); }
+          };
+        }
+
+        loadingState.classList.add('hidden');
+
+        if (snapshot.empty && !loadMore) {
+          emptyState.classList.remove('hidden');
+          loadMoreContainer.classList.add('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+        blogGrid.classList.remove('hidden');
+
+        snapshot.forEach(doc => {
+          const post = doc.data();
+          blogGrid.appendChild(createPostCard(doc.id, post));
+        });
+
+        lastDoc = snapshot.docs[snapshot.docs.length - 1];
+
+        // Show/hide load more button
+        if (snapshot.docs.length === POSTS_PER_PAGE) {
+          loadMoreContainer.classList.remove('hidden');
+        } else {
+          loadMoreContainer.classList.add('hidden');
+        }
+
+      } catch (error) {
+        console.error('Error loading posts:', error);
+        loadingState.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+      }
+    }
+
+    // HTML escape function to prevent XSS
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Create post card
+    function createPostCard(id, post) {
+      const card = document.createElement('article');
+      card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition-all group';
+
+      const publishedDate = post.publishedAt?.toDate ? post.publishedAt.toDate() : new Date();
+      const formattedDate = publishedDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      const rawExcerpt = post.excerpt || post.content?.substring(0, 150) + '...' || '';
+      // Escape all user-provided content to prevent XSS
+      const safeTitle = escapeHtml(post.title);
+      const safeExcerpt = escapeHtml(rawExcerpt);
+      const safeCategory = escapeHtml(post.category?.replace('-', ' ') || 'General');
+      const safeImageUrl = post.featuredImage ? encodeURI(post.featuredImage) : null;
+      const safeId = encodeURIComponent(id);
+
+      card.innerHTML = `
+        <a href="/blog-post.html?id=${safeId}" class="block">
+          <div class="aspect-video bg-gradient-to-br from-brand-100 to-accent-100 relative overflow-hidden">
+            ${safeImageUrl ?
+              `<img src="${safeImageUrl}" alt="${safeTitle}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">` :
+              `<div class="w-full h-full flex items-center justify-center">
+                <svg class="w-16 h-16 text-brand-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2"></path>
+                </svg>
+              </div>`
+            }
+            <span class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-xs font-semibold text-brand-600 rounded-full capitalize">
+              ${safeCategory}
+            </span>
+          </div>
+          <div class="p-6">
+            <p class="text-sm text-gray-500 mb-2">${formattedDate}</p>
+            <h3 class="text-lg font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors line-clamp-2">
+              ${safeTitle}
+            </h3>
+            <p class="text-gray-600 text-sm line-clamp-3">${safeExcerpt}</p>
+            <div class="mt-4 flex items-center text-brand-600 font-semibold text-sm">
+              Read More
+              <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </a>
+      `;
+
+      return card;
+    }
+
+    // Category filter
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.category;
+        loadPosts(currentCategory);
+      });
+    });
+
+    // Load more
+    document.getElementById('load-more-btn')?.addEventListener('click', () => {
+      loadPosts(currentCategory, true);
+    });
+
+    // Newsletter signup
+    document.getElementById('newsletter-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value;
+
+      try {
+        const { addDoc, collection: col, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+        await addDoc(col(db, 'newsletter_subscribers'), {
+          email: email,
+          subscribedAt: serverTimestamp(),
+          source: 'blog_page'
+        });
+
+        document.getElementById('newsletter-success').classList.remove('hidden');
+        document.getElementById('newsletter-email').value = '';
+      } catch (error) {
+        console.error('Error subscribing:', error);
+        alert('Failed to subscribe. Please try again.');
+      }
+    });
+
+    // Initial load
+    loadPosts();
+  </script>
+
+  <script type="module" src="/auth.js"></script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+</body>
+</html>

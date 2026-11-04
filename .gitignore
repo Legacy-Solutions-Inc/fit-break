@@ -46,3 +46,6 @@ supabase/.temp
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Extra Next build dirs (NEXT_DIST_DIR)
+/.next-*/

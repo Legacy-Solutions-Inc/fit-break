@@ -5,6 +5,10 @@ import { buildCsp } from "./csp";
 const NONCE = "test-nonce-123";
 
 describe("buildCsp", () => {
+  it("allows framing only the Google Maps embed origin", () => {
+    expect(buildCsp(NONCE, { isDev: false })).toContain("frame-src https://www.google.com;");
+  });
+
   it("prod: nonce + strict-dynamic script-src, locked frame/object, no unsafe-eval", () => {
     const csp = buildCsp(NONCE, { isDev: false });
     expect(csp).toContain(`script-src 'self' 'nonce-${NONCE}' 'strict-dynamic'`);

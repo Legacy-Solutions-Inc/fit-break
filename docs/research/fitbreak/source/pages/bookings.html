@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Bookings — FitBreak</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar Placeholder -->
+    <div id="member-sidebar-placeholder"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 lg:ml-0 min-h-screen">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">Book a Class</h1>
+          <p class="text-gray-600">Choose your class and reserve your spot</p>
+        </div>
+
+        <!-- Weekly Schedule -->
+        <div class="mb-12" id="book-class">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Weekly Schedule</h2>
+          <div id="weekly-schedule" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated by JavaScript -->
+            <div class="text-center py-12 text-gray-500">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-brand-500 border-t-transparent mx-auto mb-4"></div>
+              Loading classes...
+            </div>
+          </div>
+        </div>
+
+        <!-- My Bookings -->
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">My Bookings</h2>
+          <div id="my-bookings-list">
+            <!-- Populated by JavaScript -->
+            <div class="text-center py-12 text-gray-500">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-brand-500 border-t-transparent mx-auto mb-4"></div>
+              Loading bookings...
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50"></div>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Modals Component -->
+  <div id="modals-placeholder"></div>
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('bookings');
+      }
+    });
+  </script>
+
+  <script type="module" src="/auth.js?v=8"></script>
+  <script type="module" src="bookings.js"></script>
+  <!-- Onboarding Tour & Help -->
+  <script src="/onboarding-tour.js"></script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

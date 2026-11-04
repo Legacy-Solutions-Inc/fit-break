@@ -53,6 +53,9 @@ export function buildCsp(nonce: string, opts: CspOptions): string {
     ["img-src", ["'self'", "data:", "blob:", "https:"]],
     ["font-src", ["'self'", "data:"]],
     ["connect-src", connectSrc],
+    // Google Maps embed on the public homepage (Visit Us). Nothing else may be
+    // framed; everything else falls back to default-src 'self'.
+    ["frame-src", ["https://www.google.com"]],
     ["frame-ancestors", ["'none'"]],
     // This template renders no <base> element; lock it down entirely.
     ["base-uri", ["'none'"]],

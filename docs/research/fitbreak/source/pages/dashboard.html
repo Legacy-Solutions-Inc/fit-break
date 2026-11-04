@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Dashboard — FitBreak</title>
+  <meta name="description" content="Track your fitness journey with FitBreak" />
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260106">
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+  <style>
+    .metric-card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid #f3f4f6;
+    }
+    .progress-ring {
+      transform: rotate(-90deg);
+    }
+    .progress-ring circle {
+      transition: stroke-dashoffset 0.5s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+  <div class="flex min-h-screen bg-gray-50">
+    <!-- Sidebar Placeholder -->
+    <div id="member-sidebar-placeholder"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 min-h-screen bg-gray-50">
+      <div class="p-6">
+
+        <!-- Top Header -->
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Hello, <span id="welcome-name">there</span>! 👋</h1>
+            <p class="text-gray-500">Welcome back! Let's crush your fitness goals today!</p>
+          </div>
+          <div class="mt-4 lg:mt-0 flex items-center gap-3">
+            <!-- Search -->
+            <div class="relative flex-1 lg:w-72">
+              <input type="text" id="dashboard-search" placeholder="Search classes, bookings..." class="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-400">
+              <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <!-- Search Results Dropdown -->
+              <div id="search-results" class="hidden absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-lg z-50 max-h-64 overflow-y-auto"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone Number Prompt (hidden by default, shown if user has no phone) -->
+        <div id="phone-prompt-banner" class="hidden bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 mb-6">
+          <div class="flex items-center justify-between flex-wrap gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-900">Add your phone number</p>
+                <p class="text-sm text-gray-600">Get class reminders and important updates via SMS</p>
+              </div>
+            </div>
+            <a href="/profile.html" class="px-4 py-2 bg-amber-500 text-white font-semibold rounded-lg hover:bg-amber-600 transition text-sm">
+              Add Phone
+            </a>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Main Content - 2 columns -->
+          <div class="lg:col-span-2 space-y-6">
+
+            <!-- Enhanced Calendar with Booking Visualization -->
+            <div class="metric-card">
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-900" id="calendar-month-large">January 2026</h3>
+                  <p class="text-sm text-gray-500">Your class schedule</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="changeMonth(-1)" class="p-2 hover:bg-gray-100 rounded-lg transition">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                  </button>
+                  <button onclick="changeMonth(1)" class="p-2 hover:bg-gray-100 rounded-lg transition">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Calendar Grid -->
+              <div class="grid grid-cols-7 gap-1 text-center mb-2">
+                <div class="text-sm font-medium text-gray-400 py-2">Sun</div>
+                <div class="text-sm font-medium text-gray-400 py-2">Mon</div>
+                <div class="text-sm font-medium text-gray-400 py-2">Tue</div>
+                <div class="text-sm font-medium text-gray-400 py-2">Wed</div>
+                <div class="text-sm font-medium text-gray-400 py-2">Thu</div>
+                <div class="text-sm font-medium text-gray-400 py-2">Fri</div>
+                <div class="text-sm font-medium text-gray-400 py-2">Sat</div>
+              </div>
+              <div id="calendar-grid-large" class="grid grid-cols-7 gap-1">
+                <!-- Calendar days populated by JS with booking indicators -->
+              </div>
+
+              <!-- Calendar Legend -->
+              <div class="flex items-center gap-6 mt-4 pt-4 border-t border-gray-100">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-brand-500"></div>
+                  <span class="text-xs text-gray-500">Today</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span class="text-xs text-gray-500">Booked</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full bg-gray-600"></div>
+                  <span class="text-xs text-gray-600">Attended</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- My Classes - Unified Bookings & Schedule -->
+            <div class="metric-card">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h3 class="font-semibold text-gray-900">My Classes</h3>
+                  <p class="text-xs text-gray-500">Your bookings and schedule</p>
+                </div>
+                <a href="/bookings.html" class="text-sm text-brand-500 hover:text-brand-600 font-medium">View All</a>
+              </div>
+
+              <!-- Stats Grid - 4 columns -->
+              <div class="grid grid-cols-4 gap-3 mb-6">
+                <div class="text-center p-3 bg-purple-50 rounded-xl">
+                  <p class="text-xl font-bold text-purple-600" id="schedule-today">0</p>
+                  <p class="text-xs text-gray-500">Today</p>
+                </div>
+                <div class="text-center p-3 bg-green-50 rounded-xl">
+                  <p class="text-xl font-bold text-green-600" id="bookings-upcoming">0</p>
+                  <p class="text-xs text-gray-500">Upcoming</p>
+                </div>
+                <div class="text-center p-3 bg-gray-100 rounded-xl">
+                  <p class="text-xl font-bold text-gray-600" id="bookings-attended">0</p>
+                  <p class="text-xs text-gray-500">Attended</p>
+                </div>
+                <div class="text-center p-3 bg-red-50 rounded-xl">
+                  <p class="text-xl font-bold text-red-500" id="bookings-cancelled">0</p>
+                  <p class="text-xs text-gray-500">Cancelled</p>
+                </div>
+              </div>
+
+              <!-- Upcoming Classes List -->
+              <div id="upcoming-classes" class="space-y-3" data-tour="upcoming">
+                <div class="text-center py-4 text-gray-400 text-sm">
+                  <p>Loading classes...</p>
+                </div>
+              </div>
+
+              <!-- Footer: Credits + Book Button -->
+              <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between gap-4">
+                <div class="text-sm">
+                  <span class="text-gray-500">Credits this month:</span>
+                  <span class="font-semibold text-gray-900 ml-1" id="credits-used-month">0</span>
+                </div>
+                <a href="/bookings.html" class="flex items-center gap-2 px-4 py-2 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition font-medium text-sm">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                  </svg>
+                  Book a Class
+                </a>
+              </div>
+            </div>
+
+            <!-- My Payments - moved below My Classes -->
+            <div class="metric-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-gray-900">My Payments</h3>
+                <a href="/payments.html" class="text-sm text-brand-500 hover:text-brand-600 font-medium">View All</a>
+              </div>
+
+              <!-- Payment Summary -->
+              <div class="grid grid-cols-2 gap-3 mb-4">
+                <div class="text-center p-3 bg-green-50 rounded-xl">
+                  <p class="text-lg font-bold text-green-600" id="total-payments-amount">₱0</p>
+                  <p class="text-xs text-gray-500">Total Paid</p>
+                </div>
+                <div class="text-center p-3 bg-blue-50 rounded-xl">
+                  <p class="text-lg font-bold text-blue-600" id="total-credits-assigned">0</p>
+                  <p class="text-xs text-gray-500">Credits Assigned</p>
+                </div>
+              </div>
+
+              <!-- Recent Payments List -->
+              <div id="recent-payments-list" class="space-y-2">
+                <div class="text-center py-4 text-gray-400 text-sm">
+                  <p>Loading payments...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Sidebar -->
+          <div class="space-y-4">
+            <!-- Book a Class Reminder - shown when user has credits but no upcoming bookings -->
+            <div id="book-class-reminder" class="hidden">
+              <div class="metric-card bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 bg-pink-100 rounded-lg">
+                    <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-semibold text-pink-800">You have credits - book a class!</p>
+                    <p class="text-xs text-pink-600">Don't forget to reserve your spot</p>
+                  </div>
+                </div>
+                <a href="/schedule.html" class="mt-3 block w-full text-center py-2 bg-pink-600 text-white text-sm font-medium rounded-lg hover:bg-pink-700 transition-colors">
+                  Book Now
+                </a>
+              </div>
+            </div>
+
+            <!-- Enhanced Credits Card -->
+            <div class="metric-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-gray-900">My Credits</h3>
+                <a href="/payments.html" class="text-sm text-brand-500 hover:text-brand-600 font-medium">Buy More</a>
+              </div>
+
+              <!-- Available Credits - Large Display -->
+              <div class="text-center py-4 mb-4 bg-gradient-to-br from-brand-50 to-brand-100 rounded-xl">
+                <p class="text-4xl font-bold text-brand-600" id="available-credits" data-tour="credits">0</p>
+                <p class="text-sm text-gray-500">Available Credits</p>
+              </div>
+
+              <!-- Credits Breakdown -->
+              <div class="space-y-2">
+                <!-- Total Purchased -->
+                <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
+                  <div class="flex items-center gap-2">
+                    <div class="p-1.5 bg-blue-100 rounded">
+                      <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                      </svg>
+                    </div>
+                    <span class="text-sm text-gray-600">Total Purchased</span>
+                  </div>
+                  <span class="font-semibold text-gray-900" id="credits-purchased">0</span>
+                </div>
+
+                <!-- Used Credits -->
+                <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
+                  <div class="flex items-center gap-2">
+                    <div class="p-1.5 bg-green-100 rounded">
+                      <svg class="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                    </div>
+                    <span class="text-sm text-gray-600">Used</span>
+                  </div>
+                  <span class="font-semibold text-gray-900" id="credits-used">0</span>
+                </div>
+
+                <!-- Cancelled/Refunded -->
+                <div class="flex items-center justify-between p-2.5 bg-gray-50 rounded-lg">
+                  <div class="flex items-center gap-2">
+                    <div class="p-1.5 bg-red-100 rounded">
+                      <svg class="w-3.5 h-3.5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
+                    </div>
+                    <span class="text-sm text-gray-600">Refunded</span>
+                  </div>
+                  <span class="font-semibold text-gray-900" id="credits-refunded">0</span>
+                </div>
+
+                <!-- Expiring Credits Alert -->
+                <div id="expiring-credits-row" class="hidden flex items-center justify-between p-2.5 bg-amber-50 rounded-lg border border-amber-200">
+                  <div class="flex items-center gap-2">
+                    <div class="p-1.5 bg-amber-100 rounded">
+                      <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    <div>
+                      <span class="text-sm text-amber-700 font-medium">Expiring Soon</span>
+                      <p class="text-xs text-amber-600" id="expiry-date-detail">--</p>
+                    </div>
+                  </div>
+                  <span class="font-bold text-amber-700" id="expiring-credits-count">0</span>
+                </div>
+              </div>
+
+              <!-- Package Info -->
+              <div class="mt-4 pt-4 border-t border-gray-100 space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-gray-500">Current Package</span>
+                  <span class="text-xs font-medium text-gray-900" id="current-package">None</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-gray-500">Last Purchase</span>
+                  <span class="text-xs font-medium text-gray-900" id="last-purchase-date">--</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-xs text-gray-500">Expires</span>
+                  <span class="text-xs font-medium" id="package-expiry">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pending Payment Alert (keep for payment status) -->
+            <div id="pending-payment-alert" class="hidden">
+              <div class="metric-card bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="p-2 bg-blue-100 rounded-lg">
+                      <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                      </svg>
+                    </div>
+                    <span class="text-sm font-semibold text-blue-800">Payment Pending</span>
+                  </div>
+                  <a href="/payments.html" class="text-xs text-blue-600 hover:text-blue-700 font-medium">View Details</a>
+                </div>
+                <p class="text-xs text-blue-600 text-center" id="pending-payment-message">Your payment is being verified...</p>
+              </div>
+            </div>
+
+            <!-- Profile Card -->
+            <div class="metric-card">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-gray-900">My Profile</h3>
+                <a href="/profile.html" class="text-gray-400 hover:text-gray-600">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </a>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <img id="profile-avatar" src="https://api.dicebear.com/7.x/initials/svg?seed=User&backgroundColor=D71E49" alt="Profile" class="w-12 h-12 rounded-full">
+                <div>
+                  <p class="font-semibold text-gray-900" id="profile-name">Loading...</p>
+                  <p class="text-xs text-gray-500"><span id="membership-badge">Member</span> • <span id="total-credits" data-tour="credits" data-tooltip="credits-count">0</span> credits</p>
+                </div>
+              </div>
+              <!-- Stats Grid -->
+              <div class="grid grid-cols-2 gap-2 mb-3">
+                <div class="bg-brand-50 rounded-xl p-3 text-center">
+                  <p class="text-xl font-bold text-brand-600" id="user-classes">0</p>
+                  <p class="text-xs text-gray-500">Classes</p>
+                </div>
+                <div class="bg-orange-50 rounded-xl p-3 text-center">
+                  <p class="text-xl font-bold text-orange-600" id="user-streak">0</p>
+                  <p class="text-xs text-gray-500">Day Streak</p>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="bg-gray-50 rounded-lg py-2">
+                  <p class="text-sm font-bold text-gray-900" id="user-weight">--</p>
+                  <p class="text-xs text-gray-500">Weight</p>
+                </div>
+                <div class="bg-gray-50 rounded-lg py-2">
+                  <p class="text-sm font-bold text-gray-900" id="user-height">--</p>
+                  <p class="text-xs text-gray-500">Height</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Refer Friends Card - Only shown to package members (not drop-in only) -->
+            <div id="refer-friends-card" class="metric-card bg-gradient-to-br from-brand-500 to-brand-600 text-white hidden">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Refer Friends</h3>
+                  <p class="text-xs text-brand-100">Earn free credits!</p>
+                </div>
+              </div>
+              <p class="text-sm text-brand-100 mb-3">Share your link. When friends book, you both get 1 free class!</p>
+              <a href="/profile.html#referral" id="get-referral-link-btn" class="block w-full py-2 bg-white text-brand-600 text-center font-semibold rounded-lg hover:bg-brand-50 transition text-sm">
+                Get My Link
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50 transition-all"></div>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+  <div id="modals-placeholder"></div>
+
+  <script>
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('dashboard');
+      }
+    });
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    // Calendar functions - will be enhanced with booking data in dashboard.js
+    let currentMonth = new Date();
+    // Booking data will be populated by dashboard.js
+    window.calendarBookings = { booked: [], attended: [] };
+
+    function changeMonth(delta) {
+      currentMonth.setMonth(currentMonth.getMonth() + delta);
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const grid = document.getElementById('calendar-grid-large');
+      const monthLabel = document.getElementById('calendar-month-large');
+      if (!grid || !monthLabel) return;
+
+      const year = currentMonth.getFullYear();
+      const month = currentMonth.getMonth();
+      const firstDay = new Date(year, month, 1).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+
+      monthLabel.textContent = currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+      // Get booking data for this month
+      const bookedDates = window.calendarBookings.booked || [];
+      const attendedDates = window.calendarBookings.attended || [];
+
+      let html = '';
+      // Empty cells before first day
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="p-3"></div>';
+      }
+      // Days of month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const isToday = day === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+        const isBooked = bookedDates.includes(dateKey);
+        const isAttended = attendedDates.includes(dateKey);
+
+        // Today = brand red, Booked = green (active), Attended = darker grey (past)
+        let classes = 'calendar-day p-3 text-sm rounded-xl cursor-pointer hover:bg-gray-100 transition relative';
+        if (isToday) classes = 'calendar-day p-3 text-sm rounded-xl cursor-pointer transition relative bg-brand-500 text-white font-bold';
+        else if (isAttended) classes = 'calendar-day p-3 text-sm rounded-xl cursor-pointer transition relative bg-gray-300 text-gray-700 font-medium';
+        else if (isBooked) classes = 'calendar-day p-3 text-sm rounded-xl cursor-pointer transition relative bg-green-50 text-green-700 font-semibold';
+
+        // Dot: green for booked, darker grey for attended
+        const dot = isBooked || isAttended ?
+          `<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full ${isAttended ? 'bg-gray-600' : 'bg-green-500'}"></span>` : '';
+
+        html += `<div class="${classes}" data-date="${dateKey}" onmouseenter="showDateTooltip(event, '${dateKey}')" onmouseleave="hideDateTooltip()">${day}${dot}</div>`;
+      }
+      grid.innerHTML = html;
+    }
+
+    // Global tooltip element (created once)
+    let tooltipEl = null;
+
+    // Show tooltip on hover - positioned right above the day cell
+    function showDateTooltip(event, dateKey) {
+      // Get booking info from window.calendarBookingDetails
+      const bookings = window.calendarBookingDetails?.[dateKey] || [];
+
+      if (bookings.length === 0) {
+        return; // Don't show tooltip if no bookings
+      }
+
+      // Create tooltip if it doesn't exist
+      if (!tooltipEl) {
+        tooltipEl = document.createElement('div');
+        tooltipEl.className = 'fixed bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-lg z-[9999] pointer-events-none';
+        tooltipEl.style.maxWidth = '200px';
+        document.body.appendChild(tooltipEl);
+      }
+
+      // Build tooltip content - check if date is past before showing "Attended"
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const [year, month, day] = dateKey.split('-').map(Number);
+      const bookingDate = new Date(year, month - 1, day);
+      const isPast = bookingDate < today;
+
+      const content = bookings.map(b => {
+        // Only show "Attended" if date is in the past AND status is checked_in
+        const isAttended = isPast && b.status === 'checked_in';
+        const statusText = isAttended ? 'Attended' : 'Booked';
+        const statusColor = isAttended ? 'text-gray-300' : 'text-green-400';
+        const time = b.classTime ? ` @ ${b.classTime}` : '';
+        return `<div class="py-0.5"><span class="font-medium">${b.className}</span>${time}<br><span class="${statusColor}">${statusText}</span></div>`;
+      }).join('');
+
+      tooltipEl.innerHTML = content;
+      tooltipEl.style.display = 'block';
+
+      // Position tooltip directly above the clicked day cell
+      const rect = event.target.getBoundingClientRect();
+      const tooltipRect = tooltipEl.getBoundingClientRect();
+
+      let left = rect.left + (rect.width / 2) - (tooltipRect.width / 2);
+      let top = rect.top - tooltipRect.height - 8;
+
+      // Keep tooltip within viewport
+      if (left < 8) left = 8;
+      if (left + tooltipRect.width > window.innerWidth - 8) {
+        left = window.innerWidth - tooltipRect.width - 8;
+      }
+      if (top < 8) {
+        top = rect.bottom + 8; // Show below if no room above
+      }
+
+      tooltipEl.style.left = left + 'px';
+      tooltipEl.style.top = top + 'px';
+    }
+
+    function hideDateTooltip() {
+      if (tooltipEl) {
+        tooltipEl.style.display = 'none';
+      }
+    }
+
+    function showDayBookings(dateKey) {
+      // Will be handled by dashboard.js to show bookings for that day
+      if (window.handleDayClick) {
+        window.handleDayClick(dateKey);
+      }
+    }
+
+    // Initialize calendar
+    renderCalendar();
+  </script>
+
+  <script type="module" src="/auth.js?v=8"></script>
+  <script type="module" src="dashboard.js?v=8"></script>
+  <!-- Onboarding Tour & Help -->
+  <script src="/onboarding-tour.js"></script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

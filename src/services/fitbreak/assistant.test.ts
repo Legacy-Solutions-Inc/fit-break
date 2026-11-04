@@ -1,0 +1,31 @@
+import { describe, expect, it } from "vitest";
+
+import { reply } from "./assistant";
+
+describe("FitBreak assistant reply()", () => {
+  it("answers class-hour questions with every daily slot", () => {
+    const answer = reply("What are your class hours?");
+    for (const t of ["6:30 AM", "9:00 AM", "4:30 PM", "6:00 PM", "7:30 PM"]) {
+      expect(answer).toContain(t);
+    }
+    expect(answer).toMatch(/closed Sunday/i);
+  });
+
+  it("answers pricing with the package prices", () => {
+    const answer = reply("How much is the power pack?");
+    expect(answer).toContain("₱5,000");
+    expect(answer).toContain("₱350");
+  });
+
+  it("answers location with the studio address", () => {
+    expect(reply("Where are you located?")).toContain("Roxas Drive");
+  });
+
+  it("explains credits and GCash payment", () => {
+    expect(reply("how do credits work with gcash")).toMatch(/1 credit = 1 class/);
+  });
+
+  it("falls back to the topic list for unrelated questions", () => {
+    expect(reply("tell me a joke")).toMatch(/schedules, pricing/);
+  });
+});

@@ -17,8 +17,9 @@ export interface Config {
 
 export const config = {
   site: {
-    name: "Fit Break",
-    description: "A Next.js + Supabase + shadcn/ui starter template.",
+    name: "FitBreak",
+    description:
+      "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes, booked online.",
     url: getSiteURL(),
     version: env.NEXT_PUBLIC_SITE_VERSION,
   },

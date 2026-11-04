@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Schedule - FitBreak</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Book your FitBreak bootcamp classes. View the weekly schedule with 4 sessions daily, Monday to Saturday. All classes by Coach Iren.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+    <!-- Tailwind CSS -->
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/styles.css?v=20260119">
+
+    <!-- Component Loader -->
+    <script src="/components/loader.js"></script>
+    <script src="/components/member-sidebar.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+    <!-- Header -->
+
+    <div class="flex min-h-screen">
+      <!-- Sidebar Placeholder -->
+      <div id="member-sidebar-placeholder"></div>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-h-screen bg-gray-50">
+        <div class="p-6">
+
+        <!-- Header -->
+        <div class="grid lg:grid-cols-2 gap-8 items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Class Schedule</h1>
+                <p class="text-gray-600">Book your spot in our upcoming bootcamp classes</p>
+            </div>
+            <div class="hidden lg:block">
+                <img src="/images/fitbreak7.jpg" alt="FitBreak workout session" class="w-full h-48 object-cover object-center rounded-2xl shadow-lg" />
+            </div>
+        </div>
+
+        <!-- Credits Display -->
+        <div id="credits-banner" class="bg-gradient-to-r from-brand-500 to-brand-600 rounded-xl p-5 mb-6 text-white">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-sm text-brand-100 mb-1">Your Credits</p>
+                    <p id="credits-count" class="text-3xl font-bold">-</p>
+                </div>
+                <a href="/payments.html" class="px-5 py-2.5 bg-white text-brand-600 rounded-full font-semibold hover:bg-brand-50 transition text-sm">
+                    Buy Credits
+                </a>
+            </div>
+        </div>
+
+        <!-- Week Navigation -->
+        <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-gray-500">Schedule for</p>
+                    <p id="week-range" class="text-lg font-bold text-gray-900">Loading...</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-500">All classes by</p>
+                    <p class="font-semibold text-gray-900">Coach Iren</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500"></div>
+            <p class="mt-4 text-gray-600">Loading schedule...</p>
+        </div>
+
+        <!-- Schedule by Day -->
+        <div id="schedule-container" class="hidden space-y-4">
+            <!-- Days will be populated here -->
+        </div>
+
+        <!-- Sunday Closed Notice -->
+        <div class="mt-6 bg-gray-100 rounded-xl p-4 text-center">
+            <p class="text-gray-600"><span class="font-semibold">Sunday:</span> Studio Closed</p>
+        </div>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="modal-booking" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
+            <button id="btn-close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <h2 class="text-xl font-bold text-gray-900 mb-4">Confirm Booking</h2>
+
+            <div id="modal-content" class="space-y-4">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="mt-6 flex gap-3">
+                <button id="btn-cancel-booking" class="flex-1 px-5 py-3 bg-gray-200 text-gray-700 rounded-full font-semibold hover:bg-gray-300 transition">
+                    Cancel
+                </button>
+                <button id="btn-confirm-booking" class="flex-1 px-5 py-3 bg-brand-500 text-white rounded-full font-semibold hover:bg-brand-600 transition">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modals -->
+    <div id="modals-placeholder"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="/auth.js?v=8"></script>
+    <script>
+      // Show sidebar immediately from cache
+      document.addEventListener('DOMContentLoaded', function() {
+        var cached = localStorage.getItem('fitbreak_user');
+        if (cached && typeof initMemberSidebar === 'function') {
+          initMemberSidebar('schedule');
+        }
+      });
+    </script>
+    <script type="module" src="/schedule.js?v=8"></script>
+
+  <!-- Footer -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Onboarding Tour & Help -->
+  <script src="/onboarding-tour.js"></script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

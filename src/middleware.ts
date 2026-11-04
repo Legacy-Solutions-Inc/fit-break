@@ -9,6 +9,12 @@ import { buildCsp } from "@/lib/csp";
 import { createClient } from "@/lib/supabase/middleware";
 import { paths } from "@/paths";
 
+// FitBreak site routes (mirrors routes in src/components/sites/fitbreak/links.ts;
+// kept as literals so the edge bundle doesn't pull in React types).
+const MEMBER_PREFIX = "/member";
+const FITBREAK_LOGIN = "/login";
+const FITBREAK_MEMBER_HOME = "/member/dashboard";
+
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -59,6 +65,9 @@ export async function middleware(req: NextRequest) {
     if (pathname.startsWith("/dashboard")) {
       return redirectTo(paths.auth.signIn);
     }
+    if (pathname.startsWith(MEMBER_PREFIX)) {
+      return redirectTo(FITBREAK_LOGIN);
+    }
     return passThrough();
   }
 
@@ -85,6 +94,14 @@ export async function middleware(req: NextRequest) {
     ) {
       return redirectTo(paths.dashboard.overview, res);
     }
+  }
+
+  // FitBreak member area (cloned from fitbreak.ph's members-only pages).
+  if (pathname.startsWith(MEMBER_PREFIX) && !isAuthed) {
+    return redirectTo(FITBREAK_LOGIN, res);
+  }
+  if (pathname === FITBREAK_LOGIN && isAuthed) {
+    return redirectTo(FITBREAK_MEMBER_HOME, res);
   }
 
   // Keep signed-in users out of the auth screens (except the OAuth callback).

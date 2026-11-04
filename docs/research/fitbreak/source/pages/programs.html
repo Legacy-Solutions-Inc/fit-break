@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Formats — FitBreak</title>
+  <meta name="description" content="Discover FitBreak's 6 unique bootcamp-style classes. Each day features a different workout targeting specific muscle groups.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+
+  <!-- Tailwind CSS -->
+  <link href="/styles.css?v=20260101" rel="stylesheet">
+
+  <!-- Component Loader - Must load FIRST -->
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar Placeholder -->
+    <div id="member-sidebar-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="flex-1 min-h-screen bg-gray-50">
+      <div class="p-6">
+
+      <!-- Hero Section -->
+      <div class="bg-gradient-to-br from-brand-500 to-brand-700 text-white py-12 rounded-2xl mb-6">
+        <div class="text-center px-6">
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">Class Formats</h1>
+          <p class="text-lg text-brand-50 max-w-2xl mx-auto">
+            Six unique bootcamp-style classes designed to target different muscle groups throughout the week
+          </p>
+        </div>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="bg-white rounded-xl shadow-sm p-4 mb-6">
+        <div class="flex flex-wrap items-center gap-4">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="text-sm font-medium text-gray-700">Filter:</span>
+            <button class="filter-btn active px-3 py-1.5 rounded-full text-sm font-medium bg-brand-500 text-white" data-filter="all">All Programs</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="balance">Balance</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="cardio">Cardio</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="core">Core</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="endurance">Endurance</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="fat burn">Fat Burn</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="flexibility">Flexibility</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="full body">Full Body</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="glutes">Glutes</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="hiit">HIIT</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="lower body">Lower Body</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="posture">Posture</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="stability">Stability</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="strength">Strength</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="toning">Toning</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="upper body">Upper Body</button>
+            <button class="filter-btn px-3 py-1.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-filter="weight loss">Weight Loss</button>
+          </div>
+          <div class="ml-auto">
+            <span class="text-sm text-gray-600" id="program-count">Loading programs...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Programs Grid -->
+      <div id="programs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <!-- Programs will be loaded here -->
+        <div class="col-span-full text-center py-12">
+          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-500 mx-auto"></div>
+          <p class="mt-4 text-gray-600">Loading programs...</p>
+        </div>
+      </div>
+
+      <!-- My Programs Widget (for enrolled users) -->
+      <div id="my-programs-section" class="hidden bg-white rounded-2xl shadow-sm p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl font-bold text-gray-900">My Active Programs</h2>
+          <a href="/my-programs.html" class="text-brand-500 hover:text-brand-600 font-medium">View All →</a>
+        </div>
+        <div id="my-programs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- User's enrolled programs will appear here -->
+        </div>
+      </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="hidden fixed bottom-4 right-4 bg-gray-900 text-white px-6 py-3 rounded-lg shadow-lg z-50">
+    <p id="toast-message"></p>
+  </div>
+
+  <!-- Modals Component -->
+  <div id="modals-placeholder"></div>
+
+  <!-- Firebase & App Scripts -->
+  <script type="module" src="/auth.js"></script>
+  <script>
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('exercises');
+      }
+    });
+  </script>
+  <script type="module" src="/programs.js?v=6"></script>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

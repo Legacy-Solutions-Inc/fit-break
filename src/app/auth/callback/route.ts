@@ -8,7 +8,12 @@ import { paths } from "@/paths";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? paths.dashboard.overview;
+  const requested = searchParams.get("next");
+  // Same-origin paths only ("/x", never "//host" or absolute URLs).
+  const next =
+    requested && requested.startsWith("/") && !requested.startsWith("//")
+      ? requested
+      : paths.dashboard.overview;
 
   if (code) {
     const supabase = createClient(cookies());
@@ -18,5 +23,7 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}${paths.auth.signIn}?error=auth_callback`);
+  // FitBreak member sign-ins start on /login; send failures back there.
+  const failure = next.startsWith("/member") ? "/login" : paths.auth.signIn;
+  return NextResponse.redirect(`${origin}${failure}?error=auth_callback`);
 }
