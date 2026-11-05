@@ -12,6 +12,9 @@ jobs:
   analyze:
     name: Analyze (javascript-typescript)
     runs-on: ubuntu-latest
+    # Uploading results needs GitHub Advanced Security (code scanning) on this
+    # repo. Remove continue-on-error once it is enabled in Settings → Code security.
+    continue-on-error: true
     permissions:
       actions: read
       contents: read
