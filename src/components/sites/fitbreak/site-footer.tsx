@@ -114,17 +114,6 @@ export function SiteFooter() {
               Terms of Service
             </a>
           </div>
-          <p className="text-xs">
-            Powered by{" "}
-            <a
-              href="https://fusionict.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${footerLink} underline underline-offset-2`}
-            >
-              FusionICT
-            </a>
-          </p>
         </div>
       </div>
     </footer>
