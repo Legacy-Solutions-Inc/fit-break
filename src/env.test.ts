@@ -44,4 +44,22 @@ describe("parseEnv", () => {
     const env = parseEnv({ NEXT_PUBLIC_LOG_LEVEL: "" });
     expect(env.NEXT_PUBLIC_LOG_LEVEL).toBeUndefined();
   });
+
+  it("accepts a GA4 measurement ID and treats empty as unset", () => {
+    expect(
+      parseEnv({ NEXT_PUBLIC_GA_MEASUREMENT_ID: "G-ABC123XYZ9" }).NEXT_PUBLIC_GA_MEASUREMENT_ID,
+    ).toBe("G-ABC123XYZ9");
+    expect(
+      parseEnv({ NEXT_PUBLIC_GA_MEASUREMENT_ID: "" }).NEXT_PUBLIC_GA_MEASUREMENT_ID,
+    ).toBeUndefined();
+    expect(parseEnv({}).NEXT_PUBLIC_GA_MEASUREMENT_ID).toBeUndefined();
+  });
+
+  it("throws on a malformed GA4 measurement ID (UA-, GTM- or junk)", () => {
+    for (const bad of ["UA-12345-1", "GTM-ABC123", "G-", "g-abc123", "G-ABC 123", "G-1');x//"]) {
+      expect(() => parseEnv({ NEXT_PUBLIC_GA_MEASUREMENT_ID: bad })).toThrow(
+        /NEXT_PUBLIC_GA_MEASUREMENT_ID/,
+      );
+    }
+  });
 });

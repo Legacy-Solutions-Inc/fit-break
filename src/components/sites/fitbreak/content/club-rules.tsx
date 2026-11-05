@@ -97,6 +97,7 @@ export function ClubRules() {
           <div className="lg:col-span-4 lg:justify-self-end">
             <a
               href={contact.messenger}
+              data-placement="club-rules"
               target="_blank"
               rel="noopener noreferrer"
               className="fb-btn fb-btn--crimson min-h-14 px-8 text-lg"

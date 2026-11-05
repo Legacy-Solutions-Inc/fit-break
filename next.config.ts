@@ -34,6 +34,11 @@ const nextConfig: NextConfig = {
   // Opt-in separate build dir (e.g. NEXT_DIST_DIR=.next-preview) so a second
   // dev/preview server never clobbers the main `.next` of a running `pnpm dev`.
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  // Blog-post share images render on request (next/og) and read these fonts
+  // from node_modules at runtime; the standalone output must include them.
+  outputFileTracingIncludes: {
+    "/blog/[id]/*": ["./node_modules/@fontsource/archivo-narrow/files/*.woff"],
+  },
   // Payment proof uploads (member/payments) are validated to ≤5 MB in the action;
   // allow that through the Server Action body limit (default 1 MB).
   experimental: { serverActions: { bodySizeLimit: "6mb" } },

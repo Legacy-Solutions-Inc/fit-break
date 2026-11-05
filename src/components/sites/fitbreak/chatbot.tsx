@@ -84,7 +84,9 @@ export function Chatbot() {
   const bubbleText = "max-w-[85%] px-3.5 py-2.5 text-sm leading-[1.45] whitespace-pre-wrap";
 
   return (
-    <div className="fixed right-4 bottom-20 z-[9999] lg:bottom-4">
+    // data-placement / data-analytics: GA4 event markers (ADR 0010), read by
+    // the delegated listener in analytics/analytics-events.tsx.
+    <div data-placement="assistant" className="fixed right-4 bottom-20 z-[9999] lg:bottom-4">
       <div
         role="dialog"
         aria-label="FitBreak Assistant"
@@ -185,6 +187,7 @@ export function Chatbot() {
         type="button"
         aria-label={open ? "Close FitBreak Assistant" : "Open FitBreak Assistant"}
         aria-expanded={open}
+        data-analytics="assistant-open"
         onClick={() => setOpen((v) => !v)}
         className="flex h-14 w-14 items-center justify-center rounded-[3px] bg-ink shadow-[0_10px_30px_-8px_rgba(23,19,15,0.55)] transition-colors duration-200 hover:bg-crimson"
       >

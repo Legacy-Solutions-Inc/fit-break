@@ -41,7 +41,7 @@ export function WeeklyTimetable() {
       </section>
 
       {/* Booking line (replaces the members' credits banner) */}
-      <section className="bg-paper">
+      <section data-placement="schedule" className="bg-paper">
         <div className={wrap}>
           <div
             data-reveal
@@ -72,7 +72,7 @@ export function WeeklyTimetable() {
       </section>
 
       {/* The week */}
-      <section className="bg-paper py-20 lg:py-28">
+      <section data-placement="schedule" className="bg-paper py-20 lg:py-28">
         <div className={wrap}>
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
             <div className="lg:col-span-7">

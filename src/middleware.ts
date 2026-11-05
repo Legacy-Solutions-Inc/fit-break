@@ -5,6 +5,7 @@ import type { User } from "@supabase/supabase-js";
 import {
   analyticsSessionReplay,
   authDisabled,
+  isGoogleAnalyticsConfigured,
   isSupabaseConfigured,
   memberAreaEnabled,
 } from "@/config";
@@ -33,6 +34,9 @@ export async function middleware(req: NextRequest) {
     // Adds `worker-src 'self' blob:` ONLY when PostHog Session Replay is on
     // (off by default). See src/config.ts and docs/adr/0007.
     sessionReplay: analyticsSessionReplay,
+    // Adds Google's tag + collection hosts ONLY when a GA4 measurement ID is
+    // configured (off by default). See src/config.ts and docs/adr/0010.
+    googleAnalytics: isGoogleAnalyticsConfigured,
   });
 
   // Forwarded request headers carry the nonce + CSP so Next.js auto-nonces its

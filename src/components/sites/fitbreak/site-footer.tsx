@@ -17,7 +17,7 @@ const quickLinks = [
 /** Solid ink footer with the studio motto set large (ADR 0009). */
 export function SiteFooter() {
   return (
-    <footer className="fb-grain bg-ink pt-20 pb-10 text-paper lg:pt-28">
+    <footer data-placement="footer" className="fb-grain bg-ink pt-20 pb-10 text-paper lg:pt-28">
       <div className={`${wrap} relative z-10`}>
         <p className="fb-display max-w-[16ch] text-[clamp(3rem,8vw,7.5rem)]">
           Sometimes stopping is what makes you <span className="text-crimson">go.</span>

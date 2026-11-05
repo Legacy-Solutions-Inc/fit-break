@@ -109,6 +109,7 @@ export function SiteHeader({ user }: { user: SiteUser | null }) {
     // grows, so the header's footprint (and everything measured below it, like
     // the pinned homepage scenes) never moves.
     <header
+      data-placement="header"
       data-scrolled={scrolled || undefined}
       className={cn(
         "sticky top-0 z-50 border-b bg-paper/90 backdrop-blur-xl transition-[margin,border-color] duration-300 motion-reduce:transition-none",

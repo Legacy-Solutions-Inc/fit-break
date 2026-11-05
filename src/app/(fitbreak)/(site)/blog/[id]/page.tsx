@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { PostView } from "@/components/sites/fitbreak/blog/post-view";
+import { JsonLd } from "@/components/sites/fitbreak/json-ld";
 import { routes } from "@/components/sites/fitbreak/links";
+import { crumbsFor, PAGE_SEO } from "@/components/sites/fitbreak/page-seo";
+import { STUDIO } from "@/components/sites/fitbreak/studio";
 import { config } from "@/config";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { buildBlogPosting, buildBreadcrumbs } from "@/lib/seo/structured-data";
 import { getPost, getRelatedPosts, listPostIds } from "@/services/fitbreak/blog";
 
 type Params = Promise<{ id: string }>;
@@ -32,23 +37,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   }
 
   const title = `${post.title} — FitBreak Blog`;
-  const description = post.excerpt || post.title;
-  const url = routes.blogPost(post.id);
   return {
-    title: { absolute: title },
-    description,
+    ...pageMetadata(
+      { path: routes.blogPost(post.id), title, description: post.excerpt || post.title },
+      { type: "article", publishedTime: post.publishedAt },
+    ),
     keywords: post.keywords,
-    alternates: { canonical: url },
-    openGraph: {
-      type: "article",
-      url,
-      title,
-      description,
-      siteName: "FitBreak",
-      publishedTime: post.publishedAt,
-      images: [{ url: post.image, width: 1200, height: 675, alt: post.title }],
-    },
-    twitter: { card: "summary_large_image", title, description, images: [post.image] },
   };
 }
 
@@ -60,5 +54,16 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   const related = await getRelatedPosts(post.id);
   const shareUrl = new URL(routes.blogPost(post.id), config.site.url).toString();
 
-  return <PostView post={post} related={related} shareUrl={shareUrl} />;
+  return (
+    <>
+      <JsonLd
+        data={buildBreadcrumbs(
+          crumbsFor(PAGE_SEO.blog, { name: post.title, path: routes.blogPost(post.id) }),
+          config.site.url,
+        )}
+      />
+      <JsonLd data={buildBlogPosting(post, STUDIO, config.site.url)} />
+      <PostView post={post} related={related} shareUrl={shareUrl} />
+    </>
+  );
 }

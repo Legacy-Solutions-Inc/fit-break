@@ -241,7 +241,7 @@ export function Corporate() {
       </section>
 
       {/* CTA (source `py-10` is absent from its compiled CSS, so dropped) */}
-      <section className="bg-paper py-20 lg:py-32">
+      <section data-placement="corporate" className="bg-paper py-20 lg:py-32">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
             <h2 className="fb-display mb-8 text-[clamp(3rem,8vw,7rem)]">Get Your Group Started</h2>

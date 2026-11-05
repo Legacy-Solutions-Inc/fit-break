@@ -57,4 +57,47 @@ describe("buildCsp", () => {
     const csp = buildCsp(NONCE, { isDev: false, sessionReplay: true });
     expect(csp).toContain("worker-src 'self' blob:");
   });
+
+  describe("Google Analytics 4 (ADR 0010)", () => {
+    const GOOGLE =
+      /googletagmanager|google-analytics|analytics\.google|connect-src[^;]*google\.com/;
+
+    it("no measurement ID (default): no Google host anywhere", () => {
+      expect(buildCsp(NONCE, { isDev: false })).not.toMatch(GOOGLE);
+      expect(buildCsp(NONCE, { isDev: true })).not.toMatch(GOOGLE);
+      expect(buildCsp(NONCE, { isDev: false, googleAnalytics: false })).not.toMatch(GOOGLE);
+    });
+
+    it("with a measurement ID: adds the gtag.js host to script-src", () => {
+      const csp = buildCsp(NONCE, { isDev: false, googleAnalytics: true });
+      expect(csp).toContain(
+        `script-src 'self' 'nonce-${NONCE}' 'strict-dynamic' https://www.googletagmanager.com;`,
+      );
+    });
+
+    it("with a measurement ID: adds the collection hosts to connect-src", () => {
+      const csp = buildCsp(NONCE, { isDev: false, googleAnalytics: true });
+      expect(csp).toMatch(
+        /connect-src 'self' https:\/\/\*\.google-analytics\.com https:\/\/\*\.analytics\.google\.com https:\/\/\*\.googletagmanager\.com https:\/\/www\.google\.com(;|$)/,
+      );
+    });
+
+    it("with a measurement ID: every other directive is unchanged", () => {
+      const strip = (csp: string) =>
+        csp.split("; ").filter((d) => !d.startsWith("script-src") && !d.startsWith("connect-src"));
+      for (const isDev of [false, true]) {
+        const base = { isDev, supabaseUrl: "https://abc.supabase.co" };
+        expect(strip(buildCsp(NONCE, { ...base, googleAnalytics: true }))).toEqual(
+          strip(buildCsp(NONCE, base)),
+        );
+      }
+    });
+
+    it("never weakens script-src: no 'unsafe-inline', and the nonce stays", () => {
+      const csp = buildCsp(NONCE, { isDev: false, googleAnalytics: true });
+      expect(csp).not.toContain("'unsafe-inline' ");
+      expect(csp).not.toMatch(/script-src[^;]*'unsafe-inline'/);
+      expect(csp).toContain(`'nonce-${NONCE}'`);
+    });
+  });
 });

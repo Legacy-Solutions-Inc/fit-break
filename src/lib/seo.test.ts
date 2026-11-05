@@ -31,4 +31,10 @@ describe("buildRobots", () => {
     expect(disallow).toEqual(expect.arrayContaining(["/dashboard/", "/member/", "/login"]));
     expect(robots.sitemap).toBe("https://example.com/sitemap.xml");
   });
+
+  it("allows every crawler (answer and training) with one rule, no crawler-specific blocks", () => {
+    const robots = buildRobots("https://fitbreak.ph/");
+    expect(Array.isArray(robots.rules)).toBe(false);
+    expect(robots.rules).toMatchObject({ userAgent: "*", allow: "/" });
+  });
 });

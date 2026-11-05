@@ -5,59 +5,8 @@ import { cn } from "@/lib/utils";
 
 import { Arrow, ArrowLink, SectionHead, wrap } from "../editorial";
 import { asset, contact, routes } from "../links";
-import { CertificationIcon, type CertificationIconName } from "./certification-icons";
-
-const certifications: ReadonlyArray<{
-  icon: CertificationIconName;
-  title: string;
-  text: string;
-}> = [
-  {
-    icon: "badgeCheck",
-    title: "Certified Personal Trainer",
-    text: "Professional certification in personal training and fitness instruction",
-  },
-  {
-    icon: "bolt",
-    title: "Functional Fitness Essentials",
-    text: "Specialized in functional movement patterns and training",
-  },
-  {
-    icon: "clipboard",
-    title: "Functional Anatomy & Adaptive Fitness",
-    text: "Training in anatomy and adaptive fitness techniques",
-  },
-  {
-    icon: "eye",
-    title: "Movement Analysis & Corrective Strategies",
-    text: "Expert in identifying and correcting movement patterns",
-  },
-  {
-    icon: "heart",
-    title: "Obesity Exercise Specialist",
-    text: "Specialized training for weight management clients",
-  },
-  {
-    icon: "bookOpen",
-    title: "Nutrition Essentials",
-    text: "Certified in nutrition fundamentals and dietary guidance",
-  },
-  {
-    icon: "chartBar",
-    title: "Nutrition for Obesity & Weight Management",
-    text: "Advanced certification in weight management nutrition",
-  },
-  {
-    icon: "fire",
-    title: "HIIT FIT Certified Instructor",
-    text: "Certified to lead high-intensity interval training",
-  },
-  {
-    icon: "bolt",
-    title: "Certified MetCon L1 Specialist",
-    text: "Metabolic conditioning specialist certification",
-  },
-];
+import { CertificationIcon } from "./certification-icons";
+import { certifications } from "./coach-data";
 
 const expertise = [
   "Body Transformation",
@@ -110,7 +59,7 @@ export function CoachProfile() {
   return (
     <>
       {/* Profile: sharp portrait beside the big name heading (5/7). */}
-      <section className="bg-paper pt-10 pb-20 lg:pt-16 lg:pb-32">
+      <section data-placement="coach" className="bg-paper pt-10 pb-20 lg:pt-16 lg:pb-32">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="relative aspect-[2/3] overflow-hidden bg-bone lg:col-span-5">
             <Image
@@ -361,7 +310,7 @@ export function CoachProfile() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-rule bg-paper py-20 lg:py-32">
+      <section data-placement="coach" className="border-t border-rule bg-paper py-20 lg:py-32">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
             <h2 className="fb-display mb-8 text-[clamp(3rem,8vw,7rem)]">

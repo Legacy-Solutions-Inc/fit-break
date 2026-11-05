@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 
 import { Fitbreakers } from "@/components/sites/fitbreak/content/fitbreakers";
+import { JsonLd } from "@/components/sites/fitbreak/json-ld";
+import { crumbsFor, PAGE_SEO } from "@/components/sites/fitbreak/page-seo";
+import { config } from "@/config";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { buildBreadcrumbs } from "@/lib/seo/structured-data";
 
-export const metadata: Metadata = {
-  title: { absolute: "Who Are the FitBreakers? - FitBreak" },
-  description:
-    "FitBreakers are women who choose themselves. Discover the meaning behind the name and join our empowering community.",
-  alternates: { canonical: "/fitbreakers" },
-};
+export const metadata: Metadata = pageMetadata(PAGE_SEO.fitbreakers);
 
 export default function Page() {
-  return <Fitbreakers />;
+  return (
+    <>
+      <JsonLd data={buildBreadcrumbs(crumbsFor(PAGE_SEO.fitbreakers), config.site.url)} />
+      <Fitbreakers />
+    </>
+  );
 }

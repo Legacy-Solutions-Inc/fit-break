@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 
 import { PrivacyPolicy } from "@/components/sites/fitbreak/content/privacy-policy";
+import { JsonLd } from "@/components/sites/fitbreak/json-ld";
+import { crumbsFor, PAGE_SEO } from "@/components/sites/fitbreak/page-seo";
+import { config } from "@/config";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { buildBreadcrumbs } from "@/lib/seo/structured-data";
 
 export const metadata: Metadata = {
-  title: { absolute: "Privacy Policy - FitBreak" },
-  description:
-    "Privacy Policy for FitBreak - How we collect, use, and protect your personal information.",
-  alternates: { canonical: "/privacy-policy" },
+  ...pageMetadata(PAGE_SEO.privacy),
   robots: { index: false, follow: false },
 };
 
 export default function Page() {
-  return <PrivacyPolicy />;
+  return (
+    <>
+      <JsonLd data={buildBreadcrumbs(crumbsFor(PAGE_SEO.privacy), config.site.url)} />
+      <PrivacyPolicy />
+    </>
+  );
 }

@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
 
+import { JsonLd } from "@/components/sites/fitbreak/json-ld";
+import { crumbsFor, PAGE_SEO } from "@/components/sites/fitbreak/page-seo";
 import { BookingProvider } from "@/components/sites/fitbreak/booking/booking-provider";
 import { Schedule } from "@/components/sites/fitbreak/booking/schedule";
 import { OnboardingTour } from "@/components/sites/fitbreak/member-pages/onboarding-tour";
 import { MemberShell } from "@/components/sites/fitbreak/member-shell/member-shell";
 import { WeeklyTimetable } from "@/components/sites/fitbreak/schedule/weekly-timetable";
-import { authDisabled, memberAreaEnabled } from "@/config";
+import { authDisabled, config, memberAreaEnabled } from "@/config";
 import { getMember, requireMember } from "@/lib/fitbreak/member";
+import { pageMetadata } from "@/lib/seo/metadata";
+import { buildBreadcrumbs } from "@/lib/seo/structured-data";
 import { getAccount, getBookingCounts, listBookings } from "@/services/fitbreak/members";
 
-export const metadata: Metadata = {
-  title: { absolute: "Class Schedule - FitBreak" },
-  description:
-    "Book your FitBreak bootcamp classes. View the weekly schedule, Monday to Saturday. All classes by Coach Iren.",
-  alternates: { canonical: "/schedule" },
-};
+export const metadata: Metadata = pageMetadata(PAGE_SEO.schedule);
 
 /**
  * Public schedule. With the Member Area on, guests see "Sign In" slots and members
@@ -22,7 +21,14 @@ export const metadata: Metadata = {
  */
 export default async function SchedulePage() {
   // Information Site: a read-only weekly timetable with Messenger booking.
-  if (!memberAreaEnabled) return <WeeklyTimetable />;
+  if (!memberAreaEnabled) {
+    return (
+      <>
+        <JsonLd data={buildBreadcrumbs(crumbsFor(PAGE_SEO.schedule), config.site.url)} />
+        <WeeklyTimetable />
+      </>
+    );
+  }
 
   const now = new Date();
   // In dev without Supabase (auth disabled) use the member area's demo member

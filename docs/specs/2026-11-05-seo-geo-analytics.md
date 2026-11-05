@@ -1,6 +1,6 @@
 # Spec: SEO, GEO/AEO and Google Analytics 4 for the FitBreak Information Site
 
-Date: 2026-11-05 · Status: ready-for-agent · Decided in a grilling session on 2026-11-05 ·
+Date: 2026-11-05 · Status: implemented (2026-11-05) · Decided in a grilling session on 2026-11-05 ·
 Related: [ADR 0010](../adr/0010-fitbreak-google-analytics-4.md) (GA4, supersedes 0007 for FitBreak),
 [ADR 0009](../adr/0009-fitbreak-departs-visually-from-the-clone.md),
 [non-fact messages spec](2026-11-05-remove-non-fact-messages.md), research in `docs/research/fitbreak/`
@@ -322,3 +322,7 @@ name, Search Console, the Google Business Profile, and matching listing details 
 - Once the Business Profile exists, add its URL to the business record's social profiles.
 - The GEO readiness target is about 8.5/10 (`geo-audit.md`). Re-run the GEO audit and a
   technical SEO check after launch.
+- As built, the browser seam is split across three Playwright files, one per track: SEO and
+  structured data, share images, and analytics. The GA-on analytics checks run on a server
+  started with a test measurement ID. Google also sends Consent Mode pings to
+  `www.google.com`, so that host is in the GA-only connect-src.

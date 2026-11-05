@@ -11,7 +11,10 @@ import { Scene } from "./motion/home-scenes";
 export function Hero() {
   return (
     <Scene kind="hero" className="fb-pre">
-      <section className="fb-grain relative flex min-h-[calc(100svh-4rem)] items-end overflow-hidden bg-ink text-paper">
+      <section
+        data-placement="hero"
+        className="fb-grain relative flex min-h-[calc(100svh-4rem)] items-end overflow-hidden bg-ink text-paper"
+      >
         <div data-hero-photo className="absolute inset-0 z-0">
           <Image
             src={asset("/images/fitbreak12.webp")}

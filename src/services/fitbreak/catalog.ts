@@ -122,6 +122,42 @@ export const PACKAGES: readonly ClassPackage[] = [
 
 export const ANNUAL_MEMBERSHIP_FEE_PHP = 500;
 
+/** The days classes run (closed Sunday), in week order. */
+export const CLASS_DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+] as const;
+
+/**
+ * Corporate Group Program: the per-class, per-person rate for organizations that
+ * enroll at least {@link CORPORATE_MIN_MEMBERS} women on one of the
+ * {@link CORPORATE_ELIGIBLE_CREDITS}-class packages (corporate.html).
+ */
+export const CORPORATE_RATE_PHP = 200;
+export const CORPORATE_MIN_MEMBERS = 5;
+export const CORPORATE_ELIGIBLE_CREDITS = [12, 20] as const;
+
+/** A package by id. Every id in the union exists in {@link PACKAGES}. */
+export function getPackage(id: ClassPackage["id"]): ClassPackage {
+  const pkg = PACKAGES.find((p) => p.id === id);
+  if (!pkg) throw new Error(`Unknown package: ${id}`);
+  return pkg;
+}
+
+/** 1800 → "₱1,800" (as the pages print prices). */
+export function formatPhp(amount: number): string {
+  return `₱${amount.toLocaleString("en-US")}`;
+}
+
+/** Whole-percent saving of `perClassPhp` against `basePhp` (the drop-in price): 300 vs 350 → 14. */
+export function discountPercent(perClassPhp: number, basePhp: number): number {
+  return Math.round((1 - perClassPhp / basePhp) * 100);
+}
+
 export const PAYMENT_DETAILS = {
   bpi: { bank: "BPI", accountNumber: "8969-3458-85", accountName: "Iren San Buenaventura" },
 } as const;

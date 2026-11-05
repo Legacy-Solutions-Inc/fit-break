@@ -1,4 +1,12 @@
 import { cn } from "@/lib/utils";
+import {
+  CORPORATE_RATE_PHP,
+  discountPercent,
+  formatPhp,
+  getPackage,
+  PACKAGES,
+  type ClassPackage,
+} from "@/services/fitbreak/catalog";
 
 import { Arrow, ArrowLink } from "./editorial";
 import { Icon } from "./icons";
@@ -9,54 +17,53 @@ import { asset, contact, routes } from "./links";
  * homepage's GSAP scenes so /pricing never loads that animation code.
  */
 
-/** The three class packs, compared by price per class (ADR 0009). */
-export const packs = [
-  {
-    name: "Starter Pack",
-    classes: "6 Classes",
-    validity: "Valid 30 days",
-    perClass: "₱300",
-    total: "₱1,800",
-    save: "Save 14%",
-    advance: "3-day advance booking",
-    tag: null,
-    featured: false,
-  },
-  {
-    name: "Standard Pack",
-    classes: "12 Classes",
-    validity: "Valid 30 days",
-    perClass: "₱275",
-    total: "₱3,300",
-    save: "Save 21%",
-    advance: "5-day advance booking",
-    tag: "Popular",
-    featured: true,
-  },
-  {
-    name: "Power Pack",
-    classes: "20 Classes",
-    validity: "Valid 45 days",
-    perClass: "₱250",
-    total: "₱5,000",
-    save: "Save 29%",
-    advance: "7-day advance booking",
-    tag: "Best Value",
-    featured: false,
-  },
-] as const;
+/** How each pack is presented (the catalogue carries the numbers). */
+const packLook = {
+  starter: { tag: null, featured: false },
+  standard: { tag: "Popular", featured: true },
+  power: { tag: "Best Value", featured: false },
+} as const satisfies Record<
+  Exclude<ClassPackage["id"], "drop-in">,
+  { tag: string | null; featured: boolean }
+>;
+
+const dropIn = getPackage("drop-in");
+
+/**
+ * The three class packs, compared by price per class (ADR 0009). Prices,
+ * classes, validity and booking window come from the studio catalogue; the
+ * discount is each pack's saving per class against the drop-in price.
+ */
+export const packs = PACKAGES.flatMap((pkg) =>
+  pkg.id === "drop-in"
+    ? []
+    : [
+        {
+          name: pkg.name,
+          classes: `${pkg.credits} Classes`,
+          validity: `Valid ${pkg.validityDays} days`,
+          perClass: formatPhp(pkg.perClassPhp),
+          total: formatPhp(pkg.pricePhp),
+          save: `Save ${discountPercent(pkg.perClassPhp, dropIn.perClassPhp)}%`,
+          advance: `${pkg.advanceBookingDays}-day advance booking`,
+          ...packLook[pkg.id],
+        },
+      ],
+);
 
 /** Guest Drop-In as one plain line above the packs. */
 export function DropInLine() {
   return (
     <div
       data-price-card
+      data-placement="drop-in"
       className="flex flex-col gap-4 border-y border-ink/20 py-6 lg:flex-row lg:items-center lg:justify-between"
     >
       <p className="text-lg">
         <span className="fb-label mr-3 text-mute">New here?</span>
         <strong className="font-semibold">Guest Drop-In</strong> — try a class for{" "}
-        <strong className="fb-num font-semibold">₱350</strong>, no membership required.{" "}
+        <strong className="fb-num font-semibold">{formatPhp(dropIn.pricePhp)}</strong>, no
+        membership required.{" "}
         <span className="text-mute">Next-day booking only · limited to 3 drop-ins.</span>
       </p>
       <ArrowLink href={contact.messenger} external className="self-start lg:self-auto">
@@ -77,6 +84,8 @@ export function PackColumns() {
         <article
           key={p.name}
           data-price-card
+          data-placement="pricing-pack"
+          data-pack={p.name}
           className={cn(
             "flex flex-col border-b border-ink/20 p-7 lg:border-b-0 lg:p-10",
             p.featured
@@ -153,7 +162,8 @@ export function CorporateBlock({ headingAs: Heading = "h3" }: { headingAs?: "h2"
         </Heading>
         <p className="max-w-xl text-lg text-ink/80">
           Enroll 5+ women from your organization and get exclusive group rates at{" "}
-          <strong className="font-semibold text-ink">₱200 per class</strong> — that&apos;s 42% off!
+          <strong className="font-semibold text-ink">{`${formatPhp(CORPORATE_RATE_PHP)} per class`}</strong>{" "}
+          — that&apos;s 42% off!
         </p>
         <ul className="mt-6 space-y-2 text-mute">
           <li>— Companies, schools, government offices</li>

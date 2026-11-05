@@ -3,13 +3,22 @@ import Link from "next/link";
 
 import { memberAreaEnabled } from "@/config";
 import { cn } from "@/lib/utils";
-import type { ClassPackage } from "@/services/fitbreak/catalog";
+import {
+  ANNUAL_MEMBERSHIP_FEE_PHP,
+  discountPercent,
+  formatPhp,
+  getPackage,
+  PACKAGES,
+  type ClassPackage,
+} from "@/services/fitbreak/catalog";
 
 import { SectionHead, wrap } from "../editorial";
+import { FaqSection } from "../faq-section";
 import { FacebookIcon, Icon, SolidCheck } from "../icons";
 import { asset, contact, routes } from "../links";
 import { CorporateBlock, DropInLine, PackColumns, packs } from "../pack-pricing";
 import { SolidX } from "./icons";
+import { PRICING_FAQS } from "./pricing-faqs";
 
 /**
  * Package purchase → the local payments page (source: `/checkout.html?package=<id>`),
@@ -76,75 +85,53 @@ interface PackCard {
   note: string;
 }
 
-const packCards: readonly PackCard[] = [
-  {
-    id: "drop-in",
+/** Per-pack wording the catalogue doesn't carry. */
+const cardCopy: Record<
+  ClassPackage["id"],
+  Pick<PackCard, "variant" | "tagline" | "cta"> & { badge?: string; note?: string }
+> = {
+  "drop-in": {
     variant: "plain",
     badge: "NO MEMBERSHIP NEEDED",
-    title: "Guest Drop-In",
     tagline: "Try a class before committing",
-    price: "₱350",
-    perClass: "per class",
-    features: [
-      { text: "1 Class Credit", included: true },
-      { text: "All class types", included: true },
-      { text: "Next-day booking only", included: false },
-    ],
     cta: "Book Drop-In",
     note: "Limited to 3 drop-ins, then choose a package",
   },
-  {
-    id: "starter",
-    variant: "plain",
-    badge: "14% OFF",
-    title: "Starter Pack",
-    tagline: "Perfect for beginners",
-    price: "₱1,800",
-    perClass: "₱300 per class",
-    features: [
-      { text: "6 Class Credits", included: true },
-      { text: "Valid 30 days", included: true },
-      { text: "3-day advance booking", included: true },
-      { text: "All class types", included: true },
-    ],
-    cta: "Choose Pack",
-    note: "Requires ₱500 annual membership",
-  },
-  {
-    id: "standard",
-    variant: "popular",
-    badge: "21% OFF",
-    title: "Standard Pack",
-    tagline: "For regular gym-goers",
-    price: "₱3,300",
-    perClass: "₱275 per class",
-    features: [
-      { text: "12 Class Credits", included: true },
-      { text: "Valid 30 days", included: true },
-      { text: "5-day advance booking", included: true },
-      { text: "All class types", included: true },
-    ],
-    cta: "Choose Pack",
-    note: "Requires ₱500 annual membership",
-  },
-  {
-    id: "power",
-    variant: "best",
-    badge: "29% OFF",
-    title: "Power Pack",
-    tagline: "For fitness enthusiasts",
-    price: "₱5,000",
-    perClass: "₱250 per class",
-    features: [
-      { text: "20 Class Credits", included: true },
-      { text: "Valid 45 days", included: true },
-      { text: "7-day advance booking", included: true },
-      { text: "All class types", included: true },
-    ],
-    cta: "Choose Pack",
-    note: "Requires ₱500 annual membership",
-  },
-];
+  starter: { variant: "plain", tagline: "Perfect for beginners", cta: "Choose Pack" },
+  standard: { variant: "popular", tagline: "For regular gym-goers", cta: "Choose Pack" },
+  power: { variant: "best", tagline: "For fitness enthusiasts", cta: "Choose Pack" },
+};
+
+const dropInPhp = getPackage("drop-in").perClassPhp;
+
+/** Prices, classes, validity and booking window come from the studio catalogue. */
+const packCards: readonly PackCard[] = PACKAGES.map((pkg) => {
+  const copy = cardCopy[pkg.id];
+  const isDropIn = pkg.id === "drop-in";
+  return {
+    id: pkg.id,
+    variant: copy.variant,
+    badge: copy.badge ?? `${discountPercent(pkg.perClassPhp, dropInPhp)}% OFF`,
+    title: pkg.name,
+    tagline: copy.tagline,
+    price: formatPhp(pkg.pricePhp),
+    perClass: isDropIn ? "per class" : `${formatPhp(pkg.perClassPhp)} per class`,
+    features: isDropIn
+      ? [
+          { text: `${pkg.credits} Class Credit`, included: true },
+          { text: "All class types", included: true },
+          { text: "Next-day booking only", included: false },
+        ]
+      : [
+          { text: `${pkg.credits} Class Credits`, included: true },
+          { text: `Valid ${pkg.validityDays} days`, included: true },
+          { text: `${pkg.advanceBookingDays}-day advance booking`, included: true },
+          { text: "All class types", included: true },
+        ],
+    cta: copy.cta,
+    note: copy.note ?? `Requires ${formatPhp(ANNUAL_MEMBERSHIP_FEE_PHP)} annual membership`,
+  };
+});
 
 const dropIn = packCards[0]!;
 /** Pack facts the shared columns don't carry, keyed by the shared pack name. */
@@ -310,14 +297,24 @@ function PackNotes() {
 
 type Cell = string | boolean;
 
-const comparison: ReadonlyArray<{ feature: string; cells: readonly [Cell, Cell, Cell, Cell] }> = [
-  { feature: "Price", cells: ["₱350", "₱1,800", "₱3,300", "₱5,000"] },
-  { feature: "Classes", cells: ["1", "6", "12", "20"] },
-  { feature: "Cost per Class", cells: ["₱350", "₱300", "₱275", "₱250"] },
-  // Copied verbatim from the source table (the Starter card itself says 30 days).
+type Row = readonly [Cell, Cell, Cell, Cell];
+/** One cell per package, in catalogue order (drop-in, starter, standard, power). */
+const perPackage = (cell: (pkg: ClassPackage) => Cell) => PACKAGES.map(cell) as unknown as Row;
+
+const comparison: ReadonlyArray<{ feature: string; cells: Row }> = [
+  { feature: "Price", cells: perPackage((p) => formatPhp(p.pricePhp)) },
+  { feature: "Classes", cells: perPackage((p) => String(p.credits)) },
+  { feature: "Cost per Class", cells: perPackage((p) => formatPhp(p.perClassPhp)) },
+  // Copied verbatim from the source table (the Starter card itself says 30 days);
+  // the owner chose to leave this for now (fact sheet).
   { feature: "Validity", cells: ["—", "15 days", "30 days", "45 days"] },
-  { feature: "Advance Booking", cells: ["Next day only", "3 days", "5 days", "7 days"] },
-  { feature: "Annual Membership", cells: [false, true, true, true] },
+  {
+    feature: "Advance Booking",
+    cells: perPackage((p) =>
+      p.id === "drop-in" ? "Next day only" : `${p.advanceBookingDays} days`,
+    ),
+  },
+  { feature: "Annual Membership", cells: perPackage((p) => p.requiresMembership) },
 ];
 
 const columns = ["Guest Drop-In", "Starter", "Standard", "Power"] as const;
@@ -457,74 +454,6 @@ function HowToPay() {
   );
 }
 
-const faqs = [
-  {
-    q: "How do class credits work?",
-    a: "Each class booking uses 1 credit. Credits expire based on your package validity period. Unused classes expire to encourage consistency and discipline.",
-  },
-  {
-    q: "What is the annual membership fee?",
-    a: "The ₱500 annual membership fee is required for all package members (Starter, Standard, Power). It's non-refundable and gives you access to member-only perks, events, and discounts. Guest drop-ins don't need to pay this fee.",
-  },
-  {
-    q: "Can I cancel a booking?",
-    a: "Yes! Cancel up to 2 hours before class starts for a full credit refund. Late cancellations or no-shows forfeit the credit.",
-  },
-  {
-    ...(memberAreaEnabled
-      ? {
-          q: "How do I receive my credits after paying?",
-          a: "After sending payment via GCash or bank transfer, upload your proof of payment in your FitBreak account. Our team will verify your payment and manually add the credits to your account, usually within a few hours during business hours.",
-        }
-      : {
-          q: "How do I get my classes confirmed after paying?",
-          a: "After sending payment via GCash or bank transfer, send your receipt to us on Messenger. Our team will verify your payment and confirm your classes, usually within a few hours during business hours.",
-        }),
-  },
-  {
-    q: "What's the difference in advance booking privileges?",
-    a: "Guest drop-ins can only book for the next day. Starter members can book up to 3 days in advance, Standard members up to 5 days, and Power members up to 7 days. This gives package members priority access to popular class times.",
-  },
-  {
-    q: "Do credits roll over?",
-    a: "No, credits expire at the end of their validity period. Make sure to use them before they expire! This policy encourages regular attendance and helps you stay committed to your fitness goals.",
-  },
-];
-
-function Faq() {
-  return (
-    <section className="py-20 lg:py-32">
-      <div className={cn(wrap, "grid gap-12 lg:grid-cols-12 lg:gap-10")}>
-        <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-28">
-            <p className="fb-label mb-4 text-mute">Questions</p>
-            <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)]">Frequently Asked Questions</h2>
-          </div>
-        </div>
-        <div className="border-t-2 border-ink lg:col-span-7 lg:col-start-6">
-          {faqs.map((f, i) => (
-            <details key={f.q} data-reveal className="group border-b border-ink/15">
-              <summary className="flex cursor-pointer list-none items-baseline gap-5 py-6 transition-colors hover:bg-bone/60 [&::-webkit-details-marker]:hidden">
-                <span className="fb-num fb-label w-6 flex-none text-mute">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="flex-1 text-lg font-semibold sm:text-xl">{f.q}</span>
-                <span
-                  aria-hidden="true"
-                  className="fb-display flex-none pr-1 text-3xl leading-none transition-transform duration-200 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="max-w-2xl pb-7 pl-11 text-mute">{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function MemberPricing() {
   return (
     <>
@@ -534,7 +463,9 @@ function MemberPricing() {
           <div className="grid gap-10 border-t-2 border-ink pt-8 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <h2 className="fb-label mb-3">Annual Membership Fee</h2>
-              <p className="fb-display fb-num mb-4 text-[clamp(4rem,9vw,6.5rem)]">₱500</p>
+              <p className="fb-display fb-num mb-4 text-[clamp(4rem,9vw,6.5rem)]">
+                {formatPhp(ANNUAL_MEMBERSHIP_FEE_PHP)}
+              </p>
               <p className="max-w-md text-mute">
                 Required for all package members (Starter, Standard, Power). One-time annual fee,
                 non-refundable.
@@ -574,7 +505,7 @@ function MemberPricing() {
 
       <ComparisonTable />
       <HowToPay />
-      <Faq />
+      <FaqSection faqs={PRICING_FAQS} />
 
       <section className="border-t border-rule pb-20 lg:pb-32">
         <div className={wrap}>

@@ -39,6 +39,16 @@ const envSchema = z.object({
   NEXT_PUBLIC_POSTHOG_KEY: optionalEnv(z.string().min(1).optional()),
   NEXT_PUBLIC_POSTHOG_HOST: optionalEnv(z.string().url().optional()),
   NEXT_PUBLIC_POSTHOG_REQUIRE_CONSENT: optionalEnv(z.enum(["true", "false"]).optional()),
+  // Google Analytics 4 for FitBreak (optional; unset ⇒ no script, no consent
+  // bar, no network, no CSP change). The measurement ID is PUBLISHABLE, not a
+  // secret. The strict format also keeps it safe to embed in the inline
+  // bootstrap script. See docs/adr/0010-fitbreak-google-analytics-4.md.
+  NEXT_PUBLIC_GA_MEASUREMENT_ID: optionalEnv(
+    z
+      .string()
+      .regex(/^G-[A-Z0-9]{4,20}$/, "must be a GA4 measurement ID like G-XXXXXXXXXX")
+      .optional(),
+  ),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
 });
 
@@ -75,5 +85,6 @@ export const env = parseEnv({
   NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
   NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
   NEXT_PUBLIC_POSTHOG_REQUIRE_CONSENT: process.env.NEXT_PUBLIC_POSTHOG_REQUIRE_CONSENT,
+  NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
   NODE_ENV: process.env.NODE_ENV,
 });

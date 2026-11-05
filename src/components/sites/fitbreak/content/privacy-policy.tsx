@@ -1,6 +1,12 @@
+import { isGoogleAnalyticsConfigured } from "@/config";
+
+import { ChangeConsentButton } from "../analytics/change-consent-button";
 import { ContactBlock, H2, H3, LegalPage, List, P } from "./legal";
 
-/** Cloned verbatim from fitbreak.ph/privacy-policy.html (main content only). */
+/**
+ * Cloned verbatim from fitbreak.ph/privacy-policy.html (main content only),
+ * plus the Google Analytics section below, shown only while GA4 is configured.
+ */
 export function PrivacyPolicy() {
   return (
     <LegalPage title="Privacy Policy" updated="January 24, 2025">
@@ -106,6 +112,22 @@ export function PrivacyPolicy() {
         We use cookies to enhance your experience. You can control cookies through your browser
         settings.
       </P>
+
+      {/* Pending studio approval (fact sheet): GA4 paragraph, ADR 0010. True
+          only while GA4 is on, so it renders only when a measurement ID is set. */}
+      {isGoogleAnalyticsConfigured && (
+        <>
+          <H2>Google Analytics</H2>
+          <P>
+            This website uses Google Analytics to see which pages help people find the studio. It
+            runs in Google&apos;s Consent Mode: no analytics cookies are set unless you choose
+            Accept in the cookie bar. If you decline or don&apos;t choose, Google Analytics sets no
+            cookies and receives only anonymous, cookieless signals.
+          </P>
+          <P>You can change your choice at any time:</P>
+          <ChangeConsentButton />
+        </>
+      )}
 
       <H2>Children&apos;s Privacy</H2>
       <P>

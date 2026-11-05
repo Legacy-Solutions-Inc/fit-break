@@ -8,7 +8,11 @@ const MAP_EMBED =
 
 export function Contact() {
   return (
-    <section id="contact" className="border-t border-rule bg-paper py-20 lg:py-28">
+    <section
+      id="contact"
+      data-placement="contact"
+      className="border-t border-rule bg-paper py-20 lg:py-28"
+    >
       <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:gap-10`}>
         <div className="lg:col-span-5">
           <h2 className="fb-display mb-10 text-[clamp(2.75rem,7vw,5.75rem)]">Visit Us</h2>
