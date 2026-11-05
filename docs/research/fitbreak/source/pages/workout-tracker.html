@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workout Tracker — FitBreak</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+  <div class="flex min-h-screen">
+    <div id="member-sidebar-placeholder"></div>
+
+    <main class="flex-1 min-h-screen bg-gray-50">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Workout Tracker</h1>
+            <p class="text-gray-600">Log and track your daily workouts</p>
+          </div>
+          <button id="btn-log-workout" class="flex items-center gap-2 px-4 py-2 bg-brand-500 text-white rounded-xl font-semibold hover:bg-brand-600 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            Log Workout
+          </button>
+        </div>
+
+        <!-- Today's Summary -->
+        <div class="bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-6 text-white mb-6">
+          <h2 class="text-lg font-semibold mb-4">Today's Progress</h2>
+          <div class="grid grid-cols-3 gap-4">
+            <div class="text-center">
+              <p class="text-3xl font-bold" id="today-workouts">0</p>
+              <p class="text-brand-100 text-sm">Workouts</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold" id="today-minutes">0</p>
+              <p class="text-brand-100 text-sm">Minutes</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold" id="today-calories">0</p>
+              <p class="text-brand-100 text-sm">Calories</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Workout Log -->
+          <div class="lg:col-span-2 space-y-4">
+            <h2 class="text-lg font-bold text-gray-900">Recent Workouts</h2>
+            <div id="workout-log" class="space-y-3">
+              <!-- Sample workout entries -->
+              <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-gray-900">HIIT Bootcamp</p>
+                  <p class="text-sm text-gray-500">Today at 7:00 AM • 45 min</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-brand-500">350 cal</p>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-gray-900">Yoga Flow</p>
+                  <p class="text-sm text-gray-500">Yesterday at 6:00 PM • 30 min</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-purple-500">120 cal</p>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center">
+                  <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                  </svg>
+                </div>
+                <div class="flex-1">
+                  <p class="font-semibold text-gray-900">Strength Training</p>
+                  <p class="text-sm text-gray-500">2 days ago • 50 min</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-blue-500">280 cal</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Log & Weekly Goal -->
+          <div class="space-y-6">
+            <!-- Weekly Goal -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h3 class="font-bold text-gray-900 mb-4">Weekly Goal</h3>
+              <div class="text-center mb-4">
+                <p class="text-4xl font-bold text-brand-500"><span id="weekly-count">0</span><span class="text-gray-300">/<span id="weekly-goal">5</span></span></p>
+                <p class="text-sm text-gray-500">workouts this week</p>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-3">
+                <div id="weekly-progress-bar" class="bg-brand-500 h-3 rounded-full transition-all" style="width: 0%"></div>
+              </div>
+              <p id="weekly-message" class="text-xs text-gray-500 mt-2 text-center">Start logging workouts!</p>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <h3 class="font-bold text-gray-900 mb-4">Quick Log</h3>
+              <div class="grid grid-cols-2 gap-3">
+                <button onclick="quickLog('cardio')" class="p-3 bg-brand-50 rounded-xl text-center hover:bg-brand-100 transition">
+                  <span class="text-2xl mb-1 block">🏃‍♀️</span>
+                  <span class="text-xs font-medium text-gray-700">Cardio</span>
+                </button>
+                <button onclick="quickLog('strength')" class="p-3 bg-blue-50 rounded-xl text-center hover:bg-blue-100 transition">
+                  <span class="text-2xl mb-1 block">💪</span>
+                  <span class="text-xs font-medium text-gray-700">Strength</span>
+                </button>
+                <button onclick="quickLog('yoga')" class="p-3 bg-purple-50 rounded-xl text-center hover:bg-purple-100 transition">
+                  <span class="text-2xl mb-1 block">🧘‍♀️</span>
+                  <span class="text-xs font-medium text-gray-700">Yoga</span>
+                </button>
+                <button onclick="quickLog('walking')" class="p-3 bg-green-50 rounded-xl text-center hover:bg-green-100 transition">
+                  <span class="text-2xl mb-1 block">🚶‍♀️</span>
+                  <span class="text-xs font-medium text-gray-700">Walking</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Log Workout Modal -->
+  <div id="log-workout-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Log Workout</h2>
+      <form id="log-workout-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Workout Type</label>
+          <select id="workout-type" class="w-full border border-gray-200 rounded-xl px-4 py-2.5">
+            <option value="hiit">HIIT / Bootcamp</option>
+            <option value="strength">Strength Training</option>
+            <option value="cardio">Cardio</option>
+            <option value="yoga">Yoga / Stretching</option>
+            <option value="walking">Walking / Running</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Duration (minutes)</label>
+          <input type="number" id="workout-duration" value="45" class="w-full border border-gray-200 rounded-xl px-4 py-2.5">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Calories Burned (optional)</label>
+          <input type="number" id="workout-calories" class="w-full border border-gray-200 rounded-xl px-4 py-2.5" placeholder="Leave blank for auto-estimate">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Notes (optional)</label>
+          <textarea id="workout-notes" rows="2" class="w-full border border-gray-200 rounded-xl px-4 py-2.5" placeholder="How was your workout?"></textarea>
+        </div>
+        <div class="flex gap-3 pt-2">
+          <button type="button" id="btn-cancel-log" class="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition">Cancel</button>
+          <button type="submit" class="flex-1 px-4 py-2.5 bg-brand-500 text-white rounded-xl font-semibold hover:bg-brand-600 transition">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50"></div>
+
+  <script type="module" src="/auth.js"></script>
+  <script>
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('tracker');
+      }
+    });
+  </script>
+  <script type="module">
+    import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs, addDoc, orderBy, limit, Timestamp, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import firebaseConfig from './firebase-config-module.js';
+
+    const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app, 'asia-db');
+
+    let currentUser = null;
+    let workoutLogs = [];
+    const WEEKLY_GOAL = 5;
+
+    // Calorie estimates per minute by workout type
+    const caloriesPerMinute = {
+      hiit: 12,
+      strength: 8,
+      cardio: 10,
+      yoga: 4,
+      walking: 5,
+      other: 6
+    };
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      if (toast) {
+        toast.textContent = message;
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 3000);
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        if (typeof initMemberSidebar === 'function') initMemberSidebar('tracker');
+
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists() && typeof updateSidebarUser === 'function') {
+          updateSidebarUser(user, userDoc.data());
+        }
+
+        // Load workout data
+        await loadWorkoutLogs();
+        updateTodayStats();
+        updateWeeklyGoal();
+        renderRecentWorkouts();
+      } else {
+        window.location.href = '/login.html';
+      }
+    });
+
+    async function loadWorkoutLogs() {
+      try {
+        const logsRef = collection(db, 'users', currentUser.uid, 'workoutLogs');
+        const logsQuery = query(logsRef, orderBy('loggedAt', 'desc'), limit(50));
+        const snapshot = await getDocs(logsQuery);
+
+        workoutLogs = [];
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          workoutLogs.push({
+            id: doc.id,
+            ...data,
+            loggedAt: data.loggedAt?.toDate() || new Date()
+          });
+        });
+      } catch (error) {
+        console.error('Error loading workout logs:', error);
+      }
+    }
+
+    function updateTodayStats() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const todayWorkouts = workoutLogs.filter(w => {
+        const workoutDate = new Date(w.loggedAt);
+        workoutDate.setHours(0, 0, 0, 0);
+        return workoutDate.getTime() === today.getTime();
+      });
+
+      const totalWorkouts = todayWorkouts.length;
+      const totalMinutes = todayWorkouts.reduce((sum, w) => sum + (w.duration || 0), 0);
+      const totalCalories = todayWorkouts.reduce((sum, w) => sum + (w.caloriesBurned || 0), 0);
+
+      document.getElementById('today-workouts').textContent = totalWorkouts;
+      document.getElementById('today-minutes').textContent = totalMinutes;
+      document.getElementById('today-calories').textContent = totalCalories;
+    }
+
+    function updateWeeklyGoal() {
+      const now = new Date();
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - now.getDay());
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      const weekWorkouts = workoutLogs.filter(w => w.loggedAt >= startOfWeek);
+      const count = weekWorkouts.length;
+      const percent = Math.min(100, Math.round((count / WEEKLY_GOAL) * 100));
+      const remaining = Math.max(0, WEEKLY_GOAL - count);
+
+      document.getElementById('weekly-count').textContent = count;
+      document.getElementById('weekly-goal').textContent = WEEKLY_GOAL;
+      document.getElementById('weekly-progress-bar').style.width = `${percent}%`;
+
+      const messageEl = document.getElementById('weekly-message');
+      if (count >= WEEKLY_GOAL) {
+        messageEl.textContent = 'Goal reached! Amazing work!';
+        messageEl.classList.add('text-green-600');
+      } else if (count === 0) {
+        messageEl.textContent = 'Start logging workouts!';
+      } else {
+        messageEl.textContent = `${remaining} more to reach your goal!`;
+      }
+    }
+
+    function renderRecentWorkouts() {
+      const container = document.getElementById('workout-log');
+
+      if (workoutLogs.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
+            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <p class="text-gray-500">No workouts logged yet</p>
+            <p class="text-sm text-gray-400 mt-1">Click "Log Workout" to get started!</p>
+          </div>
+        `;
+        return;
+      }
+
+      const typeConfig = {
+        hiit: { color: 'brand', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>', label: 'HIIT / Bootcamp' },
+        strength: { color: 'blue', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>', label: 'Strength Training' },
+        cardio: { color: 'orange', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>', label: 'Cardio' },
+        yoga: { color: 'purple', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>', label: 'Yoga / Stretching' },
+        walking: { color: 'green', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>', label: 'Walking / Running' },
+        other: { color: 'gray', icon: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>', label: 'Other' }
+      };
+
+      container.innerHTML = workoutLogs.slice(0, 10).map(workout => {
+        const config = typeConfig[workout.type] || typeConfig.other;
+        const dateStr = formatWorkoutDate(workout.loggedAt);
+
+        return `
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex items-center gap-4">
+            <div class="w-12 h-12 bg-${config.color}-50 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-${config.color}-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                ${config.icon}
+              </svg>
+            </div>
+            <div class="flex-1">
+              <p class="font-semibold text-gray-900">${config.label}</p>
+              <p class="text-sm text-gray-500">${dateStr} • ${workout.duration || 0} min</p>
+            </div>
+            <div class="text-right">
+              <p class="font-bold text-${config.color}-500">${workout.caloriesBurned || 0} cal</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function formatWorkoutDate(date) {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      const workoutDay = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+      const timeStr = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+      if (workoutDay.getTime() === today.getTime()) {
+        return `Today at ${timeStr}`;
+      } else if (workoutDay.getTime() === yesterday.getTime()) {
+        return `Yesterday at ${timeStr}`;
+      } else {
+        const daysDiff = Math.floor((today - workoutDay) / (1000 * 60 * 60 * 24));
+        if (daysDiff < 7) {
+          return `${daysDiff} days ago`;
+        }
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      }
+    }
+
+    async function saveWorkout(type, duration, calories, notes) {
+      if (!currentUser) return;
+
+      const estimatedCalories = calories || Math.round(duration * (caloriesPerMinute[type] || 6));
+
+      try {
+        const logsRef = collection(db, 'users', currentUser.uid, 'workoutLogs');
+        await addDoc(logsRef, {
+          type,
+          duration: parseInt(duration),
+          caloriesBurned: parseInt(estimatedCalories),
+          notes: notes || '',
+          loggedAt: serverTimestamp()
+        });
+
+        showToast('Workout logged!');
+
+        // Reload data
+        await loadWorkoutLogs();
+        updateTodayStats();
+        updateWeeklyGoal();
+        renderRecentWorkouts();
+
+        return true;
+      } catch (error) {
+        console.error('Error saving workout:', error);
+        showToast('Error saving workout. Please try again.');
+        return false;
+      }
+    }
+
+    // Quick log function (exposed to window)
+    window.quickLog = async function(type) {
+      const defaultDurations = {
+        cardio: 30,
+        strength: 45,
+        yoga: 30,
+        walking: 20
+      };
+      const duration = defaultDurations[type] || 30;
+      await saveWorkout(type, duration, null, '');
+    };
+
+    // Modal handling
+    const modal = document.getElementById('log-workout-modal');
+    document.getElementById('btn-log-workout')?.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
+
+    document.getElementById('btn-cancel-log')?.addEventListener('click', () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    });
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    });
+
+    // Form submission
+    document.getElementById('log-workout-form')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const type = document.getElementById('workout-type').value;
+      const duration = document.getElementById('workout-duration').value;
+      const calories = document.getElementById('workout-calories').value;
+      const notes = document.getElementById('workout-notes').value;
+
+      if (!duration || duration <= 0) {
+        showToast('Please enter a valid duration');
+        return;
+      }
+
+      const success = await saveWorkout(type, duration, calories, notes);
+      if (success) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        // Reset form
+        document.getElementById('workout-duration').value = 45;
+        document.getElementById('workout-calories').value = '';
+        document.getElementById('workout-notes').value = '';
+      }
+    });
+  </script>
+
+  <div id="footer-placeholder"></div>
+  <div id="modals-placeholder"></div>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

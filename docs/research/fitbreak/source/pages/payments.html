@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Payments & Credits — FitBreak</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar Placeholder -->
+    <div id="member-sidebar-placeholder"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 lg:ml-0 min-h-screen">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">Payments & Credits</h1>
+          <p class="text-gray-600">Manage your membership and purchase class credits</p>
+        </div>
+
+      <!-- Current Balance -->
+      <div class="bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl p-8 text-white mb-8 shadow-xl" data-tour="payment-status">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-brand-100 mb-2">Available Credits</p>
+            <p class="text-5xl font-bold" id="available-credits" data-tooltip="credits-count">0</p>
+            <p class="text-brand-100 text-sm mt-2" id="credits-expiry">No active membership</p>
+          </div>
+          <div class="text-right">
+            <p class="text-brand-100 mb-2">Membership Status</p>
+            <span class="inline-block px-4 py-2 bg-white/20 backdrop-blur rounded-full font-semibold" id="membership-status">Inactive</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buy Credits Section -->
+      <div class="mb-12" id="buy-credits" data-tour="buy-credits">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Purchase Credits</h2>
+        <div class="grid md:grid-cols-4 gap-6">
+          <!-- Guest Drop-In -->
+          <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-all">
+            <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-full mb-3">NO MEMBERSHIP NEEDED</span>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Guest Drop-In</h3>
+            <p class="text-gray-600 text-sm mb-4">Try a class</p>
+            <p class="text-3xl font-bold text-brand-500 mb-2">₱350</p>
+            <p class="text-sm text-gray-600 mb-4">per class</p>
+            <ul class="space-y-2 mb-6 text-sm text-gray-600">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                1 Class Credit
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Valid 7 days
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Next-day booking only
+              </li>
+            </ul>
+            <button class="w-full px-6 py-3 bg-gray-200 text-gray-800 font-semibold rounded-xl hover:bg-gray-300 transition-all" onclick="selectPackage('drop-in', 350, 1, 7)">
+              Purchase Now
+            </button>
+          </div>
+
+          <!-- Starter Pack -->
+          <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-lg transition-all">
+            <span class="inline-block px-3 py-1 bg-brand-100 text-brand-700 text-xs font-bold rounded-full mb-3">14% OFF</span>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Starter Pack</h3>
+            <p class="text-gray-600 text-sm mb-4">Perfect for beginners</p>
+            <p class="text-3xl font-bold text-brand-500 mb-1">₱1,800</p>
+            <p class="text-sm text-gray-600 mb-1">₱300 per class</p>
+            <p class="text-sm text-green-600 font-semibold mb-4">Save ₱300</p>
+            <ul class="space-y-2 mb-6 text-sm text-gray-600">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                6 Class Credits
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Valid 30 days
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                3-day advance booking
+              </li>
+            </ul>
+            <button class="w-full px-6 py-3 bg-brand-500 text-white font-semibold rounded-xl hover:bg-brand-600 transition-all" onclick="selectPackage('starter', 1800, 6, 30)">
+              Purchase Now
+            </button>
+          </div>
+
+          <!-- Standard Pack -->
+          <div class="bg-white rounded-2xl p-6 border-2 border-brand-500 shadow-lg hover:shadow-xl transition-all relative">
+            <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Most Popular</div>
+            <span class="inline-block px-3 py-1 bg-brand-100 text-brand-700 text-xs font-bold rounded-full mb-3">21% OFF</span>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Standard Pack</h3>
+            <p class="text-gray-600 text-sm mb-4">Best for regulars</p>
+            <p class="text-3xl font-bold text-brand-500 mb-1">₱3,300</p>
+            <p class="text-sm text-gray-600 mb-1">₱275 per class</p>
+            <p class="text-sm text-green-600 font-semibold mb-4">Save ₱900</p>
+            <ul class="space-y-2 mb-6 text-sm text-gray-600">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                12 Class Credits
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Valid 30 days
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                5-day advance booking
+              </li>
+            </ul>
+            <button class="w-full px-6 py-3 bg-brand-500 text-white font-semibold rounded-xl hover:bg-brand-600 transition-all" onclick="selectPackage('standard', 3300, 12, 30)">
+              Purchase Now
+            </button>
+          </div>
+
+          <!-- Power Pack -->
+          <div class="bg-white rounded-2xl p-6 border-2 border-purple-500 shadow-lg hover:shadow-xl transition-all relative">
+            <div class="absolute top-0 right-0 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">Best Value</div>
+            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full mb-3">29% OFF</span>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Power Pack</h3>
+            <p class="text-gray-600 text-sm mb-4">For fitness enthusiasts</p>
+            <p class="text-3xl font-bold text-brand-500 mb-1">₱5,000</p>
+            <p class="text-sm text-gray-600 mb-1">₱250 per class</p>
+            <p class="text-sm text-green-600 font-semibold mb-4">Save ₱2,000</p>
+            <ul class="space-y-2 mb-6 text-sm text-gray-600">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                20 Class Credits
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Valid 45 days
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                7-day advance booking
+              </li>
+            </ul>
+            <button class="w-full px-6 py-3 bg-purple-600 text-white font-semibold rounded-xl hover:bg-purple-700 transition-all" onclick="selectPackage('power', 5000, 20, 45)">
+              Purchase Now
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opening Promo Banner -->
+      <div class="bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-6 mb-12 text-white text-center">
+        <h3 class="text-xl font-bold mb-2">January 2026 Opening Promo!</h3>
+        <p class="text-brand-100">Annual Membership Fee (₱500) WAIVED for all sign-ups this month!</p>
+      </div>
+
+      <!-- Payment History -->
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Payment History</h2>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div id="payment-history" class="divide-y divide-gray-100">
+            <div class="p-8 text-center text-gray-500">
+              <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <p>No payment history yet</p>
+              <p class="text-sm mt-2">Purchase credits to get started!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Credit Usage History -->
+      <div>
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">Credit Usage History</h2>
+          <div class="flex items-center gap-2">
+            <select id="usage-filter" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-brand-400">
+              <option value="all">All Time</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="3months">Last 3 Months</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Usage Summary Cards -->
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-brand-100 rounded-lg">
+                <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-2xl font-bold text-gray-900" id="credits-purchased">0</p>
+                <p class="text-xs text-gray-500">Credits Purchased</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-green-100 rounded-lg">
+                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-2xl font-bold text-gray-900" id="credits-used">0</p>
+                <p class="text-xs text-gray-500">Credits Used</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-blue-100 rounded-lg">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-2xl font-bold text-gray-900" id="classes-attended">0</p>
+                <p class="text-xs text-gray-500">Classes Attended</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="p-2 bg-purple-100 rounded-lg">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                </svg>
+              </div>
+              <div>
+                <p class="text-2xl font-bold text-gray-900" id="avg-classes-week">0</p>
+                <p class="text-xs text-gray-500">Avg Classes/Week</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Usage Timeline -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+          <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-semibold text-gray-900">Recent Credit Activity</h3>
+            <button onclick="exportUsageHistory()" class="text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+              </svg>
+              Export
+            </button>
+          </div>
+          <div id="credit-usage-history" class="divide-y divide-gray-100">
+            <div class="p-8 text-center text-gray-500">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-brand-500 border-t-transparent mx-auto mb-4"></div>
+              <p>Loading usage history...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50"></div>
+
+  <!-- Modals Component -->
+  <div id="modals-placeholder"></div>
+
+  <!-- Payment Method Modal -->
+  <div id="payment-method-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-brand-50 to-brand-50">
+        <h2 class="text-2xl font-bold text-gray-900">Choose Payment Method</h2>
+        <button onclick="closePaymentModal()" class="p-2 hover:bg-white/50 rounded-full transition-colors">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <!-- GCash Manual -->
+        <button onclick="choosePaymentMethod('gcash-manual')" class="w-full p-4 border-2 border-gray-200 rounded-xl hover:border-brand-500 hover:bg-brand-50 transition-all flex items-center gap-4">
+          <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
+            </svg>
+          </div>
+          <div class="flex-1 text-left">
+            <p class="font-semibold text-gray-900">GCash</p>
+            <p class="text-sm text-gray-600">Scan QR code & upload proof of payment</p>
+          </div>
+          <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <!-- BPI Bank Transfer -->
+        <button onclick="choosePaymentMethod('bpi-transfer')" class="w-full p-4 border-2 border-gray-200 rounded-xl hover:border-brand-500 hover:bg-brand-50 transition-all flex items-center gap-4">
+          <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+            <span class="text-red-600 font-bold text-sm">BPI</span>
+          </div>
+          <div class="flex-1 text-left">
+            <p class="font-semibold text-gray-900">BPI Bank Transfer</p>
+            <p class="text-sm text-gray-600">Transfer via BPI app & upload proof</p>
+          </div>
+          <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+
+        <p class="text-xs text-gray-500 text-center mt-4">
+          All payments are secure and encrypted
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Payment Selection Functions (must be in regular script, not module) -->
+  <script>
+    // Select package function
+    function selectPackage(packageType, amount, credits) {
+      // Show payment method selection modal
+      const modal = document.getElementById('payment-method-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        // Store package info
+        window.selectedPackageInfo = { packageType, amount, credits };
+      }
+    }
+
+    // Choose payment method
+    function choosePaymentMethod(method) {
+      const { packageType, amount, credits } = window.selectedPackageInfo || {};
+      if (!packageType) {
+        alert('Please select a package first');
+        return;
+      }
+
+      // Redirect to checkout with payment method pre-selected
+      window.location.href = `/checkout.html?package=${packageType}&method=${method}`;
+    }
+
+    // Close payment modal
+    function closePaymentModal() {
+      const modal = document.getElementById('payment-method-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Make functions available globally
+    window.selectPackage = selectPackage;
+    window.choosePaymentMethod = choosePaymentMethod;
+    window.closePaymentModal = closePaymentModal;
+
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('payments');
+      }
+    });
+  </script>
+
+  <script type="module" src="/auth.js"></script>
+  <script type="module" src="payments.js"></script>
+  <!-- Onboarding Tour & Help -->
+  <script src="/onboarding-tour.js"></script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

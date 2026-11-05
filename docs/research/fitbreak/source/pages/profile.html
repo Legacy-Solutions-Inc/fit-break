@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Profile — FitBreak</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+  <div class="flex min-h-screen">
+    <!-- Sidebar Placeholder -->
+    <div id="member-sidebar-placeholder"></div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 lg:ml-0 min-h-screen">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
+          <p class="text-gray-600">Manage your personal information</p>
+        </div>
+
+        <!-- Profile Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
+          <!-- Header with Cover -->
+          <div class="h-32 bg-gradient-to-r from-brand-500 to-brand-600"></div>
+
+          <!-- Profile Content -->
+          <div class="px-6 pb-6">
+            <!-- Avatar -->
+            <div class="flex items-end -mt-16 mb-6">
+              <div class="relative">
+                <img id="profile-avatar" src="" alt="Profile" class="w-32 h-32 rounded-full border-4 border-white shadow-lg bg-gray-100">
+                <label class="absolute bottom-2 right-2 p-2 bg-brand-500 text-white rounded-full hover:bg-brand-600 shadow-lg cursor-pointer">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                  <input type="file" id="avatar-upload" class="hidden" accept="image/*">
+                </label>
+              </div>
+            </div>
+
+            <!-- Profile Form -->
+            <form id="profile-form" class="space-y-6">
+              <!-- Display Name -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+                <input type="text" id="display-name" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Your Name">
+              </div>
+
+              <!-- Email (Read Only) -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+                <input type="email" id="email" readonly class="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 cursor-not-allowed" placeholder="email@example.com">
+                <p class="text-xs text-gray-500 mt-1">Email cannot be changed</p>
+              </div>
+
+              <!-- Phone -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+                <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="+63 XXX XXX XXXX">
+              </div>
+
+              <!-- Emergency Contact -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Emergency Contact</label>
+                <input type="tel" id="emergency-contact" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="Emergency contact number">
+              </div>
+
+              <!-- Body Measurements -->
+              <div class="pt-4 border-t border-gray-100">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Body Measurements</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <label class="block text-sm font-semibold text-gray-700">Height</label>
+                      <div class="flex bg-gray-100 rounded-lg p-0.5 text-xs">
+                        <button type="button" id="unit-ft" onclick="setHeightUnit('ft')" class="px-2 py-1 rounded-md bg-white text-gray-900 shadow-sm font-medium">ft/in</button>
+                        <button type="button" id="unit-cm" onclick="setHeightUnit('cm')" class="px-2 py-1 rounded-md text-gray-500">cm</button>
+                      </div>
+                    </div>
+                    <!-- Feet/Inches input -->
+                    <div id="height-ft-input" class="flex gap-2">
+                      <div class="flex-1">
+                        <div class="relative">
+                          <input type="number" id="height-feet" min="3" max="7" class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="5">
+                          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">ft</span>
+                        </div>
+                      </div>
+                      <div class="flex-1">
+                        <div class="relative">
+                          <input type="number" id="height-inches" min="0" max="11" class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="4">
+                          <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">in</span>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- CM input (hidden by default) -->
+                    <div id="height-cm-input" class="hidden">
+                      <input type="number" id="height-cm" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="e.g., 165">
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Weight (kg)</label>
+                    <input type="number" id="weight" step="0.1" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400" placeholder="e.g., 60">
+                  </div>
+                  <div class="min-w-0">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Date of Birth</label>
+                    <input type="date" id="birthday" class="w-full px-1 sm:px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 text-xs sm:text-base">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                    <select id="gender" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400">
+                      <option value="">Select...</option>
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="other">Prefer not to say</option>
+                    </select>
+                  </div>
+                </div>
+                <p class="text-xs text-gray-500 mt-2">Used to calculate BMI and personalize your fitness recommendations</p>
+              </div>
+
+              <!-- Save Button -->
+              <div class="flex gap-3">
+                <button type="submit" class="px-6 py-3 bg-brand-500 text-white font-semibold rounded-xl hover:bg-brand-600 transition-all shadow-md hover:shadow-lg">
+                  Save Changes
+                </button>
+                <button type="button" onclick="window.location.reload()" class="px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-all">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Refer Friends Card -->
+          <div class="md:col-span-2 bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-6 shadow-sm text-white">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+                  <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold">Refer Friends & Earn Credits</h3>
+                  <p class="text-brand-100 text-sm">Share your link. When they book, you both get 1 free class!</p>
+                </div>
+              </div>
+              <button id="get-referral-code" class="px-6 py-3 bg-white text-brand-600 font-bold rounded-xl hover:bg-brand-50 transition-all shadow-lg flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                </svg>
+                Get My Referral Link
+              </button>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/20 flex gap-6 text-sm">
+              <div>
+                <span class="text-brand-200">Friends Referred:</span>
+                <span id="profile-referral-count" class="font-bold ml-1">0</span>
+              </div>
+              <div>
+                <span class="text-brand-200">Credits Earned:</span>
+                <span id="profile-referral-rewards" class="font-bold ml-1">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Info -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Account Information</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Member Since</p>
+                <p class="font-semibold text-gray-900" id="member-since">--</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Account Status</p>
+                <span class="inline-block px-3 py-1 bg-green-100 text-green-700 text-sm font-semibold rounded-full" id="account-status">Active</span>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">User ID</p>
+                <p class="font-mono text-xs text-gray-600" id="user-id">---</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Your Stats</h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-sm text-gray-500">Total Classes</p>
+                <p class="text-2xl font-bold text-brand-500" id="total-classes">0</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Current Streak</p>
+                <p class="text-2xl font-bold text-orange-500" id="current-streak">0 days</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Credits Remaining</p>
+                <p class="text-2xl font-bold text-green-500" id="credits-remaining">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help & Guide Section -->
+        <div class="mt-6 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-gray-900">Help & Guide</h3>
+                <p class="text-sm text-gray-500">Learn how to use FitBreak</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Start Banner for New Users -->
+          <div id="new-user-banner" class="hidden bg-gradient-to-r from-brand-500 to-brand-600 rounded-xl p-4 mb-4 text-white">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">👋</span>
+                <div>
+                  <p class="font-bold">Welcome to FitBreak!</p>
+                  <p class="text-sm text-brand-100">New here? Take a quick tour to get started.</p>
+                </div>
+              </div>
+              <button onclick="startOnboardingTour()" class="px-4 py-2 bg-white text-brand-600 font-semibold rounded-lg hover:bg-brand-50 transition text-sm">
+                Start Tour
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Bar for Help -->
+          <div class="p-4 border-b border-gray-100">
+            <div class="relative">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input type="text" id="help-search" placeholder="Search help topics... (e.g., book, credit, check in, cancel)" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 text-sm">
+              <button id="clear-help-search" class="hidden absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 rounded-full">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              </button>
+            </div>
+            <p id="help-search-results" class="hidden text-xs text-gray-500 mt-2"></p>
+          </div>
+
+          <!-- Member Guide (shown to all users) -->
+          <div id="member-guide" class="divide-y divide-gray-100">
+            <!-- Getting Started Section -->
+            <div class="p-3 bg-green-50 border-b border-green-100">
+              <p class="text-xs font-semibold text-green-800 uppercase tracking-wide">🚀 Getting Started</p>
+            </div>
+
+            <details class="group" open>
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">⭐</span>
+                  <span class="font-medium text-gray-900">Quick Start Guide (Read This First!)</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-4">
+                  <p class="font-medium text-gray-900">Welcome to FitBreak! Here's how to get started in 3 easy steps:</p>
+                  <div class="grid gap-3">
+                    <div class="flex gap-3 p-3 bg-blue-50 rounded-lg">
+                      <span class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold">1</span>
+                      <div>
+                        <p class="font-semibold text-blue-900">Buy Credits</p>
+                        <p class="text-blue-700 text-xs">Go to Pricing → Choose a package → Pay via GCash/BPI → Wait for approval</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3 p-3 bg-green-50 rounded-lg">
+                      <span class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold">2</span>
+                      <div>
+                        <p class="font-semibold text-green-900">Book a Class</p>
+                        <p class="text-green-700 text-xs">Go to Schedule → Pick a class → Click Book Now → Done!</p>
+                      </div>
+                    </div>
+                    <div class="flex gap-3 p-3 bg-purple-50 rounded-lg">
+                      <span class="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold">3</span>
+                      <div>
+                        <p class="font-semibold text-purple-900">Show Up & Sweat!</p>
+                        <p class="text-purple-700 text-xs">Arrive 10 mins early → Check in with instructor → Enjoy your workout!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">📅</span>
+                  <span class="font-medium text-gray-900">How to Book a Class</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Go to <a href="/schedule.html" class="text-brand-500 hover:underline font-medium">Schedule</a> page</li>
+                  <li>Browse available classes by day</li>
+                  <li>Click on a class to view details</li>
+                  <li>Click "Book Now" to reserve your spot</li>
+                  <li>You'll receive an email confirmation</li>
+                </ol>
+                <p class="ml-9 mt-2 text-gray-500">Note: You need credits to book classes. Each class costs 1 credit.</p>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">💳</span>
+                  <span class="font-medium text-gray-900">How to Buy Credits</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Go to <a href="/pricing.html" class="text-brand-500 hover:underline font-medium">Pricing</a> page</li>
+                  <li>Choose a package that suits your needs</li>
+                  <li>Click "Get Started" on your preferred package</li>
+                  <li>Select payment method (GCash or BPI)</li>
+                  <li>Send payment to the displayed account</li>
+                  <li>Upload screenshot of your payment</li>
+                  <li>Wait for admin approval (usually 1-2 hours)</li>
+                </ol>
+                <div class="ml-9 mt-3 p-3 bg-blue-50 rounded-lg">
+                  <p class="text-blue-800 font-medium">Available Packages:</p>
+                  <ul class="mt-1 text-blue-700 text-xs space-y-1">
+                    <li>• Drop-In: 1 credit (7 days validity)</li>
+                    <li>• Starter Pack: 6 credits (30 days)</li>
+                    <li>• Standard Pack: 12 credits (30 days)</li>
+                    <li>• Power Pack: 20 credits (45 days)</li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">✅</span>
+                  <span class="font-medium text-gray-900">How to Check In to a Class</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <p class="ml-9 font-medium text-gray-900 mb-3">Three easy ways to check in:</p>
+
+                <!-- Self Check-in (Kiosk) -->
+                <div class="ml-9 p-4 bg-green-50 rounded-xl mb-3">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-lg">📲</span>
+                    <p class="font-semibold text-green-800">Option 1: Scan the Studio QR (Fastest!)</p>
+                  </div>
+                  <ol class="list-decimal list-inside space-y-2 text-green-700 text-xs">
+                    <li>Look for the QR code displayed at the studio counter</li>
+                    <li>Open your phone camera and scan it</li>
+                    <li>Tap the link that appears on your screen</li>
+                    <li>Sign in (if needed) and tap your class to check in</li>
+                  </ol>
+                  <p class="text-xs text-green-600 mt-2 italic">💡 Self check-in is available 30 min before to 15 min after class</p>
+                </div>
+
+                <!-- Show Your QR Code -->
+                <div class="ml-9 p-4 bg-brand-50 rounded-xl mb-3">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-lg">📱</span>
+                    <p class="font-semibold text-brand-800">Option 2: Show Your Booking QR</p>
+                  </div>
+                  <ol class="list-decimal list-inside space-y-2 text-brand-700 text-xs">
+                    <li>Go to <a href="/bookings.html" class="text-brand-600 underline font-medium">My Bookings</a> before class</li>
+                    <li>Find your upcoming class - you'll see a QR code</li>
+                    <li>Show it to Coach Iren when you arrive</li>
+                    <li>She'll scan it and you're checked in!</li>
+                  </ol>
+                  <p class="text-xs text-brand-600 mt-2 italic">💡 Your QR code appears 24 hours before class</p>
+                </div>
+
+                <!-- Manual Check-in -->
+                <div class="ml-9 p-4 bg-gray-50 rounded-xl">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-lg">🙋</span>
+                    <p class="font-semibold text-gray-800">Option 3: Manual Check-in</p>
+                  </div>
+                  <ol class="list-decimal list-inside space-y-2 text-gray-600 text-xs">
+                    <li>Tell Coach Iren your name when you arrive</li>
+                    <li>She'll find your booking and check you in</li>
+                  </ol>
+                </div>
+
+                <p class="ml-9 mt-3 text-gray-500">Tip: You can view your booked classes in your <a href="/bookings.html" class="text-brand-500 hover:underline">My Bookings</a>.</p>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">❌</span>
+                  <span class="font-medium text-gray-900">How to Cancel a Booking</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Go to <a href="/bookings.html" class="text-brand-500 hover:underline font-medium">My Bookings</a></li>
+                  <li>Find the class you want to cancel</li>
+                  <li>Click "Cancel" on the booking</li>
+                  <li>Your credit will be refunded automatically</li>
+                </ol>
+                <div class="ml-9 mt-3 p-3 bg-yellow-50 rounded-lg">
+                  <p class="text-yellow-800 text-xs"><strong>Cancellation Policy:</strong> Cancel at least 4 hours before the class to get your credit back. Late cancellations may forfeit the credit.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">🏋️</span>
+                  <span class="font-medium text-gray-900">Class Types & What to Expect</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <div class="ml-9 space-y-3">
+                  <p>FitBreak offers various bootcamp-style classes designed for all fitness levels:</p>
+                  <ul class="space-y-2">
+                    <li><strong class="text-gray-900">HIIT:</strong> High-intensity interval training for maximum calorie burn</li>
+                    <li><strong class="text-gray-900">Strength:</strong> Resistance training to build muscle and tone</li>
+                    <li><strong class="text-gray-900">Cardio:</strong> Heart-pumping exercises to improve endurance</li>
+                    <li><strong class="text-gray-900">Core:</strong> Ab-focused workouts for a stronger midsection</li>
+                    <li><strong class="text-gray-900">Full Body:</strong> Complete workout targeting all muscle groups</li>
+                  </ul>
+                  <p class="mt-2"><strong>What to bring:</strong> Water bottle, towel, and comfortable workout clothes</p>
+                </div>
+              </div>
+            </details>
+
+            <!-- Payments & Credits Section -->
+            <div class="p-3 bg-blue-50 border-b border-blue-100 mt-2">
+              <p class="text-xs font-semibold text-blue-800 uppercase tracking-wide">💳 Payments & Credits</p>
+            </div>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">🎫</span>
+                  <span class="font-medium text-gray-900">Understanding Your Credits</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-3">
+                  <div class="p-3 bg-green-50 rounded-lg">
+                    <p class="font-semibold text-green-800">What are credits?</p>
+                    <p class="text-green-700 text-xs mt-1">Credits are your class passes. 1 credit = 1 class session. Buy them in packages and use them to book classes.</p>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Where to see your credits:</p>
+                    <ul class="mt-1 space-y-1 text-xs">
+                      <li>• <strong>Dashboard:</strong> Shows remaining credits prominently</li>
+                      <li>• <strong>Sidebar:</strong> Quick view on desktop</li>
+                      <li>• <strong>Profile page:</strong> Detailed credit info</li>
+                    </ul>
+                  </div>
+                  <div class="p-3 bg-orange-50 rounded-lg">
+                    <p class="font-semibold text-orange-800">⏰ Credit Expiry</p>
+                    <p class="text-orange-700 text-xs mt-1">Credits expire based on your package validity (7-45 days). Check your dashboard to see when your credits expire. Use them before they're gone!</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">📊</span>
+                  <span class="font-medium text-gray-900">Tracking Your Payment Status</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-3">
+                  <p class="font-medium text-gray-900">Payment Status Guide:</p>
+                  <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded">Pending</span>
+                      <span class="text-xs">Waiting for admin verification (usually 1-2 hours)</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-bold rounded">Approved</span>
+                      <span class="text-xs">Payment verified! Credits added to your account</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-1 bg-red-100 text-red-800 text-xs font-bold rounded">Rejected</span>
+                      <span class="text-xs">Issue with payment - check your email for details</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded">Refunded</span>
+                      <span class="text-xs">Money returned to your account</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-gray-500 mt-2">Check your payment history in the <a href="/payments.html" class="text-brand-500 hover:underline">Payments</a> page.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">💡</span>
+                  <span class="font-medium text-gray-900">Tips to Save on Credits</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-2">
+                  <ul class="space-y-2">
+                    <li class="flex gap-2"><span>💰</span> <span><strong>Buy bigger packs:</strong> Power Pack gives you ₱250/class vs ₱350 for drop-in</span></li>
+                    <li class="flex gap-2"><span>👥</span> <span><strong>Refer friends:</strong> Earn bonus credits when friends sign up</span></li>
+                    <li class="flex gap-2"><span>📅</span> <span><strong>Book ahead:</strong> Plan your week to maximize credit usage before expiry</span></li>
+                    <li class="flex gap-2"><span>⏰</span> <span><strong>Cancel early:</strong> Cancel 4+ hours ahead to get your credit back</span></li>
+                    <li class="flex gap-2"><span>📱</span> <span><strong>Watch for promos:</strong> Follow us on social media for special deals</span></li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+
+            <!-- Troubleshooting Section -->
+            <div class="p-3 bg-red-50 border-b border-red-100 mt-2">
+              <p class="text-xs font-semibold text-red-800 uppercase tracking-wide">🔧 Troubleshooting</p>
+            </div>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">❓</span>
+                  <span class="font-medium text-gray-900">Common Issues & Solutions</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-4">
+                  <div class="border-l-2 border-gray-200 pl-3">
+                    <p class="font-semibold text-gray-900">"I can't book a class"</p>
+                    <ul class="mt-1 text-xs space-y-1">
+                      <li>✓ Check if you have available credits</li>
+                      <li>✓ Make sure you're logged in</li>
+                      <li>✓ Check if the class is full (waitlist available)</li>
+                      <li>✓ Verify your credits haven't expired</li>
+                    </ul>
+                  </div>
+                  <div class="border-l-2 border-gray-200 pl-3">
+                    <p class="font-semibold text-gray-900">"My payment is still pending"</p>
+                    <ul class="mt-1 text-xs space-y-1">
+                      <li>✓ Verification usually takes 1-2 hours</li>
+                      <li>✓ Check if you uploaded a clear receipt</li>
+                      <li>✓ Email support@fitbreak.ph if pending > 24 hours</li>
+                    </ul>
+                  </div>
+                  <div class="border-l-2 border-gray-200 pl-3">
+                    <p class="font-semibold text-gray-900">"I didn't receive my credits"</p>
+                    <ul class="mt-1 text-xs space-y-1">
+                      <li>✓ Check your email for approval notification</li>
+                      <li>✓ Refresh your dashboard page</li>
+                      <li>✓ Check payment status in Payments page</li>
+                    </ul>
+                  </div>
+                  <div class="border-l-2 border-gray-200 pl-3">
+                    <p class="font-semibold text-gray-900">"I accidentally booked the wrong class"</p>
+                    <ul class="mt-1 text-xs space-y-1">
+                      <li>✓ Cancel immediately from My Bookings</li>
+                      <li>✓ Credit is refunded if cancelled 4+ hours ahead</li>
+                      <li>✓ Book the correct class right away</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">🔐</span>
+                  <span class="font-medium text-gray-900">Account & Security</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-3">
+                  <div>
+                    <p class="font-medium text-gray-900">Reset your password:</p>
+                    <p class="text-xs">Go to <a href="/settings.html" class="text-brand-500 hover:underline">Settings</a> → Security → Change Password</p>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Update your profile:</p>
+                    <p class="text-xs">Edit your name, phone, and emergency contact on this page</p>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Connect wearables:</p>
+                    <p class="text-xs">Go to <a href="/settings.html" class="text-brand-500 hover:underline">Settings</a> → Connected Devices to sync Google Fit or Fitbit</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <!-- Info Section -->
+            <div class="p-3 bg-purple-50 border-b border-purple-100 mt-2">
+              <p class="text-xs font-semibold text-purple-800 uppercase tracking-wide">ℹ️ About FitBreak</p>
+            </div>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">🏋️</span>
+                  <span class="font-medium text-gray-900">Class Types & What to Expect</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <div class="ml-9 space-y-3">
+                  <p>FitBreak offers various bootcamp-style classes designed for all fitness levels:</p>
+                  <ul class="space-y-2">
+                    <li><strong class="text-gray-900">HIIT:</strong> High-intensity interval training for maximum calorie burn</li>
+                    <li><strong class="text-gray-900">Strength:</strong> Resistance training to build muscle and tone</li>
+                    <li><strong class="text-gray-900">Cardio:</strong> Heart-pumping exercises to improve endurance</li>
+                    <li><strong class="text-gray-900">Core:</strong> Ab-focused workouts for a stronger midsection</li>
+                    <li><strong class="text-gray-900">Full Body:</strong> Complete workout targeting all muscle groups</li>
+                  </ul>
+                  <p class="mt-2"><strong>What to bring:</strong> Water bottle, towel, and comfortable workout clothes</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">📍</span>
+                  <span class="font-medium text-gray-900">Studio Location & Contact</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <div class="ml-9 space-y-3">
+                  <div>
+                    <p class="font-medium text-gray-900">Address:</p>
+                    <p>2nd Floor Roxas Drive, Brgy Ilaya, Calapan City, Oriental Mindoro</p>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Contact:</p>
+                    <p>Email: <a href="mailto:support@fitbreak.ph" class="text-brand-500 hover:underline">support@fitbreak.ph</a></p>
+                  </div>
+                  <div>
+                    <p class="font-medium text-gray-900">Operating Hours:</p>
+                    <p>Monday - Saturday: 6:00 AM - 8:00 PM</p>
+                    <p>Sunday: Closed</p>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">📜</span>
+                  <span class="font-medium text-gray-900">Policies & Terms</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600">
+                <div class="ml-9 space-y-2">
+                  <p><a href="/terms-of-service.html" class="text-brand-500 hover:underline">Terms of Service</a> - Rules for using FitBreak</p>
+                  <p><a href="/privacy-policy.html" class="text-brand-500 hover:underline">Privacy Policy</a> - How we protect your data</p>
+                  <p><a href="/refund-policy.html" class="text-brand-500 hover:underline">Refund Policy</a> - Our refund guidelines</p>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- Admin Guide (only shown to admins) -->
+          <div id="admin-guide" class="hidden divide-y divide-gray-100 border-t-2 border-brand-200">
+            <div class="p-4 bg-brand-50">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 bg-brand-500 text-white text-xs font-bold rounded">ADMIN</span>
+                <span class="font-semibold text-brand-800">Administrator Guide</span>
+              </div>
+            </div>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">💰</span>
+                  <span class="font-medium text-gray-900">Approving Payments</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Go to <a href="/admin.html" class="text-brand-500 hover:underline font-medium">Admin Dashboard</a> > Payments tab</li>
+                  <li>Review pending payments (yellow status)</li>
+                  <li>Click "View Receipt" to verify the payment screenshot</li>
+                  <li>Check that the amount matches the package price</li>
+                  <li>Click "Approve" to add credits to the user</li>
+                  <li>User will receive an email confirmation</li>
+                </ol>
+                <div class="ml-9 mt-3 p-3 bg-red-50 rounded-lg">
+                  <p class="text-red-800 text-xs"><strong>If payment is suspicious:</strong> Click "Reject" and select the appropriate reason (Unclear Proof, Wrong Amount, Wrong Account, or Fraudulent). The user will be notified accordingly.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">🔄</span>
+                  <span class="font-medium text-gray-900">Processing Refunds</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Find the approved payment in the Payments tab</li>
+                  <li>Click "Refund" button (blue)</li>
+                  <li>Select refund method (GCash, BPI, Cash)</li>
+                  <li>Enter the reference number from your refund transaction</li>
+                  <li>Credits will be automatically deducted from the user</li>
+                  <li>User receives email notification of refund</li>
+                </ol>
+                <p class="ml-9 mt-2 text-gray-500">Note: Always process the actual refund via GCash/BPI before marking as refunded in the system.</p>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">✅</span>
+                  <span class="font-medium text-gray-900">Checking In Members</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Go to Admin Dashboard > Bookings tab</li>
+                  <li>Find the member's booking for today's class</li>
+                  <li>Click "Check In" when they arrive</li>
+                  <li>System will verify they have credits</li>
+                  <li>If no credits, you'll be prompted to redirect to Credits page</li>
+                </ol>
+                <div class="ml-9 mt-3 p-3 bg-yellow-50 rounded-lg">
+                  <p class="text-yellow-800 text-xs"><strong>Important:</strong> Members with 0 credits cannot be checked in. They must purchase a package first.</p>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">🎫</span>
+                  <span class="font-medium text-gray-900">Managing Credits Manually</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <ol class="list-decimal list-inside space-y-2 ml-9">
+                  <li>Go to <a href="/admin-credits.html" class="text-brand-500 hover:underline font-medium">Credits Management</a></li>
+                  <li>Search for the user by email or name</li>
+                  <li>Click "Add Credits" or "Remove Credits"</li>
+                  <li>Enter the amount and reason</li>
+                  <li>Changes are logged for audit purposes</li>
+                </ol>
+                <p class="ml-9 mt-2 text-gray-500">Use cases: Complimentary credits, corrections, promotions, expired credit adjustments.</p>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">👥</span>
+                  <span class="font-medium text-gray-900">Managing Members</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <div class="ml-9 space-y-3">
+                  <p><strong>View Members:</strong> Admin Dashboard > Members tab</p>
+                  <p><strong>Member Info Shown:</strong></p>
+                  <ul class="list-disc list-inside ml-4 space-y-1">
+                    <li>Name and email</li>
+                    <li>Credits remaining (color-coded)</li>
+                    <li>Account status</li>
+                    <li>Join date</li>
+                  </ul>
+                  <p><strong>Actions:</strong></p>
+                  <ul class="list-disc list-inside ml-4 space-y-1">
+                    <li>View - See full profile details</li>
+                    <li>Delete - Remove user (Super Admin only)</li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+
+            <details class="group">
+              <summary class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">📊</span>
+                  <span class="font-medium text-gray-900">Dashboard Statistics</span>
+                </div>
+                <svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </summary>
+              <div class="px-4 pb-4 text-sm text-gray-600 space-y-2">
+                <div class="ml-9 space-y-3">
+                  <p>The admin dashboard shows key metrics:</p>
+                  <ul class="list-disc list-inside ml-4 space-y-1">
+                    <li><strong>Total Members:</strong> All registered users</li>
+                    <li><strong>Active Bookings:</strong> Upcoming confirmed classes</li>
+                    <li><strong>Total Revenue:</strong> Sum of all approved payments</li>
+                    <li><strong>Total Classes:</strong> Classes conducted</li>
+                    <li><strong>Payments Today:</strong> Payments received today</li>
+                    <li><strong>Check-ins Today:</strong> Members checked in today</li>
+                    <li><strong>Pending Approval:</strong> Payments awaiting verification</li>
+                    <li><strong>Credits Available:</strong> Total credits in user accounts</li>
+                  </ul>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <!-- Need More Help -->
+          <div class="p-4 bg-gray-50 border-t border-gray-100">
+            <p class="text-sm text-gray-600">
+              Need more help? Contact us at <a href="mailto:support@fitbreak.ph" class="text-brand-500 hover:underline font-medium">support@fitbreak.ph</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50"></div>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Modals Component -->
+  <div id="modals-placeholder"></div>
+
+  <!-- Referral Modal -->
+  <div id="referral-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+      <!-- Header -->
+      <div class="p-6 border-b border-gray-100">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold text-gray-900">Your Referral Link</h2>
+          <button id="close-referral-modal" class="p-2 hover:bg-gray-100 rounded-full transition">
+            <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="p-6 space-y-6">
+        <!-- Stats -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-brand-50 rounded-xl p-4 text-center">
+            <p class="text-3xl font-bold text-brand-600" id="referral-count">0</p>
+            <p class="text-sm text-gray-600">Friends Referred</p>
+          </div>
+          <div class="bg-green-50 rounded-xl p-4 text-center">
+            <p class="text-3xl font-bold text-green-600" id="referral-rewards">0</p>
+            <p class="text-sm text-gray-600">Credits Earned</p>
+          </div>
+        </div>
+
+        <!-- QR Code -->
+        <div class="text-center">
+          <p class="text-sm text-gray-600 mb-3">Scan QR Code</p>
+          <div id="qr-code-container" class="inline-block p-4 bg-white border-2 border-gray-200 rounded-xl"></div>
+          <button id="download-qr-code" class="mt-3 text-sm text-brand-600 hover:text-brand-700 font-medium flex items-center gap-1 mx-auto">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Download QR
+          </button>
+        </div>
+
+        <!-- Link -->
+        <div>
+          <p class="text-sm text-gray-600 mb-2">Or share this link:</p>
+          <div class="flex gap-2">
+            <input type="text" id="referral-link-input" readonly class="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-mono">
+            <button id="copy-referral-link" class="px-4 py-3 bg-brand-500 text-white rounded-xl hover:bg-brand-600 transition font-medium">
+              Copy
+            </button>
+          </div>
+          <p id="copy-success" class="hidden text-sm text-green-600 mt-2 flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Link copied to clipboard!
+          </p>
+        </div>
+
+        <!-- Social Share Buttons -->
+        <div>
+          <p class="text-sm text-gray-600 mb-3">Share on social media:</p>
+          <div class="grid grid-cols-3 gap-2">
+            <!-- Facebook -->
+            <button onclick="shareReferral('facebook')" class="flex items-center justify-center gap-1 py-2 px-2 bg-[#1877F2] text-white rounded-lg hover:opacity-90 transition text-xs font-medium" title="Share on Facebook">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              <span>Facebook</span>
+            </button>
+            <!-- Messenger -->
+            <button onclick="shareReferral('messenger')" class="flex items-center justify-center gap-1 py-2 px-2 bg-gradient-to-r from-[#00B2FF] to-[#006AFF] text-white rounded-lg hover:opacity-90 transition text-xs font-medium" title="Send via Messenger">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"/></svg>
+              <span>Messenger</span>
+            </button>
+            <!-- WhatsApp -->
+            <button onclick="shareReferral('whatsapp')" class="flex items-center justify-center gap-1 py-2 px-2 bg-[#25D366] text-white rounded-lg hover:opacity-90 transition text-xs font-medium" title="Share on WhatsApp">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span>WhatsApp</span>
+            </button>
+            <!-- Viber -->
+            <button onclick="shareReferral('viber')" class="flex items-center justify-center gap-1 py-2 px-2 bg-[#7360F2] text-white rounded-lg hover:opacity-90 transition text-xs font-medium" title="Share on Viber">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.4 0C9.473.028 5.333.344 3.01 2.467 1.309 4.168.622 6.68.582 9.78c-.04 3.1-.09 8.91 5.45 10.5h.01l-.01 2.42s-.04.98.61 1.18c.78.25 1.24-.5 1.99-1.3.41-.44.98-1.08 1.4-1.58 3.87.32 6.85-.42 7.19-.53.79-.25 5.27-.83 6-6.79.75-6.14-.36-10.02-2.38-11.76C18.86.87 14.144.04 11.4 0zm.33 1.87c2.64.04 6.47.6 8.24 2.04 1.59 1.38 2.47 4.65 1.84 9.72-.58 4.77-4.16 5.17-4.82 5.38-.28.09-2.79.72-5.97.54 0 0-2.37 2.86-3.11 3.6-.12.12-.26.17-.35.15-.13-.04-.17-.19-.16-.41 0-.32.02-3.94.02-3.94-4.44-1.28-4.18-6.12-4.15-8.57.03-2.45.53-4.5 1.89-5.84C6.64 2.84 9.55 1.87 11.73 1.87zm.08 2.8c-.2 0-.2.3 0 .3 2.61.08 4.65 1.65 4.87 4.76 0 .19.3.18.3-.01-.04-1.7-.71-3.14-1.88-4.12a5.67 5.67 0 00-3.3-1.13zm-3.18.93c-.28-.02-.6.1-.94.35l-.02.02c-.32.27-.62.59-.84.92-.37.54-.43 1.08-.18 1.59.51 1.07 1.2 2.09 2.08 3.11l.03.03c.8.92 1.73 1.76 2.76 2.5l.05.04c.86.58 2.52 1.36 2.9 1.43h.01c.36.07.67-.01.9-.24l.01-.02c.24-.24.48-.57.67-.9.32-.56.15-1.12-.4-1.4l-1.56-.85a.67.67 0 00-.7.07l-.62.52c-.18.14-.43.12-.58.06-1.17-.57-3-2.2-3.45-3.4-.05-.16 0-.4.16-.56l.58-.55a.67.67 0 00.14-.7l-.79-1.65c-.14-.27-.42-.37-.71-.4zm3.06.85c-.2 0-.2.3 0 .3 1.63.06 2.86 1.12 2.93 2.87 0 .2.3.18.3-.01-.03-1.94-1.41-3.1-3.23-3.16zm.08 1.48c-.2-.02-.21.28-.01.3 1.01.09 1.42.68 1.47 1.57 0 .2.3.18.3-.01-.03-1.04-.59-1.79-1.76-1.86z"/></svg>
+              <span>Viber</span>
+            </button>
+            <!-- Telegram -->
+            <button onclick="shareReferral('telegram')" class="flex items-center justify-center gap-1 py-2 px-2 bg-[#0088cc] text-white rounded-lg hover:opacity-90 transition text-xs font-medium" title="Share on Telegram">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+              <span>Telegram</span>
+            </button>
+            <!-- X/Twitter -->
+            <button onclick="shareReferral('twitter')" class="flex items-center justify-center gap-1 py-2 px-2 bg-black text-white rounded-lg hover:opacity-90 transition text-xs font-medium" title="Share on X">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>X</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- How it works -->
+        <div class="bg-gray-50 rounded-xl p-4">
+          <p class="font-semibold text-gray-900 mb-2">How it works:</p>
+          <ol class="text-sm text-gray-600 space-y-1">
+            <li class="flex gap-2"><span class="font-bold text-brand-600">1.</span> Share your link with friends</li>
+            <li class="flex gap-2"><span class="font-bold text-brand-600">2.</span> They sign up using your link</li>
+            <li class="flex gap-2"><span class="font-bold text-brand-600">3.</span> When they book their first class, you both get 1 free credit!</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code Library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('profile');
+      }
+    });
+  </script>
+
+  <script>
+    // Social media share function
+    function shareReferral(platform) {
+      const referralLink = document.getElementById('referral-link-input').value;
+      const message = "Join me at FitBreak! Women-only fitness bootcamp. Sign up using my link and we both get a free class!";
+      const encodedLink = encodeURIComponent(referralLink);
+      const encodedMessage = encodeURIComponent(message + " " + referralLink);
+
+      let shareUrl = '';
+
+      switch(platform) {
+        case 'facebook':
+          shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedLink}&quote=${encodeURIComponent(message)}`;
+          break;
+        case 'messenger':
+          shareUrl = `fb-messenger://share/?link=${encodedLink}`;
+          // Fallback for desktop
+          if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            shareUrl = `https://www.facebook.com/dialog/send?link=${encodedLink}&app_id=751967784039817&redirect_uri=${encodeURIComponent(window.location.href)}`;
+          }
+          break;
+        case 'whatsapp':
+          shareUrl = `https://wa.me/?text=${encodedMessage}`;
+          break;
+        case 'viber':
+          shareUrl = `viber://forward?text=${encodedMessage}`;
+          break;
+        case 'telegram':
+          shareUrl = `https://t.me/share/url?url=${encodedLink}&text=${encodeURIComponent(message)}`;
+          break;
+        case 'twitter':
+          shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodedLink}`;
+          break;
+      }
+
+      if (shareUrl) {
+        window.open(shareUrl, '_blank', 'width=600,height=400');
+      }
+    }
+  </script>
+
+  <script type="module" src="/auth.js"></script>
+  <script type="module" src="profile.js"></script>
+  <script type="module" src="/referral.js"></script>
+  <!-- Onboarding Tour & Help -->
+  <script src="/onboarding-tour.js"></script>
+
+  <!-- Help Search Functionality -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('help-search');
+      const clearBtn = document.getElementById('clear-help-search');
+      const resultsText = document.getElementById('help-search-results');
+      const memberGuide = document.getElementById('member-guide');
+      const adminGuide = document.getElementById('admin-guide');
+
+      if (!searchInput || !memberGuide) return;
+
+      // Get all details elements
+      function getAllDetails() {
+        const memberDetails = memberGuide ? Array.from(memberGuide.querySelectorAll('details')) : [];
+        const adminDetails = adminGuide && !adminGuide.classList.contains('hidden')
+          ? Array.from(adminGuide.querySelectorAll('details'))
+          : [];
+        return [...memberDetails, ...adminDetails];
+      }
+
+      // Get section headers
+      function getAllSectionHeaders() {
+        const memberHeaders = memberGuide ? Array.from(memberGuide.querySelectorAll('.bg-green-50, .bg-blue-50, .bg-red-50, .bg-purple-50')) : [];
+        const adminHeaders = adminGuide && !adminGuide.classList.contains('hidden')
+          ? Array.from(adminGuide.querySelectorAll('.bg-brand-50'))
+          : [];
+        return [...memberHeaders, ...adminHeaders];
+      }
+
+      function performSearch(query) {
+        const allDetails = getAllDetails();
+        const allHeaders = getAllSectionHeaders();
+        const searchTerm = query.toLowerCase().trim();
+
+        if (!searchTerm) {
+          // Reset everything
+          allDetails.forEach(detail => {
+            detail.style.display = '';
+            detail.classList.remove('ring-2', 'ring-brand-300', 'bg-brand-50/30');
+            const summary = detail.querySelector('summary span:last-of-type');
+            if (summary) summary.innerHTML = summary.textContent;
+          });
+          allHeaders.forEach(header => header.style.display = '');
+          clearBtn.classList.add('hidden');
+          resultsText.classList.add('hidden');
+          return;
+        }
+
+        let matchCount = 0;
+        const matchedSections = new Set();
+
+        allDetails.forEach(detail => {
+          const summary = detail.querySelector('summary');
+          const content = detail.querySelector('div.px-4');
+          const titleSpan = summary ? summary.querySelector('span:last-of-type') : null;
+          const title = titleSpan ? titleSpan.textContent : '';
+          const contentText = content ? content.textContent : '';
+          const fullText = (title + ' ' + contentText).toLowerCase();
+
+          // Check if matches search term
+          if (fullText.includes(searchTerm)) {
+            detail.style.display = '';
+            detail.classList.add('ring-2', 'ring-brand-300', 'bg-brand-50/30');
+            matchCount++;
+
+            // Find parent section
+            let parent = detail.previousElementSibling;
+            while (parent) {
+              if (parent.classList.contains('bg-green-50') ||
+                  parent.classList.contains('bg-blue-50') ||
+                  parent.classList.contains('bg-red-50') ||
+                  parent.classList.contains('bg-purple-50') ||
+                  parent.classList.contains('bg-brand-50')) {
+                matchedSections.add(parent);
+                break;
+              }
+              parent = parent.previousElementSibling;
+            }
+
+            // Highlight matching text in title
+            if (titleSpan && title.toLowerCase().includes(searchTerm)) {
+              const regex = new RegExp(`(${searchTerm})`, 'gi');
+              titleSpan.innerHTML = title.replace(regex, '<mark class="bg-yellow-200 px-0.5 rounded">$1</mark>');
+            }
+
+            // Auto-expand matching details
+            detail.open = true;
+          } else {
+            detail.style.display = 'none';
+            detail.classList.remove('ring-2', 'ring-brand-300', 'bg-brand-50/30');
+            if (titleSpan) titleSpan.innerHTML = title;
+          }
+        });
+
+        // Show/hide section headers based on matched content
+        allHeaders.forEach(header => {
+          if (matchedSections.has(header)) {
+            header.style.display = '';
+          } else {
+            header.style.display = 'none';
+          }
+        });
+
+        // Update results text
+        clearBtn.classList.remove('hidden');
+        resultsText.classList.remove('hidden');
+        if (matchCount === 0) {
+          resultsText.textContent = `No results found for "${query}"`;
+          resultsText.classList.add('text-red-500');
+          resultsText.classList.remove('text-gray-500');
+        } else {
+          resultsText.textContent = `Found ${matchCount} topic${matchCount === 1 ? '' : 's'} matching "${query}"`;
+          resultsText.classList.remove('text-red-500');
+          resultsText.classList.add('text-gray-500');
+        }
+      }
+
+      // Debounce search
+      let searchTimeout;
+      searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => performSearch(this.value), 200);
+      });
+
+      // Clear button
+      clearBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        performSearch('');
+        searchInput.focus();
+      });
+
+      // Clear on Escape key
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          this.value = '';
+          performSearch('');
+        }
+      });
+    });
+  </script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

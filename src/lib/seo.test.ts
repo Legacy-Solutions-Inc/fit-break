@@ -10,17 +10,31 @@ describe("buildSitemap", () => {
     expect(entries).toHaveLength(SITEMAP_ROUTES.length);
     const urls = entries.map((e) => e.url);
     expect(urls).toContain("https://example.com/");
-    expect(urls).toContain("https://example.com/auth/sign-in");
+    expect(urls).toContain("https://example.com/pricing");
+    expect(urls.some((u) => /\/(auth|member|login|dashboard)/.test(u))).toBe(false);
     // absolute + no accidental "//" after the scheme
     urls.forEach((u) => expect(u.replace("https://", "")).not.toContain("//"));
     expect(entries[0]?.lastModified).toBe(date);
   });
+
+  it("appends extra routes such as blog posts", () => {
+    const entries = buildSitemap("https://example.com", new Date(), ["/blog/abc"]);
+    expect(entries.map((e) => e.url)).toContain("https://example.com/blog/abc");
+  });
 });
 
 describe("buildRobots", () => {
-  it("disallows the private dashboard and points at the sitemap", () => {
+  it("disallows private/parked areas and points at the sitemap", () => {
     const robots = buildRobots("https://example.com/");
-    expect(robots.rules).toMatchObject({ userAgent: "*", disallow: "/dashboard/" });
+    expect(robots.rules).toMatchObject({ userAgent: "*" });
+    const { disallow } = robots.rules as { disallow: string[] };
+    expect(disallow).toEqual(expect.arrayContaining(["/dashboard/", "/member/", "/login"]));
     expect(robots.sitemap).toBe("https://example.com/sitemap.xml");
+  });
+
+  it("allows every crawler (answer and training) with one rule, no crawler-specific blocks", () => {
+    const robots = buildRobots("https://fitbreak.ph/");
+    expect(Array.isArray(robots.rules)).toBe(false);
+    expect(robots.rules).toMatchObject({ userAgent: "*", allow: "/" });
   });
 });

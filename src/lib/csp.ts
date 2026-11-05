@@ -11,7 +11,30 @@ export interface CspOptions {
    * src/config.ts via src/middleware.ts. See docs/adr/0007.
    */
   sessionReplay?: boolean;
+  /**
+   * When true (a GA4 measurement ID is configured), adds Google's tag host to
+   * `script-src` and its collection hosts to `connect-src`. Default `false` ⇒
+   * no Google host anywhere (policy unchanged). Wired from
+   * `isGoogleAnalyticsConfigured` in src/config.ts via src/middleware.ts. See
+   * docs/adr/0010.
+   */
+  googleAnalytics?: boolean;
 }
+
+/** gtag.js host. Under 'strict-dynamic' the nonce is what trusts the loader;
+ * the host is the fallback for browsers without 'strict-dynamic'. */
+export const GA_SCRIPT_HOSTS = ["https://www.googletagmanager.com"] as const;
+/**
+ * GA4 collection hosts (regional `region1.google-analytics.com` etc.).
+ * `www.google.com` is needed too: with Consent Mode denied, gtag.js also sends
+ * its cookieless pings to `https://www.google.com/g/collect` (seen in testing).
+ */
+export const GA_CONNECT_HOSTS = [
+  "https://*.google-analytics.com",
+  "https://*.analytics.google.com",
+  "https://*.googletagmanager.com",
+  "https://www.google.com",
+] as const;
 
 /**
  * Builds an enforced, nonce-based strict Content-Security-Policy string.
@@ -22,7 +45,7 @@ export interface CspOptions {
  * style attributes — per Google's strict-CSP guidance).
  */
 export function buildCsp(nonce: string, opts: CspOptions): string {
-  const { isDev, supabaseUrl, sessionReplay } = opts;
+  const { isDev, supabaseUrl, sessionReplay, googleAnalytics } = opts;
 
   const scriptSrc = [
     "'self'",
@@ -30,6 +53,8 @@ export function buildCsp(nonce: string, opts: CspOptions): string {
     "'strict-dynamic'",
     // HMR in dev evaluates code via eval(); never allowed in production.
     ...(isDev ? ["'unsafe-eval'"] : []),
+    // GA4 only (ADR 0010). No Tag Manager container, so nothing arbitrary.
+    ...(googleAnalytics ? GA_SCRIPT_HOSTS : []),
   ];
 
   const connectSrc = ["'self'"];
@@ -45,6 +70,11 @@ export function buildCsp(nonce: string, opts: CspOptions): string {
     // Local Supabase CLI (http) + the HMR websocket.
     connectSrc.push("ws:", "http://127.0.0.1:54321");
   }
+  // GA4 collection endpoints, only when a measurement ID is configured. Its
+  // pixels go to img-src, which already allows https:.
+  if (googleAnalytics) {
+    connectSrc.push(...GA_CONNECT_HOSTS);
+  }
 
   const directives: Array<[string, string[]]> = [
     ["default-src", ["'self'"]],
@@ -53,6 +83,9 @@ export function buildCsp(nonce: string, opts: CspOptions): string {
     ["img-src", ["'self'", "data:", "blob:", "https:"]],
     ["font-src", ["'self'", "data:"]],
     ["connect-src", connectSrc],
+    // Google Maps embed on the public homepage (Visit Us). Nothing else may be
+    // framed; everything else falls back to default-src 'self'.
+    ["frame-src", ["https://www.google.com"]],
     ["frame-ancestors", ["'none'"]],
     // This template renders no <base> element; lock it down entirely.
     ["base-uri", ["'none'"]],

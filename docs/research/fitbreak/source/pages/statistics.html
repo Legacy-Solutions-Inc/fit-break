@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Statistics — FitBreak</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+  <script src="/components/member-sidebar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+
+
+  <div class="flex min-h-screen">
+    <div id="member-sidebar-placeholder"></div>
+
+    <main class="flex-1 min-h-screen bg-gray-50">
+      <div class="p-6">
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold text-gray-900">Statistics</h1>
+          <p class="text-gray-600">Track your fitness progress over time</p>
+        </div>
+
+        <!-- Stats Overview Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="p-2 bg-brand-50 rounded-lg">
+                <svg class="w-5 h-5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-500">Total Workouts</span>
+            </div>
+            <p id="stat-workouts" class="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="p-2 bg-orange-50 rounded-lg">
+                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-500">Calories Burned</span>
+            </div>
+            <p id="stat-calories" class="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="p-2 bg-green-50 rounded-lg">
+                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-500">Hours Active</span>
+            </div>
+            <p id="stat-hours" class="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="p-2 bg-purple-50 rounded-lg">
+                <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-500">Day Streak</span>
+            </div>
+            <p id="stat-streak" class="text-3xl font-bold text-gray-900">0</p>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <!-- Weekly Activity Chart -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-bold text-gray-900">Weekly Activity</h2>
+              <select id="activity-period" class="text-sm border border-gray-200 rounded-lg px-3 py-1.5">
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+              </select>
+            </div>
+            <div class="h-64">
+              <canvas id="activity-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Workout Types -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-lg font-bold text-gray-900 mb-4">Workout Types</h2>
+            <div class="h-64">
+              <canvas id="workout-types-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Progress Over Time -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 lg:col-span-2">
+            <h2 class="text-lg font-bold text-gray-900 mb-4">Progress Over Time</h2>
+            <div class="h-64">
+              <canvas id="progress-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Recent Achievements -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 lg:col-span-2">
+            <h2 class="text-lg font-bold text-gray-900 mb-4">Recent Achievements</h2>
+            <div id="achievements-list" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="text-center p-4 bg-gray-50 rounded-xl">
+                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span class="text-2xl">🔥</span>
+                </div>
+                <p class="font-medium text-gray-900">First Workout</p>
+                <p class="text-xs text-gray-500">Completed</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-xl opacity-50">
+                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span class="text-2xl">🏆</span>
+                </div>
+                <p class="font-medium text-gray-900">7 Day Streak</p>
+                <p class="text-xs text-gray-500">Locked</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-xl opacity-50">
+                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span class="text-2xl">💪</span>
+                </div>
+                <p class="font-medium text-gray-900">10 Workouts</p>
+                <p class="text-xs text-gray-500">Locked</p>
+              </div>
+              <div class="text-center p-4 bg-gray-50 rounded-xl opacity-50">
+                <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span class="text-2xl">⭐</span>
+                </div>
+                <p class="font-medium text-gray-900">30 Day Member</p>
+                <p class="text-xs text-gray-500">Locked</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/auth.js"></script>
+  <script>
+    // Show sidebar immediately from cache
+    document.addEventListener('DOMContentLoaded', function() {
+      var cached = localStorage.getItem('fitbreak_user');
+      if (cached && typeof initMemberSidebar === 'function') {
+        initMemberSidebar('statistics');
+      }
+    });
+  </script>
+  <script type="module">
+    import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs, orderBy } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import firebaseConfig from './firebase-config-module.js';
+
+    const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app, 'asia-db');
+
+    let userBookings = [];
+    let userData = {};
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        if (typeof initMemberSidebar === 'function') initMemberSidebar('statistics');
+
+        // Load user data
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc.exists()) {
+          userData = userDoc.data();
+          if (typeof updateSidebarUser === 'function') {
+            updateSidebarUser(user, userData);
+          }
+          // Update stats cards
+          document.getElementById('stat-workouts').textContent = userData.classesAttended || 0;
+          document.getElementById('stat-streak').textContent = userData.activeStreak || 0;
+          document.getElementById('stat-calories').textContent = ((userData.classesAttended || 0) * 350).toLocaleString();
+          document.getElementById('stat-hours').textContent = ((userData.classesAttended || 0) * 0.75).toFixed(1);
+        }
+
+        // Load user bookings
+        await loadUserBookings(user.uid);
+
+        // Initialize charts with real data
+        initCharts();
+
+        // Update achievements
+        updateAchievements();
+      } else {
+        window.location.href = '/login.html';
+      }
+    });
+
+    async function loadUserBookings(userId) {
+      try {
+        const bookingsRef = collection(db, 'bookings');
+        const bookingsQuery = query(bookingsRef, where('userId', '==', userId));
+        const snapshot = await getDocs(bookingsQuery);
+
+        userBookings = [];
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const classDate = data.classDate?.toDate ? data.classDate.toDate() : new Date(data.classDate);
+          userBookings.push({ id: doc.id, ...data, classDate });
+        });
+
+        userBookings.sort((a, b) => a.classDate - b.classDate);
+      } catch (error) {
+        console.error('Error loading bookings:', error);
+      }
+    }
+
+    function getWeeklyActivityData() {
+      const now = new Date();
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(now.getDate() - now.getDay());
+      startOfWeek.setHours(0, 0, 0, 0);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(startOfWeek.getDate() + 7);
+
+      // Count minutes per day (assume 45 min per class)
+      const dayMinutes = [0, 0, 0, 0, 0, 0, 0];
+
+      userBookings.forEach(booking => {
+        if (booking.classDate >= startOfWeek && booking.classDate < endOfWeek) {
+          if (booking.status === 'checked_in' || booking.status === 'confirmed') {
+            const dayOfWeek = booking.classDate.getDay();
+            dayMinutes[dayOfWeek] += 45; // Assume 45 min per class
+          }
+        }
+      });
+
+      return dayMinutes;
+    }
+
+    function getWorkoutTypesData() {
+      const types = { cardio: 0, strength: 0, flexibility: 0, hiit: 0 };
+
+      userBookings.forEach(booking => {
+        if (booking.status === 'checked_in' || booking.status === 'confirmed') {
+          const className = (booking.className || '').toLowerCase();
+
+          if (className.includes('yoga') || className.includes('pilates') || className.includes('stretch') || className.includes('flexibility')) {
+            types.flexibility++;
+          } else if (className.includes('strength') || className.includes('tone') || className.includes('sculpt') || className.includes('weights')) {
+            types.strength++;
+          } else if (className.includes('hiit') || className.includes('bootcamp') || className.includes('burn')) {
+            types.hiit++;
+          } else {
+            // Default cardio for dance, zumba, cardio, etc.
+            types.cardio++;
+          }
+        }
+      });
+
+      return types;
+    }
+
+    function getProgressData() {
+      const now = new Date();
+      const weeks = [];
+
+      // Get data for last 4 weeks
+      for (let i = 3; i >= 0; i--) {
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay() - (i * 7));
+        weekStart.setHours(0, 0, 0, 0);
+
+        const weekEnd = new Date(weekStart);
+        weekEnd.setDate(weekStart.getDate() + 7);
+
+        let count = 0;
+        userBookings.forEach(booking => {
+          if (booking.classDate >= weekStart && booking.classDate < weekEnd) {
+            if (booking.status === 'checked_in' || booking.status === 'confirmed') {
+              count++;
+            }
+          }
+        });
+
+        weeks.push(count);
+      }
+
+      return weeks;
+    }
+
+    function initCharts() {
+      // Weekly Activity Chart - Real Data
+      const weeklyData = getWeeklyActivityData();
+      const activityCtx = document.getElementById('activity-chart').getContext('2d');
+      new Chart(activityCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+          datasets: [{
+            label: 'Minutes',
+            data: weeklyData,
+            backgroundColor: '#D71E49',
+            borderRadius: 8,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, title: { display: true, text: 'Minutes' } } }
+        }
+      });
+
+      // Workout Types Chart - Real Data
+      const typesData = getWorkoutTypesData();
+      const hasData = Object.values(typesData).some(v => v > 0);
+      const typesCtx = document.getElementById('workout-types-chart').getContext('2d');
+      new Chart(typesCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Cardio', 'Strength', 'Flexibility', 'HIIT'],
+          datasets: [{
+            data: hasData ? [typesData.cardio, typesData.strength, typesData.flexibility, typesData.hiit] : [1, 1, 1, 1],
+            backgroundColor: ['#60a5fa', '#fbbf24', '#4ade80', '#D71E49'],
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  if (!hasData) return 'No data yet';
+                  return `${context.label}: ${context.raw} classes`;
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Progress Over Time Chart - Real Data
+      const progressData = getProgressData();
+      const progressCtx = document.getElementById('progress-chart').getContext('2d');
+      new Chart(progressCtx, {
+        type: 'line',
+        data: {
+          labels: ['3 Weeks Ago', '2 Weeks Ago', 'Last Week', 'This Week'],
+          datasets: [{
+            label: 'Workouts',
+            data: progressData,
+            borderColor: '#D71E49',
+            backgroundColor: 'rgba(215, 30, 73, 0.1)',
+            fill: true,
+            tension: 0.4,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 },
+              title: { display: true, text: 'Classes' }
+            }
+          }
+        }
+      });
+    }
+
+    function updateAchievements() {
+      const classesAttended = userData.classesAttended || 0;
+      const streak = userData.activeStreak || 0;
+      const memberSince = userData.createdAt?.toDate ? userData.createdAt.toDate() : new Date();
+      const daysMember = Math.floor((new Date() - memberSince) / (1000 * 60 * 60 * 24));
+
+      const achievements = [
+        {
+          id: 'first-workout',
+          emoji: '🔥',
+          title: 'First Workout',
+          unlocked: classesAttended >= 1,
+          progress: Math.min(classesAttended, 1),
+          goal: 1
+        },
+        {
+          id: '7-day-streak',
+          emoji: '🏆',
+          title: '7 Day Streak',
+          unlocked: streak >= 7,
+          progress: Math.min(streak, 7),
+          goal: 7
+        },
+        {
+          id: '10-workouts',
+          emoji: '💪',
+          title: '10 Workouts',
+          unlocked: classesAttended >= 10,
+          progress: Math.min(classesAttended, 10),
+          goal: 10
+        },
+        {
+          id: '30-day-member',
+          emoji: '⭐',
+          title: '30 Day Member',
+          unlocked: daysMember >= 30,
+          progress: Math.min(daysMember, 30),
+          goal: 30
+        },
+        {
+          id: '25-workouts',
+          emoji: '🎯',
+          title: '25 Workouts',
+          unlocked: classesAttended >= 25,
+          progress: Math.min(classesAttended, 25),
+          goal: 25
+        },
+        {
+          id: '14-day-streak',
+          emoji: '🌟',
+          title: '14 Day Streak',
+          unlocked: streak >= 14,
+          progress: Math.min(streak, 14),
+          goal: 14
+        },
+        {
+          id: '50-workouts',
+          emoji: '👑',
+          title: '50 Workouts',
+          unlocked: classesAttended >= 50,
+          progress: Math.min(classesAttended, 50),
+          goal: 50
+        },
+        {
+          id: '90-day-member',
+          emoji: '💎',
+          title: '90 Day Member',
+          unlocked: daysMember >= 90,
+          progress: Math.min(daysMember, 90),
+          goal: 90
+        }
+      ];
+
+      const container = document.getElementById('achievements-list');
+      container.innerHTML = achievements.map(a => {
+        const progressPercent = Math.round((a.progress / a.goal) * 100);
+        return `
+          <div class="text-center p-4 bg-gray-50 rounded-xl ${a.unlocked ? '' : 'opacity-60'}">
+            <div class="w-12 h-12 ${a.unlocked ? 'bg-yellow-100' : 'bg-gray-200'} rounded-full flex items-center justify-center mx-auto mb-2">
+              <span class="text-2xl">${a.emoji}</span>
+            </div>
+            <p class="font-medium text-gray-900">${a.title}</p>
+            <p class="text-xs ${a.unlocked ? 'text-green-600' : 'text-gray-500'}">
+              ${a.unlocked ? 'Completed!' : `${a.progress}/${a.goal} (${progressPercent}%)`}
+            </p>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+  <div id="footer-placeholder"></div>
+  <div id="modals-placeholder"></div>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

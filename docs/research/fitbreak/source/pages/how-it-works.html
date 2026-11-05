@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - FitBreak</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn how to set up your FitBreak account, book classes, and manage your credits. Step-by-step guide for new members.">
+    <meta name="keywords" content="FitBreak guide, how to book, fitness classes, account setup">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="/styles.css?v=20260101">
+
+    <!-- Component Loader -->
+    <script src="/components/loader.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAib-0lFrD1qaX_HZyOA8SMT5hIBrpDGnY",
+        authDomain: "fitbreak.ph",
+        projectId: "fitbreak-ai",
+        storageBucket: "fitbreak-ai.firebasestorage.app",
+        messagingSenderId: "545418882177",
+        appId: "1:545418882177:web:c785be3adee0f539feb180",
+        measurementId: "G-PBL89169C0"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- Header -->
+        <div class="grid lg:grid-cols-2 gap-8 items-center mb-12">
+            <div class="text-center lg:text-left">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">How FitBreak Works</h1>
+                <p class="text-xl text-gray-600">
+                    Your complete guide to setting up your account, buying credits, and booking classes online.
+                </p>
+            </div>
+            <div class="hidden lg:block">
+                <img src="/images/fitbreak6.jpg" alt="FitBreak workout" class="w-full h-64 object-cover object-top rounded-2xl shadow-lg" />
+            </div>
+        </div>
+
+        <!-- Quick Overview -->
+        <div class="bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-8 mb-12 text-white">
+            <h2 class="text-2xl font-bold mb-6 text-center">Quick Overview</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">1</span>
+                    </div>
+                    <p class="font-semibold">Create Account</p>
+                    <p class="text-sm text-brand-100 mt-1">Sign up online</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">2</span>
+                    </div>
+                    <p class="font-semibold">Choose Package</p>
+                    <p class="text-sm text-brand-100 mt-1">Select your plan</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">3</span>
+                    </div>
+                    <p class="font-semibold">Pay & Verify</p>
+                    <p class="text-sm text-brand-100 mt-1">GCash or bank transfer</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">4</span>
+                    </div>
+                    <p class="font-semibold">Book Classes</p>
+                    <p class="text-sm text-brand-100 mt-1">Start your journey</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step-by-Step Guide -->
+        <div class="space-y-8">
+
+            <!-- Step 1: Create Account -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-xl font-bold text-white">1</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Create Your FitBreak Account</h2>
+                        <p class="text-gray-600 mb-6">
+                            All classes at FitBreak are booked online only. You need to create an account first before you can book classes or purchase packages.
+                        </p>
+
+                        <div class="bg-gray-50 rounded-xl p-6 space-y-4">
+                            <h3 class="font-semibold text-gray-900">How to Sign Up:</h3>
+                            <ol class="space-y-3">
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">a</span>
+                                    <span class="text-gray-700">Click the <strong>"Get Started"</strong> button on the top right of the page</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">b</span>
+                                    <span class="text-gray-700">Enter your email address and create a password, OR sign up with your Google account for faster registration</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">c</span>
+                                    <span class="text-gray-700">Complete your profile by adding your name and contact number</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">d</span>
+                                    <span class="text-gray-700">Your account is now active! You can now purchase credits and book classes.</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="mt-6 flex gap-4">
+                            <a href="/app.html" class="inline-flex items-center px-6 py-3 bg-brand-500 text-white font-semibold rounded-full hover:bg-brand-600 transition-all">
+                                Create Account Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Choose Package -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-xl font-bold text-white">2</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Choose Your Package</h2>
+
+                        <!-- Sign in required message (shown to guests) -->
+                        <div id="pricing-signin-required" class="bg-gray-50 rounded-xl p-6 text-center">
+                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Want to See Our Pricing?</h3>
+                            <p class="text-gray-600 mb-4">Sign in to your account or follow us on Facebook for pricing, promos, and updates!</p>
+                            <div class="flex flex-wrap gap-3 justify-center">
+                                <a href="/app.html" class="inline-flex items-center px-6 py-3 bg-brand-500 text-white font-semibold rounded-full hover:bg-brand-600 transition-all">
+                                    Sign In / Create Account
+                                </a>
+                                <a href="https://facebook.com/FitBreakPhilippines/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all">
+                                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                                    Follow on Facebook
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Pricing content (shown to logged-in users) -->
+                        <div id="pricing-content-hiw" class="hidden">
+                            <p class="text-gray-600 mb-6">
+                                Select a class package that fits your fitness goals and schedule. Package members need to pay a one-time annual membership fee of ₱500.
+                            </p>
+
+                            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Guest Drop-In (₱350)</h4>
+                                    <p class="text-sm text-gray-600">Try a single class. No membership required. Next-day booking only.</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Starter Pack (₱1,800)</h4>
+                                    <p class="text-sm text-gray-600">6 classes, valid 30 days. 3-day advance booking.</p>
+                                </div>
+                                <div class="bg-brand-50 rounded-xl p-4 border border-brand-200">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Standard Pack (₱3,300)</h4>
+                                    <p class="text-sm text-gray-600">12 classes, valid 30 days. 5-day advance booking. Most popular!</p>
+                                </div>
+                                <div class="bg-gray-50 rounded-xl p-4">
+                                    <h4 class="font-semibold text-gray-900 mb-2">Power Pack (₱5,000)</h4>
+                                    <p class="text-sm text-gray-600">20 classes, valid 45 days. 7-day advance booking. Best value!</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-accent-50 border border-accent-200 rounded-xl p-4">
+                                <p class="text-sm text-gray-700">
+                                    <strong>Note:</strong> Package members (Starter, Standard, Power) must pay a ₱500 annual membership fee before purchasing packages. This fee gives you access to member perks and discounts.
+                                </p>
+                            </div>
+
+                            <div class="mt-6">
+                                <a href="/pricing.html" class="inline-flex items-center px-6 py-3 bg-brand-500 text-white font-semibold rounded-full hover:bg-brand-600 transition-all">
+                                    View All Packages
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Pay & Get Credits -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-xl font-bold text-white">3</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Pay & Get Your Credits</h2>
+                        <p class="text-gray-600 mb-6">
+                            We accept <strong>GCash or bank transfer only</strong> — no cash payments. After payment, upload your proof of payment and we'll add credits to your account.
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <!-- GCash -->
+                            <div class="bg-blue-50 rounded-xl p-6 border border-blue-200">
+                                <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                    Pay via GCash
+                                </h3>
+                                <ol class="space-y-2 text-sm text-gray-600">
+                                    <li>1. Open your GCash app</li>
+                                    <li>2. Send payment to our GCash number</li>
+                                    <li>3. Take a screenshot of the confirmation</li>
+                                    <li>4. Upload in your FitBreak account</li>
+                                </ol>
+                            </div>
+
+                            <!-- Bank Transfer -->
+                            <div class="bg-green-50 rounded-xl p-6 border border-green-200">
+                                <h3 class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                    Pay via BPI Bank Transfer
+                                </h3>
+                                <div class="bg-white rounded-lg p-3 mb-4">
+                                    <p class="text-sm text-gray-600">Account Number:</p>
+                                    <p class="text-lg font-bold text-gray-900">8969-3458-85</p>
+                                    <p class="text-sm text-gray-600 mt-1">Iren San Buenaventura</p>
+                                </div>
+                                <p class="text-sm text-gray-600">Upload your deposit slip or transaction confirmation.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                            <h4 class="font-semibold text-yellow-800 mb-2">How Credits Appear in Your Account</h4>
+                            <p class="text-sm text-yellow-700">
+                                After you upload your proof of payment, our team will verify it. Once approved, credits are <strong>automatically added</strong> to your account — no manual steps needed! This usually takes <strong>a few hours during business hours</strong>. Your payment page will update in real-time when approved.
+                            </p>
+                        </div>
+
+                        <div class="bg-green-50 border border-green-200 rounded-xl p-4 mt-4">
+                            <h4 class="font-semibold text-green-800 mb-2">Credit Expiry</h4>
+                            <p class="text-sm text-green-700">
+                                Credits expire based on your package: <strong>Guest (7 days)</strong>, <strong>Starter/Standard (30 days)</strong>, or <strong>Power (45 days)</strong> from the date your payment is approved. Check your dashboard to see your expiry date!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Book Classes -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-start gap-6">
+                    <div class="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span class="text-xl font-bold text-white">4</span>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Book Your Classes</h2>
+                        <p class="text-gray-600 mb-6">
+                            Once you have credits in your account, you can start booking classes!
+                        </p>
+
+                        <div class="bg-gray-50 rounded-xl p-6 space-y-4 mb-6">
+                            <h3 class="font-semibold text-gray-900">How to Book:</h3>
+                            <ol class="space-y-3">
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">1</span>
+                                    <span class="text-gray-700">Go to the <a href="/schedule.html" class="text-brand-600 hover:underline">Schedule page</a> to see available classes</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">2</span>
+                                    <span class="text-gray-700">Click on the class you want to attend</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">3</span>
+                                    <span class="text-gray-700">Confirm your booking — 1 credit will be deducted from your account</span>
+                                </li>
+                                <li class="flex gap-3">
+                                    <span class="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">4</span>
+                                    <span class="text-gray-700">Show up on time and enjoy your class!</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-brand-50 rounded-xl p-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">Advance Booking Privileges</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>Guest Drop-In: Next day only</li>
+                                    <li>Starter (3 days): Book up to 3 days ahead</li>
+                                    <li>Standard (5 days): Book up to 5 days ahead</li>
+                                    <li>Power (7 days): Book up to 7 days ahead</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 rounded-xl p-4">
+                                <h4 class="font-semibold text-gray-900 mb-2">Cancellation Policy</h4>
+                                <p class="text-sm text-gray-600">
+                                    Cancel up to <strong>2 hours before</strong> class for a full credit refund. Late cancellations or no-shows forfeit the credit.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <a href="/schedule.html" class="inline-flex items-center px-6 py-3 bg-brand-500 text-white font-semibold rounded-full hover:bg-brand-600 transition-all">
+                                View Class Schedule
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Class Schedule Overview -->
+        <div id="classes" class="bg-white rounded-2xl shadow-lg p-8 mt-12 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Weekly Class Schedule</h2>
+            <p class="text-center text-gray-600 mb-8">All classes are 1 hour long and led by Coach Iren</p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-[700px]">
+                    <thead>
+                        <tr class="bg-brand-50">
+                            <th class="py-3 px-4 text-left font-semibold text-gray-900">Time</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Mon</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Tue</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Wed</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Thu</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Fri</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Sat</th>
+                            <th class="py-3 px-4 text-center font-semibold text-gray-900">Sun</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr>
+                            <td class="py-4 px-4 font-semibold text-gray-700">6:30 - 7:30 AM</td>
+                            <td class="py-4 px-4 text-center text-sm">Total Body Burn</td>
+                            <td class="py-4 px-4 text-center text-sm">Tone & Tighten</td>
+                            <td class="py-4 px-4 text-center text-sm">Cardio Crush</td>
+                            <td class="py-4 px-4 text-center text-sm">Sculpt & Strength</td>
+                            <td class="py-4 px-4 text-center text-sm">Core & Balance</td>
+                            <td class="py-4 px-4 text-center text-sm">Booty & Burn</td>
+                            <td class="py-4 px-4 text-center text-gray-400">Closed</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-semibold text-gray-700">9:00 - 10:00 AM</td>
+                            <td class="py-4 px-4 text-center text-sm">Total Body Burn</td>
+                            <td class="py-4 px-4 text-center text-sm">Tone & Tighten</td>
+                            <td class="py-4 px-4 text-center text-sm">Cardio Crush</td>
+                            <td class="py-4 px-4 text-center text-sm">Sculpt & Strength</td>
+                            <td class="py-4 px-4 text-center text-sm">Core & Balance</td>
+                            <td class="py-4 px-4 text-center text-sm">Booty & Burn</td>
+                            <td class="py-4 px-4 text-center text-gray-400">Closed</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-semibold text-gray-700">4:30 - 5:30 PM</td>
+                            <td class="py-4 px-4 text-center text-sm">Total Body Burn</td>
+                            <td class="py-4 px-4 text-center text-sm">Tone & Tighten</td>
+                            <td class="py-4 px-4 text-center text-sm">Cardio Crush</td>
+                            <td class="py-4 px-4 text-center text-sm">Sculpt & Strength</td>
+                            <td class="py-4 px-4 text-center text-sm">Core & Balance</td>
+                            <td class="py-4 px-4 text-center text-sm">Booty & Burn</td>
+                            <td class="py-4 px-4 text-center text-gray-400">Closed</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-semibold text-gray-700">6:00 - 7:00 PM</td>
+                            <td class="py-4 px-4 text-center text-sm">Total Body Burn</td>
+                            <td class="py-4 px-4 text-center text-sm">Tone & Tighten</td>
+                            <td class="py-4 px-4 text-center text-sm">Cardio Crush</td>
+                            <td class="py-4 px-4 text-center text-sm">Sculpt & Strength</td>
+                            <td class="py-4 px-4 text-center text-sm">Core & Balance</td>
+                            <td class="py-4 px-4 text-center text-sm">Booty & Burn</td>
+                            <td class="py-4 px-4 text-center text-gray-400">Closed</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-semibold text-gray-700">7:30 - 8:30 PM</td>
+                            <td class="py-4 px-4 text-center text-sm">All Programs</td>
+                            <td class="py-4 px-4 text-center text-sm">All Programs</td>
+                            <td class="py-4 px-4 text-center text-sm">All Programs</td>
+                            <td class="py-4 px-4 text-center text-sm">All Programs</td>
+                            <td class="py-4 px-4 text-center text-sm">All Programs</td>
+                            <td class="py-4 px-4 text-center text-sm">All Programs</td>
+                            <td class="py-4 px-4 text-center text-gray-400">Closed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="text-center text-sm text-gray-500 mt-6">
+                Class schedule may vary. Check the <a href="/schedule.html" class="text-brand-600 hover:underline">Schedule page</a> for real-time availability.
+            </p>
+        </div>
+
+        <!-- FAQ -->
+        <div class="bg-gray-100 rounded-2xl p-8 mt-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">What should I bring to class?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">Bring a water bottle, towel, and wear comfortable workout clothes and shoes. All equipment is provided by FitBreak.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">I'm a beginner. Can I still join?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">FitBreak welcomes all fitness levels! Coach Iren provides modifications for each exercise, so everyone can participate safely and effectively.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">What happens if I miss a class?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">If you don't cancel at least 2 hours before class, you'll forfeit your credit. We encourage you to cancel early so others can take your spot!</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">Can I reschedule my booking?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">Yes! Click "Reschedule" on your booking to move it to a different date or time. Your credit is preserved — no additional charge. Just make sure to reschedule at least 2 hours before the original class time.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">How long does payment verification take?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">Payment verification usually takes a few hours during business hours (Monday-Saturday). After submitting payment, you'll see a live status update on your screen — no need to refresh! You'll also receive an email when your payment is approved.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">What happens when my credits expire?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">Credits expire based on your package (7-45 days from purchase). Expired credits cannot be used to book classes — you'll need to purchase a new package. Check your dashboard to see your credit expiry date.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">Can I share my credits with someone else?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">No, credits are non-transferable and tied to your account. Each person needs their own account and credits to book classes.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">How do I check in when I arrive?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">Show your booking QR code (from your dashboard or email confirmation) to the front desk. You can check in starting 30 minutes before class and up to 60 minutes after class starts.</p>
+                </details>
+
+                <details class="bg-white rounded-lg p-4">
+                    <summary class="font-semibold text-gray-900 cursor-pointer">What are the club rules?</summary>
+                    <p class="mt-2 text-gray-600 text-sm">FitBreak has 10 house rules to ensure a safe, empowering, and respectful space for every woman. These include no video recording during classes, women's space only (male companions may wait at the coffee shop downstairs), and respectful behavior. <a href="/club-rules.html" class="text-brand-500 hover:underline font-medium">View all Club Rules →</a></p>
+                </details>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-12">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Ready to Start Your Fitness Journey?</h2>
+            <p class="text-gray-600 mb-6">Join the FitBreak community and transform your life, one class at a time.</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="/app.html" class="px-8 py-4 bg-brand-500 text-white font-semibold rounded-full hover:bg-brand-600 transition-all shadow-lg hover:shadow-xl">
+                    Get Started Now
+                </a>
+                <a href="/pricing.html" class="px-8 py-4 bg-white text-gray-700 font-semibold rounded-full border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all">
+                    View Packages
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modals -->
+    <div id="modals-placeholder"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="/auth.js"></script>
+    <script>
+        // Toggle pricing visibility based on auth state
+        firebase.auth().onAuthStateChanged(function(user) {
+            const signinRequired = document.getElementById('pricing-signin-required');
+            const pricingContent = document.getElementById('pricing-content-hiw');
+            if (user) {
+                signinRequired.classList.add('hidden');
+                pricingContent.classList.remove('hidden');
+            } else {
+                signinRequired.classList.remove('hidden');
+                pricingContent.classList.add('hidden');
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+<!-- FitBreak Chatbot -->
+<script src="/components/chatbot.js"></script>
+</body>
+</html>

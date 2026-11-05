@@ -17,8 +17,9 @@ export interface Config {
 
 export const config = {
   site: {
-    name: "Fit Break",
-    description: "A Next.js + Supabase + shadcn/ui starter template.",
+    name: "FitBreak",
+    description:
+      "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes. Book by Messenger or phone.",
     url: getSiteURL(),
     version: env.NEXT_PUBLIC_SITE_VERSION,
   },
@@ -52,6 +53,43 @@ export const isAnalyticsConfigured = Boolean(env.NEXT_PUBLIC_POSTHOG_KEY);
 // `strict-dynamic` does NOT cover). Consumed by src/middleware.ts → buildCsp.
 export const analyticsSessionReplay = false;
 
+// Fact: is Google Analytics 4 configured for FitBreak? The measurement ID is
+// publishable and inlined at build time. Unset ⇒ GA is inert: no script, no
+// consent bar, no network, and the CSP gains no Google hosts. Consumed by the
+// (site) layout, the privacy policy and src/middleware.ts → buildCsp. PostHog
+// (above) stays dormant for FitBreak. See docs/adr/0010-fitbreak-google-analytics-4.md.
+export const googleAnalyticsMeasurementId = env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+export const isGoogleAnalyticsConfigured = Boolean(googleAnalyticsMeasurementId);
+
+/**
+ * Toggle: is the FitBreak Member Area switched on? OFF while FitBreak runs as an
+ * Information Site (see CONTEXT.md). When false, every account surface is
+ * parked: /login, /member/*, /how-it-works, and the template's /auth/* and
+ * /dashboard/* redirect to the homepage (src/middleware.ts), and the public
+ * pages show Messenger "Booking Enquiry" calls to action instead of sign-in,
+ * credits or online booking. Flip to true to bring the Member Area back.
+ */
+export const memberAreaEnabled = false;
+
+/**
+ * Toggle: is the FitBreak newsletter sign-up switched on? OFF until the studio
+ * chooses where sign-ups go (fact sheet question 1.5) — until then the form
+ * would confirm a sign-up that is never kept. When false, the newsletter
+ * section renders nothing and the subscribe action refuses every submission.
+ * Turn on once `src/services/newsletter.ts` stores sign-ups somewhere real.
+ */
+export const newsletterEnabled = false;
+
+/**
+ * Toggle: does the homepage show the FitBreak definition sentence and FAQ? OFF
+ * until the studio approves the new wording on the fact sheet (see
+ * docs/research/fitbreak/seo-drafts.md). The wording lives in one module
+ * (src/components/sites/fitbreak/home-faq-content.ts); when true, the homepage
+ * renders it with matching FAQPage structured data and /llms.txt includes the
+ * definition sentence.
+ */
+export const homepageFaqEnabled = false;
+
 /**
  * Policy: may the browsable "auth disabled" bypass apply? Only when Supabase is
  * unconfigured AND we are not in production. In production an unconfigured
@@ -75,5 +113,15 @@ if (env.NODE_ENV === "production" && !isSupabaseConfigured) {
     "[config] Supabase env vars missing in production — auth is enforced (fail-closed): " +
       "protected routes redirect to sign-in and no one can sign in until " +
       "NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set.",
+  );
+}
+
+// Loud warning: canonical links, the sitemap, structured data and share images
+// all derive from the site URL. A production build still pointing at localhost
+// would publish them with the wrong address (FitBreak lives at https://fitbreak.ph).
+if (env.NODE_ENV === "production" && /\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(config.site.url)) {
+  console.error(
+    `[config] NEXT_PUBLIC_SITE_URL is ${config.site.url} in production — set it to ` +
+      "https://fitbreak.ph so canonical links, the sitemap and structured data are correct.",
   );
 }

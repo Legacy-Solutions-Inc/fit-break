@@ -2,12 +2,26 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import type { User } from "@supabase/supabase-js";
 
-import { analyticsSessionReplay, authDisabled, isSupabaseConfigured } from "@/config";
+import {
+  analyticsSessionReplay,
+  authDisabled,
+  isGoogleAnalyticsConfigured,
+  isSupabaseConfigured,
+  memberAreaEnabled,
+} from "@/config";
 import { env } from "@/env";
 import { hasRole } from "@/lib/authz";
 import { buildCsp } from "@/lib/csp";
 import { createClient } from "@/lib/supabase/middleware";
 import { paths } from "@/paths";
+
+// FitBreak site routes (mirrors routes in src/components/sites/fitbreak/links.ts;
+// kept as literals so the edge bundle doesn't pull in React types).
+const MEMBER_PREFIX = "/member";
+const FITBREAK_LOGIN = "/login";
+const FITBREAK_MEMBER_HOME = "/member/dashboard";
+/** Routes parked while `memberAreaEnabled` is false (see src/config.ts). */
+const PARKED_PREFIXES = ["/login", "/member", "/how-it-works", "/auth", "/dashboard"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -20,6 +34,9 @@ export async function middleware(req: NextRequest) {
     // Adds `worker-src 'self' blob:` ONLY when PostHog Session Replay is on
     // (off by default). See src/config.ts and docs/adr/0007.
     sessionReplay: analyticsSessionReplay,
+    // Adds Google's tag + collection hosts ONLY when a GA4 measurement ID is
+    // configured (off by default). See src/config.ts and docs/adr/0010.
+    googleAnalytics: isGoogleAnalyticsConfigured,
   });
 
   // Forwarded request headers carry the nonce + CSP so Next.js auto-nonces its
@@ -47,6 +64,16 @@ export async function middleware(req: NextRequest) {
     return redirect;
   };
 
+  // Information Site mode: the Member Area is parked, so every account surface
+  // (FitBreak's and the template's) goes to the homepage. Checked first so it
+  // applies with or without Supabase configured.
+  if (
+    !memberAreaEnabled &&
+    PARKED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))
+  ) {
+    return redirectTo("/");
+  }
+
   // Dev-only: no Supabase configured → auth disabled, let every request through.
   if (authDisabled) {
     return passThrough();
@@ -58,6 +85,9 @@ export async function middleware(req: NextRequest) {
   if (!isSupabaseConfigured) {
     if (pathname.startsWith("/dashboard")) {
       return redirectTo(paths.auth.signIn);
+    }
+    if (pathname.startsWith(MEMBER_PREFIX)) {
+      return redirectTo(FITBREAK_LOGIN);
     }
     return passThrough();
   }
@@ -85,6 +115,14 @@ export async function middleware(req: NextRequest) {
     ) {
       return redirectTo(paths.dashboard.overview, res);
     }
+  }
+
+  // FitBreak member area (cloned from fitbreak.ph's members-only pages).
+  if (pathname.startsWith(MEMBER_PREFIX) && !isAuthed) {
+    return redirectTo(FITBREAK_LOGIN, res);
+  }
+  if (pathname === FITBREAK_LOGIN && isAuthed) {
+    return redirectTo(FITBREAK_MEMBER_HOME, res);
   }
 
   // Keep signed-in users out of the auth screens (except the OAuth callback).

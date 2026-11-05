@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog Post — FitBreak</title>
+  <meta name="description" content="Read this fitness article from FitBreak.">
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20251231">
+  <script src="/components/loader.js"></script>
+  <!-- Markdown Parser & HTML Sanitizer (XSS Prevention) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+  <style>
+    /* Professional prose styling */
+    .prose-professional {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: #374151;
+    }
+    .prose-professional h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #111827;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #FEE2E2;
+    }
+    .prose-professional h3 {
+      font-size: 1.375rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    .prose-professional p {
+      margin-bottom: 1.5rem;
+    }
+    .prose-professional ul, .prose-professional ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    .prose-professional ul {
+      list-style-type: none;
+    }
+    .prose-professional ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .prose-professional ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.6rem;
+      width: 6px;
+      height: 6px;
+      background-color: #D71E49;
+      border-radius: 50%;
+    }
+    .prose-professional ol {
+      list-style-type: decimal;
+    }
+    .prose-professional ol li {
+      margin-bottom: 0.75rem;
+      padding-left: 0.5rem;
+    }
+    .prose-professional strong {
+      font-weight: 600;
+      color: #111827;
+    }
+    .prose-professional em {
+      font-style: italic;
+    }
+    .prose-professional a {
+      color: #D71E49;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .prose-professional a:hover {
+      color: #B91840;
+    }
+    .prose-professional blockquote {
+      border-left: 4px solid #D71E49;
+      padding: 1rem 1.5rem;
+      margin: 2rem 0;
+      background: linear-gradient(to right, #FFF5F8, transparent);
+      font-style: italic;
+      color: #4b5563;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+    .prose-professional img {
+      border-radius: 1rem;
+      margin: 2rem 0;
+    }
+    .prose-professional code {
+      background-color: #f3f4f6;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+    .prose-professional pre {
+      background-color: #1f2937;
+      color: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      overflow-x: auto;
+      margin: 2rem 0;
+    }
+
+    /* Decorative elements */
+    .blog-hero-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+  <!-- Header Component -->
+  <div id="header-placeholder" class="sticky top-0 z-50"></div>
+
+  <main class="min-h-screen">
+    <!-- Loading State -->
+    <div id="loading-state" class="text-center py-24">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-brand-500 border-t-transparent mx-auto"></div>
+      <p class="mt-4 text-gray-600">Loading article...</p>
+    </div>
+
+    <!-- Post Content -->
+    <div id="post-content" class="hidden">
+      <!-- Hero Section -->
+      <div class="bg-gradient-to-br from-brand-500 via-brand-600 to-brand-500">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
+          <!-- Back Link & Category -->
+          <div class="flex items-center justify-between mb-6">
+            <a href="/blog.html" class="inline-flex items-center text-white/80 hover:text-white font-medium transition-colors">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+              </svg>
+              Back to Blog
+            </a>
+            <span id="post-category" class="px-4 py-1.5 bg-white/20 backdrop-blur-sm text-white text-sm font-semibold rounded-full capitalize"></span>
+          </div>
+
+          <!-- Title -->
+          <h1 id="post-title" class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"></h1>
+
+          <!-- Meta -->
+          <div class="flex flex-wrap items-center gap-4 text-white/80">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+              <span id="post-date"></span>
+            </div>
+            <span class="hidden sm:inline">•</span>
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span id="post-read-time"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Article Body -->
+      <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+        <!-- White Card Container -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-10 md:p-12">
+          <!-- Featured Image -->
+          <div id="post-image-container" class="mb-8 -mt-2 -mx-2 sm:-mx-4 md:-mx-6 hidden">
+            <img id="post-image" src="" alt="" class="w-full h-auto rounded-xl">
+          </div>
+
+          <!-- Author Info -->
+          <div class="flex items-center gap-4 pb-8 mb-8 border-b border-gray-100">
+            <div class="w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-600 rounded-full flex items-center justify-center">
+              <span class="text-white font-bold text-lg">F</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">FitBreak Team</p>
+              <p class="text-sm text-gray-500">Fitness & Wellness Experts</p>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div id="post-body" class="prose-professional">
+            <!-- Content will be rendered here -->
+          </div>
+
+          <!-- Tags/Keywords -->
+          <div id="post-keywords" class="mt-10 pt-8 border-t border-gray-100">
+            <div class="flex flex-wrap gap-2">
+              <!-- Keywords will be populated here -->
+            </div>
+          </div>
+
+          <!-- Share Section -->
+          <div class="mt-10 pt-8 border-t border-gray-100">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <p class="font-semibold text-gray-900">Share this article</p>
+              <div class="flex gap-3">
+                <a id="share-facebook" href="#" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors text-sm font-medium">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  Share
+                </a>
+                <a id="share-twitter" href="#" target="_blank" class="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-full hover:bg-gray-800 transition-colors text-sm font-medium">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  Post
+                </a>
+                <button id="share-copy" class="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors text-sm font-medium">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                  Copy Link
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-12 bg-gradient-to-r from-brand-500 to-brand-600 rounded-2xl p-8 md:p-10 text-center text-white">
+          <h3 class="text-2xl md:text-3xl font-bold mb-3">Ready to Start Your Fitness Journey?</h3>
+          <p class="text-white/90 mb-6 max-w-lg mx-auto">Join FitBreak today and experience the supportive, women-only environment you deserve.</p>
+          <a href="/pricing.html" class="inline-block px-8 py-3 bg-white text-brand-600 font-semibold rounded-full hover:bg-brand-50 transition-colors shadow-lg">
+            View Our Packages
+          </a>
+        </div>
+
+        <!-- Related Posts -->
+        <div class="mt-12 mb-16">
+          <h3 class="text-xl font-bold text-gray-900 mb-6">More Articles You Might Like</h3>
+          <div id="related-posts" class="grid md:grid-cols-2 gap-6">
+            <!-- Related posts will be loaded here -->
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Not Found State -->
+    <div id="not-found-state" class="text-center py-24 hidden">
+      <div class="max-w-md mx-auto px-4">
+        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-2">Article Not Found</h3>
+        <p class="text-gray-600 mb-6">The article you're looking for doesn't exist or has been removed.</p>
+        <a href="/blog.html" class="inline-block px-6 py-3 bg-brand-500 text-white font-semibold rounded-full hover:bg-brand-600 transition-colors">
+          Browse All Articles
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hidden z-50 flex items-center gap-2">
+    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+    <span id="toast-message"></span>
+  </div>
+
+  <!-- Footer Component -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Modals Component -->
+  <div id="modals-placeholder"></div>
+
+  <script type="module">
+    import { initializeApp, getApps, getApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getFirestore, doc, getDoc, collection, query, where, orderBy, limit, getDocs } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+    import { firebaseConfig } from './firebase-config.js';
+
+    const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    const db = getFirestore(app, 'asia-db');
+
+    // Get post ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    async function loadPost() {
+      const loadingState = document.getElementById('loading-state');
+      const postContent = document.getElementById('post-content');
+      const notFoundState = document.getElementById('not-found-state');
+
+      if (!postId) {
+        loadingState.classList.add('hidden');
+        notFoundState.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const postDoc = await getDoc(doc(db, 'blog_posts', postId));
+
+        if (!postDoc.exists() || postDoc.data().status !== 'published') {
+          loadingState.classList.add('hidden');
+          notFoundState.classList.remove('hidden');
+          return;
+        }
+
+        const post = postDoc.data();
+
+        // Update page title and meta
+        document.title = `${post.title} — FitBreak Blog`;
+        document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt || post.title);
+
+        // Populate content
+        document.getElementById('post-category').textContent = post.category?.replace('-', ' ') || 'Wellness';
+        document.getElementById('post-title').textContent = post.title;
+
+        const publishedDate = post.publishedAt?.toDate ? post.publishedAt.toDate() : new Date();
+        document.getElementById('post-date').textContent = publishedDate.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        });
+
+        // Estimate read time
+        const wordCount = (post.content || '').split(/\s+/).length;
+        const readTime = Math.max(1, Math.ceil(wordCount / 200));
+        document.getElementById('post-read-time').textContent = `${readTime} min read`;
+
+        // Featured image
+        if (post.featuredImage) {
+          document.getElementById('post-image-container').classList.remove('hidden');
+          document.getElementById('post-image').src = post.featuredImage;
+          document.getElementById('post-image').alt = post.title;
+        }
+
+        // Content (parse markdown with XSS sanitization)
+        const rawHtml = marked.parse(post.content || '');
+        // Sanitize HTML to prevent XSS attacks
+        const sanitizedHtml = DOMPurify.sanitize(rawHtml, {
+          ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr', 'ul', 'ol', 'li', 'a', 'strong', 'em', 'b', 'i', 'u', 'code', 'pre', 'blockquote', 'img', 'span', 'div'],
+          ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'id', 'target', 'rel'],
+          ALLOW_DATA_ATTR: false,
+          ADD_ATTR: ['target'], // Allow target for links
+          FORBID_TAGS: ['script', 'style', 'iframe', 'form', 'input', 'textarea', 'button', 'object', 'embed'],
+          FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur']
+        });
+        document.getElementById('post-body').innerHTML = sanitizedHtml;
+
+        // Keywords/Tags
+        if (post.keywords && post.keywords.length > 0) {
+          const keywordsContainer = document.getElementById('post-keywords');
+          keywordsContainer.querySelector('.flex').innerHTML = post.keywords.map(keyword =>
+            `<span class="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">#${keyword.replace(/\s+/g, '')}</span>`
+          ).join('');
+        }
+
+        // Share links
+        const pageUrl = encodeURIComponent(window.location.href);
+        const pageTitle = encodeURIComponent(post.title);
+        document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+        document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+
+        document.getElementById('share-copy').addEventListener('click', async () => {
+          await navigator.clipboard.writeText(window.location.href);
+          showToast('Link copied to clipboard!');
+        });
+
+        loadingState.classList.add('hidden');
+        postContent.classList.remove('hidden');
+
+        // Load related posts
+        loadRelatedPosts(post.category);
+
+      } catch (error) {
+        console.error('Error loading post:', error);
+        loadingState.classList.add('hidden');
+        notFoundState.classList.remove('hidden');
+      }
+    }
+
+    async function loadRelatedPosts(category) {
+      const relatedContainer = document.getElementById('related-posts');
+
+      try {
+        console.log('Loading related posts...');
+        const postsRef = collection(db, 'blog_posts');
+        const q = query(
+          postsRef,
+          where('status', '==', 'published'),
+          orderBy('publishedAt', 'desc'),
+          limit(4)
+        );
+
+        const snapshot = await getDocs(q);
+        console.log('Found', snapshot.size, 'published posts');
+
+        let count = 0;
+
+        snapshot.forEach(docSnap => {
+          console.log('Post:', docSnap.id, '- Current:', postId, '- Skip:', docSnap.id === postId);
+          if (docSnap.id === postId || count >= 2) return; // Skip current post, max 2
+
+          const post = docSnap.data();
+          const publishedDate = post.publishedAt?.toDate ? post.publishedAt.toDate() : new Date();
+
+          const card = document.createElement('a');
+          card.href = `/blog-post.html?id=${docSnap.id}`;
+          card.className = 'group block bg-white rounded-xl p-6 border border-gray-100 hover:border-brand-200 hover:shadow-lg transition-all';
+          card.innerHTML = `
+            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+              <span class="px-2 py-0.5 bg-brand-50 text-brand-600 rounded-full text-xs font-medium capitalize">${post.category?.replace('-', ' ') || 'Wellness'}</span>
+              <span>•</span>
+              <span>${publishedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+            </div>
+            <h4 class="font-semibold text-gray-900 group-hover:text-brand-600 transition-colors line-clamp-2">${post.title}</h4>
+            <p class="text-gray-600 text-sm mt-2 line-clamp-2">${post.excerpt || ''}</p>
+          `;
+
+          relatedContainer.appendChild(card);
+          count++;
+        });
+
+        console.log('Added', count, 'related posts');
+
+        // If no related posts, hide the section
+        if (count === 0) {
+          relatedContainer.parentElement.classList.add('hidden');
+        }
+      } catch (error) {
+        console.error('Error loading related posts:', error);
+        // Show error state instead of hiding
+        relatedContainer.innerHTML = `
+          <div class="col-span-2 text-center py-8 text-gray-500">
+            <p>Unable to load related articles</p>
+          </div>
+        `;
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    loadPost();
+  </script>
+
+  <script type="module" src="/auth.js"></script>
+  <!-- Google Analytics -->
+  <script type="module" src="/analytics.js"></script>
+</body>
+</html>

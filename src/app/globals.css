@@ -118,3 +118,520 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * FitBreak brand (cloned from fitbreak.ph — see docs/research/fitbreak/app.md).
+ * `brand-*` / `accent-*` are product palettes; `accent-500` etc. are distinct
+ * from shadcn's semantic `accent` token, which is untouched.
+ * ───────────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-brand-50: #fff5f8;
+  --color-brand-100: #ffe8f1;
+  --color-brand-200: #ffd1e3;
+  --color-brand-300: #ffaad0;
+  --color-brand-400: #ff7db7;
+  --color-brand-500: #d71e49;
+  --color-brand-600: #d83e7d;
+  --color-brand-700: #c1326d;
+  --color-brand-800: #9a2b58;
+
+  --color-accent-50: #effdfd;
+  --color-accent-100: #d8f5f4;
+  --color-accent-200: #b3ecea;
+  --color-accent-500: #5ec3c1;
+  --color-accent-600: #4aa5a3;
+  --color-accent-700: #3b8886;
+  --color-accent-800: #2c6a69;
+}
+
+/* Editorial redesign (ADR 0009): one crimson on warm paper/ink neutrals.
+ * `static` so the variables exist even where only plain CSS uses them. */
+@theme static {
+  --color-ink: #17130f;
+  --color-ink-soft: #2b2620;
+  --color-paper: #f5f1ea;
+  --color-bone: #ebe4d8;
+  --color-rule: #d5ccbd;
+  --color-mute: #5d564c;
+  --color-crimson: #d71e49;
+  --color-crimson-deep: #b3143b;
+}
+
+/*
+ * The FitBreak site was built on Tailwind v3. Inside `.fb-site` we re-pin the v3
+ * hex palette (v4 ships oklch variants that drift slightly) and the v3 radius
+ * scale (the template's `--radius` makes rounded-lg/xl larger), so the clone
+ * matches the source exactly without affecting the dashboard/auth screens.
+ */
+.fb-site {
+  --radius: 0.5rem;
+  /* Full Tailwind v3 palettes for every family the source site uses. */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-orange-50: #fff7ed;
+  --color-orange-100: #ffedd5;
+  --color-orange-200: #fed7aa;
+  --color-orange-300: #fdba74;
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  --color-orange-800: #9a3412;
+  --color-orange-900: #7c2d12;
+  --color-amber-50: #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-yellow-50: #fefce8;
+  --color-yellow-100: #fef9c3;
+  --color-yellow-200: #fef08a;
+  --color-yellow-300: #fde047;
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #eab308;
+  --color-yellow-600: #ca8a04;
+  --color-yellow-700: #a16207;
+  --color-yellow-800: #854d0e;
+  --color-yellow-900: #713f12;
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-200: #99f6e4;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+  --color-teal-900: #134e4a;
+  --color-cyan-50: #ecfeff;
+  --color-cyan-100: #cffafe;
+  --color-cyan-200: #a5f3fc;
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-600: #0891b2;
+  --color-cyan-700: #0e7490;
+  --color-cyan-800: #155e75;
+  --color-cyan-900: #164e63;
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-indigo-50: #eef2ff;
+  --color-indigo-100: #e0e7ff;
+  --color-indigo-200: #c7d2fe;
+  --color-indigo-300: #a5b4fc;
+  --color-indigo-400: #818cf8;
+  --color-indigo-500: #6366f1;
+  --color-indigo-600: #4f46e5;
+  --color-indigo-700: #4338ca;
+  --color-indigo-800: #3730a3;
+  --color-indigo-900: #312e81;
+  --color-purple-50: #faf5ff;
+  --color-purple-100: #f3e8ff;
+  --color-purple-200: #e9d5ff;
+  --color-purple-300: #d8b4fe;
+  --color-purple-400: #c084fc;
+  --color-purple-500: #a855f7;
+  --color-purple-600: #9333ea;
+  --color-purple-700: #7e22ce;
+  --color-purple-800: #6b21a8;
+  --color-purple-900: #581c87;
+  --color-pink-50: #fdf2f8;
+  --color-pink-100: #fce7f3;
+  --color-pink-200: #fbcfe8;
+  --color-pink-300: #f9a8d4;
+  --color-pink-400: #f472b6;
+  --color-pink-500: #ec4899;
+  --color-pink-600: #db2777;
+  --color-pink-700: #be185d;
+  --color-pink-800: #9d174d;
+  --color-pink-900: #831843;
+  --color-rose-50: #fff1f2;
+  --color-rose-100: #ffe4e6;
+  --color-rose-200: #fecdd3;
+  --color-rose-300: #fda4af;
+  --color-rose-400: #fb7185;
+  --color-rose-500: #f43f5e;
+  --color-rose-600: #e11d48;
+  --color-rose-700: #be123c;
+  --color-rose-800: #9f1239;
+  --color-rose-900: #881337;
+
+  background-color: var(--color-gray-50);
+  color: var(--color-gray-900);
+}
+
+/* v3 preflight gave buttons a pointer cursor; v4 does not. */
+.fb-site button:not(:disabled),
+.fb-site [role="button"]:not(:disabled) {
+  cursor: pointer;
+}
+
+html:has(.fb-site) {
+  scroll-behavior: smooth;
+}
+
+html:has(.fb-site)::-webkit-scrollbar {
+  width: 10px;
+}
+html:has(.fb-site)::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+html:has(.fb-site)::-webkit-scrollbar-thumb {
+  background: #d71e49;
+  border-radius: 5px;
+}
+html:has(.fb-site)::-webkit-scrollbar-thumb:hover {
+  background: #c11a41;
+}
+
+/* Page-load card entrance: the source fades every white card up on `load`,
+ * staggered by document index (`--fb-i` × 100ms). */
+@keyframes fb-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Chatbot typing indicator (source: 1.4s, 4px hop at 30%). */
+@keyframes fb-typing {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-4px);
+  }
+}
+.fb-typing-dot {
+  animation: fb-typing 1.4s infinite;
+}
+.fb-card-in {
+  animation: fb-card-in 0.5s ease both;
+  animation-delay: calc(var(--fb-i, 0) * 100ms + 50ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-card-in {
+    animation: none;
+  }
+}
+
+/* ── Motion layer (docs/specs/2026-11-04-motion-redesign.md) ───────────────
+ * Page entrance: content fades and lifts in under the persistent header.
+ * `backwards` (not `both`) so no transform lingers afterwards — a leftover
+ * transform would break the pinned homepage scenes (position: fixed). */
+@keyframes fb-page-in {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+}
+@keyframes fb-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.fb-page-in {
+  animation: fb-page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Hero pre-hide: only when scripts run and motion is welcome, so the GSAP
+ * intro can start from nothing without a flash. If the script never takes
+ * over, the fallback animation shows everything after 2.5s anyway. */
+@keyframes fb-pre-fallback {
+  to {
+    opacity: 1;
+  }
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .fb-pre [data-hero-title],
+  .fb-pre [data-hero-in] {
+    opacity: 0;
+    animation: fb-pre-fallback 0.01s 2.5s forwards;
+  }
+}
+
+/* Video scene stage (desktop, set by the scene while it is pinned). */
+.fb-site [data-video-stage][data-stage="on"] {
+  position: relative;
+  height: 100svh;
+  padding: 0;
+  overflow: hidden;
+}
+.fb-site [data-video-stage][data-stage="on"] [data-video-heading] {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(4rem + 5svh);
+  margin: 0;
+  padding-inline: 1.5rem;
+}
+.fb-site [data-video-stage][data-stage="on"] [data-video-frame] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(76rem, 92vw);
+  translate: -50% -50%;
+}
+.fb-site [data-video-stage][data-stage="on"] [data-video-hint] {
+  display: none;
+}
+
+/* Small interactions: pills press in, cards lift on hover. */
+.fb-site :is(a, button)[class*="rounded-full"]:active:not(:disabled) {
+  scale: 0.96;
+}
+.fb-ed .fb-btn:active:not(:disabled) {
+  translate: 0 1px;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .fb-site .fb-lift {
+    transition:
+      translate 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.3s ease;
+  }
+  .fb-site .fb-lift:hover {
+    translate: 0 -4px;
+  }
+}
+
+/* "Message Us" nudge: a short wiggle every ~7s until the visitor messages us. */
+@keyframes fb-nudge {
+  0%,
+  86%,
+  100% {
+    transform: none;
+  }
+  89% {
+    transform: translateY(-2px) rotate(-4deg) scale(1.06);
+  }
+  92% {
+    transform: translateY(-2px) rotate(4deg) scale(1.06);
+  }
+  95% {
+    transform: rotate(-2deg) scale(1.03);
+  }
+}
+.fb-nudge {
+  animation: fb-nudge 7s ease-in-out 4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-page-in {
+    animation: fb-fade-in 0.2s ease backwards;
+  }
+  .fb-nudge {
+    animation: none;
+  }
+  .fb-site :is(a, button)[class*="rounded-full"]:active:not(:disabled) {
+    scale: none;
+  }
+  .fb-ed .fb-btn:active:not(:disabled) {
+    translate: none;
+  }
+}
+
+/* ── Editorial system (docs/specs/2026-11-05-editorial-redesign.md, ADR 0009) ──
+ * `.fb-ed` wraps the public site; `.fb-legacy` (Member Area) opts back out.
+ * Colours come from the theme tokens above (ink/paper/bone/rule/mute/crimson). */
+@layer components {
+  .fb-ed {
+    font-family: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-feature-settings: "ss01";
+  }
+  .fb-ed .fb-legacy {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+  }
+  .fb-ed ::selection {
+    background: var(--color-crimson);
+    color: white;
+  }
+
+  /* Condensed, heavy display type, echoing the slanted logo. */
+  .fb-display {
+    font-family: var(--font-archivo), "Arial Narrow", sans-serif;
+    font-stretch: 72%;
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  /* Small all-caps label (eyebrows, column heads). */
+  .fb-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+  .fb-ed :is(p, li) {
+    text-wrap: pretty;
+  }
+  .fb-num {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* Buttons: sharp, condensed caps. */
+  .fb-btn {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 2px;
+    padding-inline: 1.5rem;
+    font-family: var(--font-archivo), "Arial Narrow", sans-serif;
+    font-size: 1rem;
+    font-stretch: 85%;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      translate 0.15s ease;
+  }
+  .fb-btn:focus-visible,
+  .fb-link:focus-visible {
+    outline: 2px solid var(--color-crimson);
+    outline-offset: 3px;
+  }
+  .fb-btn--crimson {
+    background: var(--color-crimson);
+    color: white;
+  }
+  .fb-btn--crimson:hover {
+    background: var(--color-crimson-deep);
+  }
+  .fb-btn--ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .fb-btn--ink:hover {
+    background: var(--color-ink-soft);
+  }
+  .fb-btn--paper {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .fb-btn--paper:hover {
+    background: white;
+  }
+  .fb-btn--line {
+    border: 1px solid currentColor;
+  }
+  .fb-btn--line:hover {
+    background: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  /* Text link with an arrow that steps forward on hover. */
+  .fb-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.15rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+  }
+  .fb-link:hover {
+    color: var(--color-crimson-deep);
+  }
+  .fb-link-arrow {
+    transition: translate 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .fb-link:hover .fb-link-arrow,
+  .group:hover .fb-link-arrow {
+    translate: 0.25rem 0;
+  }
+
+  /* Fine grain over photos and dark bands, so flat fills don't look sterile. */
+  .fb-grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .fb-grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Programs rows: the rule above each row draws in (motion scene sets it). */
+  .fb-ed [data-program-rule] {
+    transform-origin: left center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fb-link-arrow {
+      transition: none;
+    }
+  }
+}

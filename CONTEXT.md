@@ -60,3 +60,21 @@ else — no implementation details, no decisions. Decisions live in `docs/adr/`.
 
 - **Marketing Landing** — the public, unauthenticated entry page shown to
   visitors who are not signed in.
+
+- **Information Site** — the public FitBreak website: studio information,
+  classes, pricing, blog and contact, open to every visitor with no account.
+  This is the whole product for now.
+
+- **Member Area** — the account-holder part of FitBreak (sign-in, credits,
+  booking, payments, member pages). Currently **parked**: it exists but is
+  switched off, and nothing on the Information Site leads to it.
+
+- **Booking Enquiry** — how a visitor books a class or buys a package while the
+  Member Area is parked: they message the studio's Facebook page
+  (FitBreakPhilippines) on Messenger, or call. The studio confirms by hand.
+
+- **Studio Fact** — a statement about the studio (prices, times, place, people,
+  policies) that fitbreak.ph published without contradiction, or that the studio
+  has confirmed. Everything the Information Site tells visitors, search engines
+  or AI answer engines must be a Studio Fact, an honest description of how the
+  site works, or plain navigation.

@@ -3,6 +3,11 @@ import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
+// Tests build local-time `now` values next to studio-time (Asia/Manila)
+// bookings, so pin the process timezone to the studio's. Otherwise results
+// depend on the machine (CI runs in UTC).
+process.env.TZ = "Asia/Manila";
+
 export default defineConfig({
   plugins: [react()],
   test: {
