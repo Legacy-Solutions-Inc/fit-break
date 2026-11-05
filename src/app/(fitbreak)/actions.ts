@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 
+import { newsletterEnabled } from "@/config";
 import { subscribe } from "@/services/newsletter";
 
 /** Where the sign-up came from (the live site tags homepage vs blog_page). */
@@ -24,6 +25,10 @@ export async function subscribeToNewsletter(
   _prev: NewsletterState,
   formData: FormData,
 ): Promise<NewsletterState> {
+  // Never confirm a sign-up that is not kept (the newsletter is switched off).
+  if (!newsletterEnabled) {
+    return { ok: false, error: "Newsletter sign-ups are not open yet." };
+  }
   const parsed = newsletterSchema.safeParse({
     email: formData.get("email"),
     source: formData.get("source"),

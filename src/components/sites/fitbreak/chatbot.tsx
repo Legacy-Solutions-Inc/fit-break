@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
+import { contact } from "./links";
+
 const WELCOME =
   "Hi! I'm the FitBreak Assistant.\n\nI can help you with:\n• Class schedules\n• Pricing and packages\n• How to book\n• Our location\n• How credits work\n\nWhat would you like to know?";
-const ERROR_REPLY =
-  "Sorry, I'm having trouble connecting. Please try again or contact us at support@fitbreak.ph";
+// The studio's published contacts (never an unpublished support address).
+const ERROR_REPLY = `Sorry, I'm having trouble connecting. Please try again, or contact us at ${contact.email} or ${contact.phoneDisplay}.`;
 
 interface Message {
   id: number;

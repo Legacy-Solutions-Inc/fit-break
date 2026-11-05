@@ -36,4 +36,18 @@ describe("FitBreak assistant while the Member Area is parked", () => {
     expect(answer).toContain("m.me/FitBreakPhilippines");
     expect(answer).not.toMatch(/create an account|sign in|online only/i);
   });
+
+  it("points schedule questions to the timetable and a Booking Enquiry, not live availability", () => {
+    const answer = reply("What time are your classes?");
+    expect(answer).not.toMatch(/live availability/i);
+    expect(answer).toMatch(/timetable/i);
+    expect(answer).toMatch(/message us|call/i);
+  });
+
+  it("explains the credit policy without account features", () => {
+    const answer = reply("How do credits work?");
+    expect(answer).toMatch(/1 credit = 1 class/);
+    expect(answer).toMatch(/expire/i);
+    expect(answer).not.toMatch(/credits are added|account|balance/i);
+  });
 });

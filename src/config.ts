@@ -19,7 +19,7 @@ export const config = {
   site: {
     name: "FitBreak",
     description:
-      "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes, booked online.",
+      "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes. Book by Messenger or phone.",
     url: getSiteURL(),
     version: env.NEXT_PUBLIC_SITE_VERSION,
   },
@@ -62,6 +62,15 @@ export const analyticsSessionReplay = false;
  * credits or online booking. Flip to true to bring the Member Area back.
  */
 export const memberAreaEnabled = false;
+
+/**
+ * Toggle: is the FitBreak newsletter sign-up switched on? OFF until the studio
+ * chooses where sign-ups go (fact sheet question 1.5) — until then the form
+ * would confirm a sign-up that is never kept. When false, the newsletter
+ * section renders nothing and the subscribe action refuses every submission.
+ * Turn on once `src/services/newsletter.ts` stores sign-ups somewhere real.
+ */
+export const newsletterEnabled = false;
 
 /**
  * Policy: may the browsable "auth disabled" bypass apply? Only when Supabase is

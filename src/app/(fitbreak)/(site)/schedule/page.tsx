@@ -12,7 +12,7 @@ import { getAccount, getBookingCounts, listBookings } from "@/services/fitbreak/
 export const metadata: Metadata = {
   title: { absolute: "Class Schedule - FitBreak" },
   description:
-    "Book your FitBreak bootcamp classes. View the weekly schedule with 4 sessions daily, Monday to Saturday. All classes by Coach Iren.",
+    "Book your FitBreak bootcamp classes. View the weekly schedule, Monday to Saturday. All classes by Coach Iren.",
   alternates: { canonical: "/schedule" },
 };
 

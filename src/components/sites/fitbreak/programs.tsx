@@ -32,7 +32,6 @@ export function Programs() {
     <section id="programs" className="scroll-mt-16 border-t border-rule bg-paper py-20 lg:py-32">
       <div className={wrap}>
         <SectionHead
-          label="Six formats, every day"
           title={<>Class Formats &amp; Schedule</>}
           aside={
             <p>

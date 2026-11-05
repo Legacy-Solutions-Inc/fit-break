@@ -32,7 +32,9 @@ const answers = {
       `${COACH_NAME}.`,
     `Daily start times: ${slots}.`,
     `Programs: ${PROGRAMS.map((p) => p.name).join(", ")} — every program is offered at every time slot.`,
-    `See live availability and book at ${routes.schedule}.`,
+    memberAreaEnabled
+      ? `See live availability and book at ${routes.schedule}.`
+      : `See the weekly timetable on ${routes.schedule}, then message us on Messenger or call ${contact.phoneDisplay} to book.`,
   ].join("\n"),
   pricing: [
     "Class packages:",
@@ -67,7 +69,9 @@ const answers = {
     "It's a women-only, fully air-conditioned studio. Male companions are welcome to wait at the coffee shop downstairs.",
   ].join("\n"),
   credits: [
-    "1 credit = 1 class. Credits are added after your payment is verified and expire with your package's validity period.",
+    memberAreaEnabled
+      ? "1 credit = 1 class. Credits are added after your payment is verified and expire with your package's validity period."
+      : "1 credit = 1 class. Credits expire with your package's validity period, and unused classes don't roll over.",
     `Pay via GCash or ${PAYMENT_DETAILS.bpi.bank} transfer (${PAYMENT_DETAILS.bpi.accountNumber}, ${PAYMENT_DETAILS.bpi.accountName}).`,
     memberAreaEnabled
       ? `Check your balance on ${routes.member.payments}.`

@@ -14,7 +14,7 @@ import { getMember } from "@/lib/fitbreak/member";
 
 const title = "FitBreak — Women-Only Bootcamp in Calapan | Book Classes, Pay via GCash";
 const description =
-  "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes. Fully air conditioned fitness studio. Functional circuit training class format. All classes booked online only.";
+  "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes. Fully air conditioned fitness studio. Functional circuit training class format. Book by Messenger or phone.";
 
 export const metadata: Metadata = {
   title: { absolute: title },
@@ -43,12 +43,21 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "FitBreak — Women-Only Bootcamp in Calapan",
     description:
-      "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes. Fully air conditioned. Functional circuit training. Book online.",
+      "FitBreak - Women only Fitness Studio in Calapan, Oriental Mindoro. Coach-led bootcamp classes. Fully air conditioned. Functional circuit training. Book by Messenger or phone.",
     images: [asset("/images/hero-women-bootcamp.jpg")],
   },
 };
 
-// Structured data copied from the source (SportsActivityLocation).
+const classTimeSlots = [
+  ["06:30", "07:30"],
+  ["09:00", "10:00"],
+  ["16:30", "17:30"],
+  ["18:00", "19:00"],
+  ["19:30", "20:30"],
+] as const;
+
+// Structured data from the source (SportsActivityLocation), corrected to match
+// the pages: payment methods and all five class times.
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SportsActivityLocation",
@@ -67,22 +76,15 @@ const jsonLd = {
     addressCountry: "PH",
   },
   geo: { "@type": "GeoCoordinates", latitude: "13.4119", longitude: "121.1803" },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "06:30",
-      closes: "07:30",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-      opens: "18:00",
-      closes: "19:00",
-    },
-  ],
+  // The five published class times, Monday–Saturday (the old site listed two).
+  openingHoursSpecification: classTimeSlots.map(([opens, closes]) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    opens,
+    closes,
+  })),
   priceRange: "₱₱",
-  paymentAccepted: "GCash, Cash",
+  paymentAccepted: "GCash, Bank Transfer", // no cash (the old site's data said "Cash")
   currenciesAccepted: "PHP",
   sameAs: [
     "https://facebook.com/FitBreakPhilippines/",

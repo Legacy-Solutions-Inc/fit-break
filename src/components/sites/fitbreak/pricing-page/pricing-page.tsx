@@ -328,7 +328,7 @@ function ComparisonTable() {
   return (
     <section className="border-t border-rule py-20 lg:py-32">
       <div className={wrap}>
-        <SectionHead label="Side by side" title="Package Comparison" className="mb-12 lg:mb-16" />
+        <SectionHead title="Package Comparison" className="mb-12 lg:mb-16" />
         <div
           data-reveal
           role="region"
@@ -336,7 +336,7 @@ function ComparisonTable() {
           tabIndex={0}
           className="-mx-5 overflow-x-auto px-5 focus-visible:outline-2 focus-visible:outline-crimson sm:mx-0 sm:px-0"
         >
-          <table className="w-full min-w-[640px] border-collapse text-left">
+          <table className="w-full min-w-160 border-collapse text-left">
             <thead>
               <tr className="border-b-2 border-ink">
                 <th scope="col" className="fb-label py-4 pr-4 text-mute">
@@ -397,7 +397,7 @@ const gcashSteps = [
 function HowToPay() {
   return (
     <section className="fb-grain bg-ink py-20 text-paper lg:py-32">
-      <div className={cn(wrap, "relative z-[2]")}>
+      <div className={cn(wrap, "relative z-2")}>
         <SectionHead
           tone="dark"
           label="Payment"
@@ -594,7 +594,6 @@ export function PricingPage({ signedIn }: { signedIn: boolean }) {
     <>
       <section className="pt-14 pb-20 lg:pt-24 lg:pb-28">
         <div className={wrap}>
-          <p className="fb-label mb-5 text-mute">Packs &amp; prices</p>
           <h1 className="fb-display max-w-5xl text-[clamp(3rem,8vw,7rem)]">
             Membership &amp; Pricing
           </h1>
@@ -604,7 +603,7 @@ export function PricingPage({ signedIn }: { signedIn: boolean }) {
               Flexible class packages to match your fitness journey. All packages include access to
               all bootcamp class types.
             </p>
-            <div className="relative aspect-[3/2] overflow-hidden bg-bone lg:col-span-8 lg:aspect-[16/8]">
+            <div className="relative aspect-3/2 overflow-hidden bg-bone lg:col-span-8 lg:aspect-16/8">
               <Image
                 src={asset("/images/stretching-lady.jpg")}
                 alt="FitBreak fitness training"

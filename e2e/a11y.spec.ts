@@ -1,6 +1,8 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
+import { PUBLIC_PAGES } from "./public-pages";
+
 // Gate accessibility at the "serious"/"critical" impact levels on the public,
 // shadcn/ui-built pages. Lower-impact findings are not failed here (they'd be a
 // separate, dedicated a11y pass), but serious/critical regressions break CI.
@@ -9,23 +11,6 @@ const BLOCKING_IMPACTS = new Set(["serious", "critical"]);
 // The homepage used to exempt colour-contrast rules as debt inherited from the
 // 1:1 clone. The editorial redesign (ADR 0009) fixed the palette, so every rule
 // now gates every page.
-
-// Every public page of the Information Site. The parked Member Area (and
-// /how-it-works, which redirects home while it is parked) is excluded.
-const PUBLIC_PAGES = [
-  "/",
-  "/pricing",
-  "/schedule",
-  "/our-story",
-  "/calapan1/about",
-  "/fitbreakers",
-  "/club-rules",
-  "/corporate",
-  "/blog",
-  "/blog/kdHl9EbopUVKOpyfAc4e", // a post from the local blog data
-  "/privacy-policy",
-  "/terms-of-service",
-];
 
 /**
  * Wait for entrance animations (the CSS page fade-in and the homepage hero

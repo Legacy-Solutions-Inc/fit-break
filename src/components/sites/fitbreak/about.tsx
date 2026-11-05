@@ -4,10 +4,12 @@ import { ArrowLink, wrap } from "./editorial";
 import { asset, routes } from "./links";
 import { Scene } from "./motion/home-scenes";
 
-/** The studio in four numbers — set as one line of type, not tiles. */
+/**
+ * The studio in numbers, set as one line of type. "Classes per day" is left
+ * out until the studio confirms it (the old site said 4 but lists five times).
+ */
 const stats = [
   { value: "60", label: "minutes per class." },
-  { value: "4", label: "classes a day." },
   { value: "6", label: "days a week." },
   { value: "8–12", label: "women per class." },
 ];
@@ -19,9 +21,6 @@ export function About() {
         <div className={wrap}>
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-5 lg:pt-6">
-              <p data-about-in className="fb-label mb-4 text-mute">
-                Why we exist
-              </p>
               <h2 data-about-in className="fb-display mb-8 text-[clamp(2.75rem,7vw,5.75rem)]">
                 About FitBreak
               </h2>

@@ -131,7 +131,6 @@ export function Pricing({ showPrices }: { showPrices: boolean }) {
     <section id="pricing" className="border-t border-rule bg-bone py-20 lg:py-32">
       <div className={wrap}>
         <SectionHead
-          label="Packs & prices"
           title={<>Membership &amp; Pricing</>}
           aside={
             <p>

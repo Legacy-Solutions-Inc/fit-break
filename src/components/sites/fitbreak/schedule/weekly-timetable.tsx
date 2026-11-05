@@ -23,7 +23,6 @@ export function WeeklyTimetable() {
       <section className="bg-paper pt-16 pb-16 lg:pt-24 lg:pb-24">
         <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
-            <p className="fb-label mb-4 text-mute">Timetable</p>
             <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">Class Schedule</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
               Classes run Monday to Saturday. Message us to book your spot.

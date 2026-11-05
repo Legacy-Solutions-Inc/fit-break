@@ -9,7 +9,6 @@ export function VideoSection() {
         <div className={wrap}>
           <div data-video-heading className="mb-12 md:mb-16">
             <SectionHead
-              label="The studio, in motion"
               title="See FitBreak in Action"
               aside="Experience the energy of our women-only bootcamp. Every class, every rep, every victory."
             />
@@ -20,7 +19,7 @@ export function VideoSection() {
           </div>
 
           <p data-video-hint className="fb-label mt-6 text-mute">
-            Click to play — sound on
+            Click to play
           </p>
         </div>
       </section>

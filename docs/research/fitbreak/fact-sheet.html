@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FitBreak Website Fact Check</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..900&family=Instrument+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Layout idea: a printed studio checklist — numbered sections, ruled rows, one tick column. */
+      :root {
+        --ink: #17130f;
+        --paper: #f5f1ea;
+        --bone: #ebe4d8;
+        --rule: #d5ccbd;
+        --mute: #5d564c;
+        --crimson: #b3143b;
+        --display: "Archivo", "Arial Narrow", sans-serif;
+        --body: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+        color-scheme: light;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+      }
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font: 400 16px/1.55 var(--body);
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 3.5rem clamp(1rem, 4vw, 2.5rem) 5rem;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--display);
+        font-stretch: 72%;
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 0.92;
+        text-wrap: balance;
+        margin: 0;
+      }
+      h1 {
+        font-size: clamp(2.75rem, 8vw, 5rem);
+      }
+      h2 {
+        font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+      }
+      .label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mute);
+      }
+      .intro {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 1.75rem;
+        padding-top: 1.25rem;
+        border-top: 2px solid var(--ink);
+      }
+      @media (min-width: 760px) {
+        .intro {
+          grid-template-columns: 1fr 1fr;
+          gap: 3rem;
+        }
+      }
+      .intro p {
+        margin: 0;
+        max-width: 34rem;
+      }
+      .how {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.5rem;
+      }
+      .how li {
+        display: grid;
+        grid-template-columns: 1.75rem 1fr;
+      }
+      .how b {
+        font-family: var(--display);
+        font-stretch: 72%;
+        font-weight: 800;
+        font-size: 1.15rem;
+        line-height: 1.3;
+      }
+      section {
+        margin-top: 4rem;
+      }
+      section > header {
+        display: grid;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      section > header p {
+        margin: 0;
+        color: var(--mute);
+        max-width: 40rem;
+      }
+      .priority {
+        background: var(--ink);
+        color: var(--paper);
+        margin-inline: calc(-1 * clamp(1rem, 4vw, 2.5rem));
+        padding: 2.5rem clamp(1rem, 4vw, 2.5rem);
+      }
+      .priority .label,
+      .priority header p {
+        color: rgba(245, 241, 234, 0.72);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-variant-numeric: tabular-nums;
+      }
+      th,
+      td {
+        text-align: left;
+        vertical-align: top;
+        padding: 0.85rem 0.75rem 0.85rem 0;
+        border-top: 1px solid var(--rule);
+      }
+      .priority th,
+      .priority td {
+        border-top-color: rgba(245, 241, 234, 0.18);
+      }
+      thead th {
+        border-top: none;
+        padding-bottom: 0.4rem;
+      }
+      tbody tr:last-child td {
+        border-bottom: 1px solid var(--rule);
+      }
+      .priority tbody tr:last-child td {
+        border-bottom-color: rgba(245, 241, 234, 0.18);
+      }
+      td.no {
+        width: 3.25rem;
+        font-family: var(--display);
+        font-stretch: 72%;
+        font-weight: 800;
+        font-size: 1.1rem;
+        line-height: 1.35;
+      }
+      td.item {
+        width: 28%;
+        font-weight: 600;
+      }
+      td.says {
+        color: var(--ink);
+      }
+      .priority td.says {
+        color: var(--paper);
+      }
+      td.says small {
+        display: block;
+        color: var(--mute);
+        font-size: 0.85rem;
+        margin-top: 0.2rem;
+      }
+      .priority td.says small {
+        color: rgba(245, 241, 234, 0.72);
+      }
+      td.tick {
+        width: 6.5rem;
+        white-space: nowrap;
+        font-size: 0.82rem;
+        color: var(--mute);
+      }
+      .priority td.tick {
+        color: rgba(245, 241, 234, 0.72);
+      }
+      .box {
+        display: inline-block;
+        width: 0.95rem;
+        height: 0.95rem;
+        border: 1.5px solid currentColor;
+        vertical-align: -0.15rem;
+        margin-right: 0.35rem;
+      }
+      .opt {
+        display: block;
+        margin-top: 0.35rem;
+      }
+      .opt:first-of-type {
+        margin-top: 0.5rem;
+      }
+      .pages {
+        color: var(--mute);
+        font-size: 0.85rem;
+      }
+      a {
+        color: inherit;
+        text-decoration: underline;
+        text-decoration-color: var(--crimson);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 3px;
+      }
+      a:focus-visible {
+        outline: 2px solid var(--crimson);
+        outline-offset: 2px;
+      }
+      .priority a {
+        text-decoration-color: currentColor;
+      }
+      footer {
+        margin-top: 4rem;
+        padding-top: 1.25rem;
+        border-top: 2px solid var(--ink);
+        display: grid;
+        gap: 0.5rem;
+        color: var(--mute);
+      }
+      footer p {
+        margin: 0;
+        max-width: 40rem;
+      }
+      @media (max-width: 640px) {
+        thead {
+          display: none;
+        }
+        tr {
+          display: grid;
+          grid-template-columns: 2.5rem 1fr;
+          border-top: 1px solid var(--rule);
+          padding: 0.75rem 0;
+        }
+        .priority tr {
+          border-top-color: rgba(245, 241, 234, 0.18);
+        }
+        td {
+          border: none !important;
+          padding: 0.1rem 0;
+        }
+        td.no {
+          grid-row: span 3;
+        }
+        td.item,
+        td.says,
+        td.tick {
+          grid-column: 2;
+          width: auto;
+        }
+        td.tick {
+          padding-top: 0.4rem;
+        }
+      }
+      @media print {
+        body {
+          font-size: 11pt;
+        }
+        main {
+          padding-top: 0;
+        }
+        .priority {
+          background: none;
+          color: var(--ink);
+          border: 2px solid var(--ink);
+          margin-inline: 0;
+          padding: 1.25rem;
+        }
+        .priority td.says,
+        .priority td.tick,
+        .priority .label,
+        .priority header p,
+        .priority td.says small {
+          color: var(--ink);
+        }
+        section {
+          break-inside: auto;
+        }
+        tr {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="label">FitBreak website · fact check · prepared 5 November 2026</p>
+      <h1>Is this right?</h1>
+
+      <div class="intro">
+        <p>
+          Everything below is what the new FitBreak website currently tells visitors. It was copied
+          from fitbreak.ph, so most of it should already be correct — but a few things on the old
+          site contradict each other, and some details were never published. Please check each line
+          before the site goes live.
+        </p>
+        <ol class="how">
+          <li>
+            <b>1</b><span>Answer the questions in the dark box first. Those block the site.</span>
+          </li>
+          <li><b>2</b><span>Tick each remaining line that is correct.</span></li>
+          <li>
+            <b>3</b
+            ><span
+              >For anything wrong, send back its number and the right wording, e.g. "3.4 — Power
+              Pack is valid 60 days".</span
+            >
+          </li>
+        </ol>
+      </div>
+
+      <!-- 1. Open questions -->
+      <section class="priority" aria-labelledby="s1">
+        <header>
+          <p class="label">Section 1 · Please answer first</p>
+          <h2 id="s1">Questions we need answered</h2>
+          <p>The old website says two different things, or never said it at all.</p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Question</th>
+              <th class="label">What we found</th>
+              <th class="label">Your answer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">1.1</td>
+              <td class="item">How many classes a day?</td>
+              <td class="says">
+                The homepage says <b>4 classes per day</b>, but five class times are listed
+                everywhere: 6:30 AM, 9:00 AM, 4:30 PM, 6:00 PM, 7:30 PM.
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>4</span
+                ><span class="opt"><span class="box"></span>5</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.2</td>
+              <td class="item">Which class runs when?</td>
+              <td class="says">
+                The schedule page says every class format runs at every time slot. An older "How it
+                works" page showed one format per day instead (Mon Total Body Burn, Tue Tone &amp;
+                Tighten, Wed Cardio Crush, Thu Sculpt &amp; Strength, Fri Core &amp; Balance, Sat
+                Booty &amp; Burn).
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>Every slot</span
+                ><span class="opt"><span class="box"></span>One per day</span
+                ><span class="opt"><span class="box"></span>Other</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.3</td>
+              <td class="item">Do you accept cash?</td>
+              <td class="says">
+                The pages say <b>GCash or bank transfer only, no cash</b>. The hidden information
+                the old site gave Google says "GCash, Cash" and lists only the 6:30 AM and 6:00 PM
+                classes.
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>No cash</span
+                ><span class="opt"><span class="box"></span>Cash OK</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.4</td>
+              <td class="item">GCash number</td>
+              <td class="says">
+                The old site never published it. The new site tells people to message you for
+                it.<small
+                  >Send the number and account name if you want it shown, or tick "keep as
+                  is".</small
+                >
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>Show it</span
+                ><span class="opt"><span class="box"></span>Keep as is</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.5</td>
+              <td class="item">Newsletter sign-ups</td>
+              <td class="says">
+                The site has an "Enter your email" box, but sign-ups are not saved anywhere
+                yet.<small
+                  >Where should they go? e.g. an email to calapan1@fitbreak.ph, a Google Sheet, or a
+                  mailing service. Or remove the box.</small
+                >
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>Send to: ____</span
+                ><span class="opt"><span class="box"></span>Remove</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.6</td>
+              <td class="item">Map location</td>
+              <td class="says">
+                The map is placed by rough coordinates on Roxas Drive, and the old site used two
+                slightly different points about 170 m apart. Please check this pin is your door:
+                <a href="https://www.google.com/maps?q=13.413333,121.180919">open the map pin</a
+                >.<small>If it's off, send your Google Maps link.</small>
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>Correct</span
+                ><span class="opt"><span class="box"></span>Wrong</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.7</td>
+              <td class="item">Photos</td>
+              <td class="says">
+                The site uses the old site's photos. Some look like stock photos with the FitBreak
+                logo added.<small
+                  >Which photos show the real studio and members? Any you want removed?</small
+                >
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>All fine</span
+                ><span class="opt"><span class="box"></span>See notes</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="no">1.8</td>
+              <td class="item">"Now open"</td>
+              <td class="says">
+                The top of the homepage shows a "Now open" tag (from the old site's "We are now
+                open!" banner).
+              </td>
+              <td class="tick">
+                <span class="opt"><span class="box"></span>Keep</span
+                ><span class="opt"><span class="box"></span>Remove</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 2. Contact -->
+      <section aria-labelledby="s2">
+        <header>
+          <p class="label">Section 2</p>
+          <h2 id="s2">Contact &amp; location</h2>
+          <p class="pages">Shown on: every page footer, homepage "Visit Us", coach page.</p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Item</th>
+              <th class="label">The site says</th>
+              <th class="label">Correct?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">2.1</td>
+              <td class="item">Studio</td>
+              <td class="says">FitBreak — women-only bootcamp fitness studio in Calapan City</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">2.2</td>
+              <td class="item">Address</td>
+              <td class="says">
+                2nd Floor Roxas Drive, Brgy Ilaya, Calapan City, Oriental Mindoro 5200, Philippines
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">2.3</td>
+              <td class="item">Phone</td>
+              <td class="says">0965 944 1194 (call or text)</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">2.4</td>
+              <td class="item">Email</td>
+              <td class="says">calapan1@fitbreak.ph</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">2.5</td>
+              <td class="item">Booking</td>
+              <td class="says">
+                Every "Book" and "Message Us" button opens Messenger with the FitBreakPhilippines
+                Facebook page
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">2.6</td>
+              <td class="item">Social</td>
+              <td class="says">
+                facebook.com/FitBreakPhilippines · instagram.com/FitBreakPhilippines
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 3. Schedule -->
+      <section aria-labelledby="s3">
+        <header>
+          <p class="label">Section 3</p>
+          <h2 id="s3">Schedule &amp; classes</h2>
+          <p class="pages">Shown on: homepage, Schedule page, footer.</p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Item</th>
+              <th class="label">The site says</th>
+              <th class="label">Correct?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">3.1</td>
+              <td class="item">Days</td>
+              <td class="says">Monday to Saturday. Closed every Sunday.</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.2</td>
+              <td class="item">Class times</td>
+              <td class="says">
+                6:30–7:30 AM · 9:00–10:00 AM · 4:30–5:30 PM · 6:00–7:00 PM · 7:30–8:30 PM
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.3</td>
+              <td class="item">Class length</td>
+              <td class="says">
+                60 minutes, coach-led bootcamp in circuit stations, functional equipment only (no
+                big machines)
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.4</td>
+              <td class="item">Class size</td>
+              <td class="says">8–12 women per class</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.5</td>
+              <td class="item">Coach</td>
+              <td class="says">All classes led by Coach Iren</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.6</td>
+              <td class="item">Studio</td>
+              <td class="says">Fully air-conditioned</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.7</td>
+              <td class="item">Total Body Burn</td>
+              <td class="says">Full-body strength and endurance workout</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.8</td>
+              <td class="item">Tone &amp; Tighten</td>
+              <td class="says">Lower body and core toning session</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.9</td>
+              <td class="item">Cardio Crush</td>
+              <td class="says">High-intensity cardio conditioning</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.10</td>
+              <td class="item">Sculpt &amp; Strength</td>
+              <td class="says">Upper body strength and posture training</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.11</td>
+              <td class="item">Core &amp; Balance</td>
+              <td class="says">Core stability and coordination workout</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">3.12</td>
+              <td class="item">Booty &amp; Burn</td>
+              <td class="says">Glutes-focused endurance training</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 4. Prices -->
+      <section aria-labelledby="s4">
+        <header>
+          <p class="label">Section 4</p>
+          <h2 id="s4">Prices &amp; packages</h2>
+          <p class="pages">
+            Shown on: homepage, Pricing page. "Save %" is worked out against the ₱350 drop-in price.
+          </p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Item</th>
+              <th class="label">The site says</th>
+              <th class="label">Correct?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">4.1</td>
+              <td class="item">Guest Drop-In</td>
+              <td class="says">
+                ₱350 for 1 class. No membership needed. Next-day booking only. Limited to 3
+                drop-ins, then choose a package.
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">4.2</td>
+              <td class="item">Starter Pack</td>
+              <td class="says">
+                6 classes for ₱1,800 (₱300 a class, save 14%). Valid 30 days. Book up to 3 days
+                ahead.
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">4.3</td>
+              <td class="item">Standard Pack</td>
+              <td class="says">
+                12 classes for ₱3,300 (₱275 a class, save 21%). Valid 30 days. Book up to 5 days
+                ahead. Marked "Popular".
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">4.4</td>
+              <td class="item">Power Pack</td>
+              <td class="says">
+                20 classes for ₱5,000 (₱250 a class, save 29%). Valid 45 days. Book up to 7 days
+                ahead. Marked "Best Value".
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">4.5</td>
+              <td class="item">Annual membership fee</td>
+              <td class="says">
+                ₱500 a year, required for Starter, Standard and Power members, non-refundable. Not
+                needed for drop-ins.<small
+                  >Perks listed: member-only class packs · invitations to FitBreak events &amp;
+                  workshops · discounts on FitBreak activewear &amp; merchandise.</small
+                >
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">4.6</td>
+              <td class="item">Corporate group rate</td>
+              <td class="says">
+                ₱200 a class (42% off) for organisations with at least 5 women. The group must keep
+                5 active, package-paying members, or the discount is removed until it's back to 5.
+                Only the 12-class and 20-class packs count; 6-class packs and drop-ins don't.
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">4.7</td>
+              <td class="item">Corporate flyer</td>
+              <td class="says">
+                A downloadable PDF flyer (from the old site) is linked on the homepage, Pricing and
+                Corporate pages.
+              </td>
+              <td class="tick"><span class="box"></span>Still current</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 5. Payment & policies -->
+      <section aria-labelledby="s5">
+        <header>
+          <p class="label">Section 5</p>
+          <h2 id="s5">Payment &amp; booking rules</h2>
+          <p class="pages">Shown on: Pricing page (How to Pay, FAQ), homepage.</p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Item</th>
+              <th class="label">The site says</th>
+              <th class="label">Correct?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">5.1</td>
+              <td class="item">How to pay</td>
+              <td class="says">
+                GCash or bank transfer only. Send the receipt on Messenger; classes are confirmed
+                once payment is verified, usually within a few hours during business hours.
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">5.2</td>
+              <td class="item">Bank transfer</td>
+              <td class="says">BPI 8969-3458-85 · account name Iren San Buenaventura</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">5.3</td>
+              <td class="item">Cancelling</td>
+              <td class="says">
+                Cancel up to 2 hours before class for your credit back. Late cancellations and
+                no-shows lose the credit.
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">5.4</td>
+              <td class="item">Expiry</td>
+              <td class="says">
+                Classes expire at the end of the pack's validity. Unused classes don't roll over.
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 6. Coach -->
+      <section aria-labelledby="s6">
+        <header>
+          <p class="label">Section 6</p>
+          <h2 id="s6">Coach Iren</h2>
+          <p class="pages">Shown on: the coach page, homepage, Our Story.</p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Item</th>
+              <th class="label">The site says</th>
+              <th class="label">Correct?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">6.1</td>
+              <td class="item">Name &amp; role</td>
+              <td class="says">Iren San Buenaventura — FitBreak Owner &amp; Head Coach</td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">6.2</td>
+              <td class="item">Experience</td>
+              <td class="says">
+                More than 7 years of professional experience in the fitness industry
+              </td>
+              <td class="tick"><span class="box"></span>Yes</td>
+            </tr>
+            <tr>
+              <td class="no">6.3</td>
+              <td class="item">Certifications</td>
+              <td class="says">
+                Certified Personal Trainer · Functional Fitness Essentials · Functional Anatomy
+                &amp; Adaptive Fitness · Movement Analysis &amp; Corrective Strategies · Obesity
+                Exercise Specialist · Nutrition Essentials · Nutrition for Obesity &amp; Weight
+                Management · HIIT FIT Certified Instructor · Certified MetCon L1 Specialist
+              </td>
+              <td class="tick"><span class="box"></span>All 9 correct</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 7. Rules -->
+      <section aria-labelledby="s7">
+        <header>
+          <p class="label">Section 7</p>
+          <h2 id="s7">Club house rules</h2>
+          <p class="pages">
+            Shown on: the Club Rules page. Each rule also has a one-line explanation on the site.
+          </p>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th class="label">No.</th>
+              <th class="label">Item</th>
+              <th class="label">The site says</th>
+              <th class="label">Correct?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="no">7.1</td>
+              <td class="item">The 10 rules</td>
+              <td class="says">
+                1 No class video recording · 2 Women's space only · 3 Selfies allowed — respect
+                privacy · 4 Late? Please ask the coach first · 5 No food inside the club · 6 Watch
+                your belongings · 7 Payment required before joining classes · 8 Respectful behavior
+                only · 9 Return equipment after use · 10 Proper attire &amp; hygiene
+              </td>
+              <td class="tick"><span class="box"></span>All current</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer>
+        <p class="label">Not on this sheet</p>
+        <p>
+          The Our Story, FitBreakers, Corporate and blog pages are long-form writing copied word for
+          word from fitbreak.ph (25 blog posts, Privacy Policy and Terms of Service included). Skim
+          them if you like, and send any page you want reworded. The member sign-in area is switched
+          off for now and shows nothing to visitors.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
