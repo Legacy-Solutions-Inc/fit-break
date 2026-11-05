@@ -4,7 +4,8 @@ Date: 2026-07-31
 
 ## Status
 
-Accepted
+Accepted for the template. Superseded for the FitBreak Information Site by
+[0010](0010-fitbreak-google-analytics-4.md) (Google Analytics 4).
 
 ## Context
 

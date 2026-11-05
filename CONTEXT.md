@@ -72,3 +72,9 @@ else — no implementation details, no decisions. Decisions live in `docs/adr/`.
 - **Booking Enquiry** — how a visitor books a class or buys a package while the
   Member Area is parked: they message the studio's Facebook page
   (FitBreakPhilippines) on Messenger, or call. The studio confirms by hand.
+
+- **Studio Fact** — a statement about the studio (prices, times, place, people,
+  policies) that fitbreak.ph published without contradiction, or that the studio
+  has confirmed. Everything the Information Site tells visitors, search engines
+  or AI answer engines must be a Studio Fact, an honest description of how the
+  site works, or plain navigation.
