@@ -51,7 +51,7 @@ const gallery = [
   },
 ];
 
-const h2 = "fb-display text-[clamp(2.5rem,6vw,5rem)]";
+const h2 = "fb-display text-[clamp(2.2rem,4.65vw,3.9rem)]";
 const num = (i: number) => String(i + 1).padStart(2, "0");
 
 /** calapan1/about.html — "Meet Coach Iren" profile, set in the editorial system (ADR 0009). */
@@ -74,14 +74,14 @@ export function CoachProfile() {
 
           <div className="lg:col-span-7 lg:pb-4">
             <p className="fb-label mb-5 text-mute">The Woman Behind FitBreak</p>
-            <h1 className="fb-display text-[clamp(3.5rem,10vw,9rem)]">
+            <h1 className="fb-display text-[clamp(2.8rem,6.75vw,6.1rem)]">
               Meet Coach <span className="text-crimson">Iren</span>
             </h1>
 
             <div className="mt-12 grid gap-8 border-t-2 border-ink pt-8 xl:grid-cols-7 xl:gap-10">
               <div className="xl:col-span-3">
                 <p className="fb-label mb-3 text-mute">FitBreak Owner &amp; Head Coach</p>
-                <h2 className="fb-display mb-4 text-[clamp(2rem,3.5vw,3rem)]">
+                <h2 className="fb-display mb-4 text-[clamp(1.9rem,3.25vw,2.8rem)]">
                   Iren San Buenaventura
                 </h2>
                 <p className="font-semibold">
@@ -143,7 +143,7 @@ export function CoachProfile() {
             <figcaption className="fb-label mb-6 text-mute">
               Today, FitBreak stands as a reflection of Iren&apos;s philosophy:
             </figcaption>
-            <blockquote className="fb-display max-w-[20ch] text-[clamp(2.5rem,6.5vw,6rem)]">
+            <blockquote className="fb-display max-w-[20ch] text-[clamp(2.2rem,4.8vw,4.45rem)]">
               &quot;Strength is not just physical—it is emotional, mental, and deeply
               personal.&quot;
             </blockquote>
@@ -276,7 +276,7 @@ export function CoachProfile() {
             href={routes.clubRules}
             className="group mt-14 grid grid-cols-[1fr_auto] items-center gap-6 border-y-2 border-ink py-7 transition-colors hover:bg-bone/60 lg:grid-cols-12 lg:gap-10"
           >
-            <h3 className="fb-display text-[clamp(2rem,4vw,3.5rem)] transition-colors group-hover:text-crimson lg:col-span-5">
+            <h3 className="fb-display text-[clamp(1.9rem,3.5vw,3.05rem)] transition-colors group-hover:text-crimson lg:col-span-5">
               Club House Rules
             </h3>
             <p className="col-start-1 row-start-2 text-mute lg:col-span-5 lg:col-start-auto lg:row-start-auto">
@@ -313,7 +313,7 @@ export function CoachProfile() {
       <section data-placement="coach" className="border-t border-rule bg-paper py-20 lg:py-32">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
-            <h2 className="fb-display mb-8 text-[clamp(3rem,8vw,7rem)]">
+            <h2 className="fb-display mb-8 text-[clamp(2.5rem,5.7vw,5rem)]">
               Ready to Train with Coach Iren?
             </h2>
             <p className="max-w-xl text-lg leading-relaxed text-ink/80">

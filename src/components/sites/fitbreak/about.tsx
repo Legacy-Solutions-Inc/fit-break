@@ -21,7 +21,7 @@ export function About() {
         <div className={wrap}>
           <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-5 lg:pt-6">
-              <h2 data-about-in className="fb-display mb-8 text-[clamp(2.75rem,7vw,5.75rem)]">
+              <h2 data-about-in className="fb-display mb-8 text-[clamp(2.35rem,5.2vw,4.3rem)]">
                 About FitBreak
               </h2>
               <p data-about-lines className="mb-8 max-w-lg text-xl leading-relaxed text-ink/80">
@@ -65,7 +65,7 @@ export function About() {
 
           <p
             data-about-stats
-            className="fb-display mt-28 max-w-[22ch] text-[clamp(2.25rem,5.6vw,5rem)] leading-[0.95] lg:mt-36"
+            className="fb-display mt-28 max-w-[22ch] text-[clamp(2.05rem,4.35vw,3.9rem)] leading-[0.95] lg:mt-36"
           >
             {stats.map((s) => (
               <span key={s.label} data-about-stat className="mr-[0.25em] inline-block">

@@ -50,7 +50,7 @@ function MemberPricing() {
       <div className="mt-16 grid gap-10 border-t-2 border-ink pt-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <h3 className="fb-label mb-3">Annual Membership Fee</h3>
-          <p className="fb-display fb-num mb-3 text-6xl">{formatPhp(ANNUAL_MEMBERSHIP_FEE_PHP)}</p>
+          <p className="fb-display fb-num mb-3 text-5xl">{formatPhp(ANNUAL_MEMBERSHIP_FEE_PHP)}</p>
           <p className="max-w-md text-mute">
             Required for all package members (Starter, Standard, Power). One-time annual fee,
             non-refundable.

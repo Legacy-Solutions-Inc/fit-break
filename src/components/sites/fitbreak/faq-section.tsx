@@ -23,7 +23,9 @@ export function FaqSection({
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
             <p className="fb-label mb-4 text-mute">Questions</p>
-            <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)]">Frequently Asked Questions</h2>
+            <h2 className="fb-display text-[clamp(2.2rem,4.65vw,3.9rem)]">
+              Frequently Asked Questions
+            </h2>
             {intro && <p className="mt-8 max-w-md text-lg leading-relaxed text-mute">{intro}</p>}
           </div>
         </div>

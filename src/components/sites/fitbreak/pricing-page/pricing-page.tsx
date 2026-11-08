@@ -412,7 +412,7 @@ function HowToPay() {
         <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
           <div data-reveal className="lg:col-span-6">
             <div className="flex items-baseline justify-between gap-4 border-b-2 border-paper pb-4">
-              <h3 className="fb-display text-[clamp(2.25rem,4vw,3.25rem)]">GCash</h3>
+              <h3 className="fb-display text-[clamp(2.05rem,3.6vw,2.9rem)]">GCash</h3>
               <p className="fb-label text-paper/70">Quick mobile payment</p>
             </div>
             <ol className="divide-y divide-paper/15">
@@ -429,13 +429,15 @@ function HowToPay() {
 
           <div data-reveal className="lg:col-span-5 lg:col-start-8">
             <div className="flex items-baseline justify-between gap-4 border-b-2 border-paper pb-4">
-              <h3 className="fb-display text-[clamp(2.25rem,4vw,3.25rem)]">BPI Bank Transfer</h3>
+              <h3 className="fb-display text-[clamp(2.05rem,3.6vw,2.9rem)]">BPI Bank Transfer</h3>
               <p className="fb-label text-right text-paper/70">Direct bank deposit</p>
             </div>
             <dl className="divide-y divide-paper/15">
               <div className="py-5">
                 <dt className="fb-label mb-2 text-paper/70">Account Number:</dt>
-                <dd className="fb-display fb-num text-[clamp(2.5rem,5vw,3.75rem)]">8969-3458-85</dd>
+                <dd className="fb-display fb-num text-[clamp(2.2rem,4.25vw,3.2rem)]">
+                  8969-3458-85
+                </dd>
               </div>
               <div className="py-5">
                 <dt className="fb-label mb-2 text-paper/70">Account Name:</dt>
@@ -463,7 +465,7 @@ function MemberPricing() {
           <div className="grid gap-10 border-t-2 border-ink pt-8 lg:grid-cols-12">
             <div className="lg:col-span-5">
               <h2 className="fb-label mb-3">Annual Membership Fee</h2>
-              <p className="fb-display fb-num mb-4 text-[clamp(4rem,9vw,6.5rem)]">
+              <p className="fb-display fb-num mb-4 text-[clamp(3.1rem,6.5vw,4.7rem)]">
                 {formatPhp(ANNUAL_MEMBERSHIP_FEE_PHP)}
               </p>
               <p className="max-w-md text-mute">
@@ -525,7 +527,7 @@ export function PricingPage({ signedIn }: { signedIn: boolean }) {
     <>
       <section className="pt-14 pb-20 lg:pt-24 lg:pb-28">
         <div className={wrap}>
-          <h1 className="fb-display max-w-5xl text-[clamp(3rem,8vw,7rem)]">
+          <h1 className="fb-display max-w-5xl text-[clamp(2.5rem,5.7vw,5rem)]">
             Membership &amp; Pricing
           </h1>
 

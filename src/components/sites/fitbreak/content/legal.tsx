@@ -19,7 +19,7 @@ export function LegalPage({
 }) {
   return (
     <div className={`${wrap} pt-16 pb-20 lg:pt-24 lg:pb-32`}>
-      <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">{title}</h1>
+      <h1 className="fb-display text-[clamp(2.5rem,5.7vw,5rem)]">{title}</h1>
 
       <div className="mt-12 grid gap-8 border-t border-ink/20 pt-8 lg:mt-16 lg:grid-cols-12 lg:gap-10 lg:pt-10">
         <div className="lg:col-span-3">

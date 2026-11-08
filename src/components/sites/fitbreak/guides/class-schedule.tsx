@@ -25,7 +25,7 @@ export function ClassScheduleOverview() {
   return (
     <section id="classes" className="scroll-mt-24 border-t border-rule py-20 lg:py-28">
       <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
-        <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)] lg:col-span-7">
+        <h2 className="fb-display text-[clamp(2.2rem,4.65vw,3.9rem)] lg:col-span-7">
           Weekly Class Schedule
         </h2>
         <p className="text-lg text-mute lg:col-span-5 lg:pb-2">

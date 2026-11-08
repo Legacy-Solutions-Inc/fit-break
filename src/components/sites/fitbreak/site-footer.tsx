@@ -19,7 +19,7 @@ export function SiteFooter() {
   return (
     <footer data-placement="footer" className="fb-grain bg-ink pt-20 pb-10 text-paper lg:pt-28">
       <div className={`${wrap} relative z-10`}>
-        <p className="fb-display max-w-[16ch] text-[clamp(3rem,8vw,7.5rem)]">
+        <p className="fb-display max-w-[16ch] text-[clamp(2.5rem,5.6vw,5.25rem)]">
           Sometimes stopping is what makes you <span className="text-crimson">go.</span>
         </p>
 

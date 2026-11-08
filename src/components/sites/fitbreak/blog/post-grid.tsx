@@ -21,7 +21,7 @@ export function PostGrid({ list }: { list: PostList }) {
 
         {!lead ? (
           <div className="py-20 lg:py-28">
-            <h2 className="fb-display text-[clamp(2rem,4vw,3.25rem)]">No posts yet</h2>
+            <h2 className="fb-display text-[clamp(1.9rem,3.6vw,2.9rem)]">No posts yet</h2>
             <p className="mt-4 max-w-md text-lg text-mute">
               Check back soon for fitness tips and wellness articles!
             </p>

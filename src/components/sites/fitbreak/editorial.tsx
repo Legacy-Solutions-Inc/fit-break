@@ -72,7 +72,7 @@ export function SectionHead({
             {label}
           </p>
         )}
-        <Tag className="fb-display text-[clamp(2.75rem,7vw,5.75rem)]">{title}</Tag>
+        <Tag className="fb-display text-[clamp(2.35rem,5.2vw,4.3rem)]">{title}</Tag>
       </div>
       {aside && (
         <div
