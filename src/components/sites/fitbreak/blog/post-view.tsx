@@ -78,7 +78,7 @@ export function PostView({
       {/* CTA */}
       <section className="fb-grain bg-ink py-20 text-paper lg:py-28">
         <div className={`${wrap} relative z-[2] grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10`}>
-          <h2 className="fb-display text-[clamp(2.5rem,5.5vw,4.75rem)] lg:col-span-7">
+          <h2 className="fb-display text-[clamp(2.2rem,4.35vw,3.75rem)] lg:col-span-7">
             Ready to Start Your Fitness Journey?
           </h2>
           <div className="lg:col-span-4 lg:col-start-9 lg:pb-2">
@@ -95,7 +95,7 @@ export function PostView({
       {related.length > 0 && (
         <section className="py-20 lg:py-28">
           <div className={wrap}>
-            <h2 className="fb-display text-[clamp(2rem,4vw,3.25rem)]">
+            <h2 className="fb-display text-[clamp(1.9rem,3.6vw,2.9rem)]">
               More Articles You Might Like
             </h2>
             <ul className="mt-10 grid border-t border-ink/20 md:grid-cols-2 md:gap-x-10 lg:mt-14">
@@ -140,7 +140,7 @@ function PostHero({ post }: { post: BlogPost }) {
         Back to Blog
       </Link>
 
-      <h1 className="fb-display mt-12 max-w-[18ch] text-[clamp(2.75rem,6.5vw,6.25rem)] lg:mt-16">
+      <h1 className="fb-display mt-12 max-w-[18ch] text-[clamp(2.35rem,4.75vw,4.55rem)] lg:mt-16">
         {post.title}
       </h1>
 

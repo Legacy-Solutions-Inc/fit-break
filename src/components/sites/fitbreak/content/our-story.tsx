@@ -47,8 +47,8 @@ export function OurStory() {
       {/* Opening */}
       <header className={`${wrap} pt-16 pb-12 lg:pt-28 lg:pb-16`}>
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <h1 className="fb-display text-[clamp(3.5rem,11vw,10rem)] lg:col-span-8">Our Story</h1>
-          <p className="fb-display text-[clamp(1.75rem,3.2vw,3rem)] text-mute lg:col-span-4 lg:pb-3">
+          <h1 className="fb-display text-[clamp(2.8rem,7.3vw,6.65rem)] lg:col-span-8">Our Story</h1>
+          <p className="fb-display text-[clamp(1.75rem,2.95vw,2.8rem)] text-mute lg:col-span-4 lg:pb-3">
             Why FitBreak Was Born
           </p>
         </div>
@@ -111,7 +111,7 @@ export function OurStory() {
           <span aria-hidden="true" className="mb-8 block h-1 w-16 bg-crimson" />
           <blockquote
             data-reveal
-            className="fb-display max-w-[24ch] text-[clamp(2.25rem,5vw,4.75rem)] leading-[0.95]"
+            className="fb-display max-w-[24ch] text-[clamp(2.05rem,3.95vw,3.75rem)] leading-[0.95]"
           >
             <p>
               &quot;That&apos;s when I realized something important: Women don&apos;t just need
@@ -147,7 +147,7 @@ export function OurStory() {
       {/* Me-time band */}
       <section className="fb-grain bg-ink py-20 text-paper lg:py-28">
         <div className={`${wrap} relative z-10 grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10`}>
-          <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)] lg:col-span-7">
+          <h2 className="fb-display text-[clamp(2.2rem,4.65vw,3.9rem)] lg:col-span-7">
             FitBreak is more than a workout. It&apos;s me-time.
           </h2>
           <p className="max-w-xl text-lg leading-relaxed text-paper/75 lg:col-span-4 lg:col-start-9 lg:pb-2">
@@ -189,7 +189,7 @@ export function OurStory() {
         </div>
 
         <div className={`${wrap} mt-20 grid gap-8 lg:mt-28 lg:grid-cols-12 lg:gap-10`}>
-          <h3 className="fb-display text-[clamp(2rem,4vw,3.5rem)] lg:col-span-4">
+          <h3 className="fb-display text-[clamp(1.9rem,3.5vw,3.05rem)] lg:col-span-4">
             FitBreak is for:
           </h3>
           <ol className="border-t border-ink/20 lg:col-span-8">
@@ -230,7 +230,7 @@ export function OurStory() {
         <div className={wrap}>
           <blockquote
             data-reveal
-            className="fb-display max-w-[18ch] text-[clamp(2.75rem,7vw,6.5rem)] leading-[0.92]"
+            className="fb-display max-w-[18ch] text-[clamp(2.35rem,5.05vw,4.7rem)] leading-[0.92]"
           >
             <p>
               &quot;Because sometimes, stopping...{" "}
@@ -244,7 +244,9 @@ export function OurStory() {
       <section className="border-t border-rule bg-bone/60 py-20 lg:py-28">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
-            <h2 className="fb-display mb-6 text-[clamp(2.5rem,6vw,5rem)]">Welcome to FitBreak</h2>
+            <h2 className="fb-display mb-6 text-[clamp(2.2rem,4.65vw,3.9rem)]">
+              Welcome to FitBreak
+            </h2>
             <p className="mb-10 text-2xl leading-snug text-ink/80">
               Your strength. Your space. Your FitBreak.
             </p>

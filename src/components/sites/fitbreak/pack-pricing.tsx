@@ -111,7 +111,9 @@ export function PackColumns() {
           </p>
 
           <p className="mt-10 flex items-baseline gap-2">
-            <span className="fb-display fb-num text-[clamp(4.5rem,8vw,6.5rem)]">{p.perClass}</span>
+            <span className="fb-display fb-num text-[clamp(3.4rem,5.8vw,4.7rem)]">
+              {p.perClass}
+            </span>
             <span className={cn("fb-label", p.featured ? "text-paper/70" : "text-mute")}>
               / class
             </span>
@@ -157,7 +159,7 @@ export function CorporateBlock({ headingAs: Heading = "h3" }: { headingAs?: "h2"
     <div className="mt-20 grid gap-10 border-2 border-ink bg-paper p-7 sm:p-10 lg:grid-cols-12 lg:p-14">
       <div className="lg:col-span-7">
         <p className="fb-label mb-4 text-mute">For Organizations</p>
-        <Heading className="fb-display mb-5 text-[clamp(2.5rem,5vw,4rem)]">
+        <Heading className="fb-display mb-5 text-[clamp(2.2rem,4.15vw,3.35rem)]">
           Corporate Group Program
         </Heading>
         <p className="max-w-xl text-lg text-ink/80">

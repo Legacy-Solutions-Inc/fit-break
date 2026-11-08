@@ -22,7 +22,7 @@ const audiences = [
 // Booking Enquiry channel shared by the whole site (FitBreakPhilippines page).
 const MESSENGER_URL = contact.messenger;
 
-const h2 = "fb-display text-[clamp(2.5rem,6vw,5rem)]";
+const h2 = "fb-display text-[clamp(2.2rem,4.65vw,3.9rem)]";
 const num = (i: number) => String(i + 1).padStart(2, "0");
 
 /** fitbreak.ph/corporate.html content, set in the editorial system (ADR 0009). */
@@ -34,7 +34,7 @@ export function Corporate() {
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-8">
             <p className="fb-label mb-5 text-mute">Corporate Group Program</p>
-            <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">
+            <h1 className="fb-display text-[clamp(2.5rem,5.7vw,5rem)]">
               Stronger Women. <span className="text-crimson">Healthier Teams.</span>
             </h1>
             <p className="mt-8 max-w-xl text-xl text-ink/80">
@@ -105,7 +105,7 @@ export function Corporate() {
           </div>
           <div data-reveal className="lg:col-span-6 lg:col-start-7">
             <p className="flex flex-wrap items-baseline gap-x-5 gap-y-2">
-              <span className="fb-display fb-num text-[clamp(7rem,20vw,16rem)] leading-[0.8]">
+              <span className="fb-display fb-num text-[clamp(4rem,8.5vw,7rem)] leading-[0.8]">
                 &#8369;200
               </span>
               <span className="fb-label text-paper/70">per class, per person</span>
@@ -137,7 +137,7 @@ export function Corporate() {
             <div className="grid grid-cols-2 divide-x divide-ink/20 border-y-2 border-ink">
               {["12", "20"].map((count) => (
                 <div key={count} data-reveal className="py-8 pl-6 first:pl-0">
-                  <p className="fb-display fb-num text-[clamp(4.5rem,9vw,7rem)] leading-[0.85]">
+                  <p className="fb-display fb-num text-[clamp(3.4rem,6.4vw,5rem)] leading-[0.85]">
                     {count}
                   </p>
                   <p className="fb-label mt-3 text-mute">Class Package</p>
@@ -244,7 +244,9 @@ export function Corporate() {
       <section data-placement="corporate" className="bg-paper py-20 lg:py-32">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
-            <h2 className="fb-display mb-8 text-[clamp(3rem,8vw,7rem)]">Get Your Group Started</h2>
+            <h2 className="fb-display mb-8 text-[clamp(2.5rem,5.7vw,5rem)]">
+              Get Your Group Started
+            </h2>
             <p className="mb-5 max-w-xl text-lg leading-relaxed text-ink/80">
               Contact FitBreak today to register your group and start packages together for easy
               tracking and accountability.

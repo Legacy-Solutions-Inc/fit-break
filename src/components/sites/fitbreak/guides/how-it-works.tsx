@@ -28,11 +28,11 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
       data-reveal
       className="grid gap-6 border-t-2 border-ink py-14 lg:grid-cols-12 lg:gap-10 lg:py-20"
     >
-      <p className="fb-display fb-num text-[clamp(4.5rem,10vw,9rem)] text-crimson lg:col-span-3">
+      <p className="fb-display fb-num text-[clamp(3.4rem,6.75vw,6.1rem)] text-crimson lg:col-span-3">
         {two(n)}
       </p>
       <div className="lg:col-span-8 lg:col-start-5">
-        <h2 className="fb-display mb-6 text-[clamp(2.25rem,4.5vw,3.75rem)]">{title}</h2>
+        <h2 className="fb-display mb-6 text-[clamp(2.05rem,3.85vw,3.2rem)]">{title}</h2>
         {children}
       </div>
     </section>
@@ -171,7 +171,7 @@ export function HowItWorks({ signedIn }: { signedIn: boolean }) {
         <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
             <p className="fb-label mb-4 text-mute">Guide</p>
-            <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">How FitBreak Works</h1>
+            <h1 className="fb-display text-[clamp(2.5rem,5.7vw,5rem)]">How FitBreak Works</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
               Your complete guide to setting up your account, buying credits, and booking classes
               online.
@@ -193,7 +193,7 @@ export function HowItWorks({ signedIn }: { signedIn: boolean }) {
       {/* Quick Overview */}
       <section className="fb-grain bg-ink py-16 text-paper lg:py-24">
         <div className={wrap}>
-          <h2 className="fb-display mb-10 text-[clamp(2.25rem,5vw,4rem)] lg:mb-14">
+          <h2 className="fb-display mb-10 text-[clamp(2.05rem,4.15vw,3.35rem)] lg:mb-14">
             Quick Overview
           </h2>
           <ol className="grid grid-cols-2 border-t border-paper/20 lg:grid-cols-4">
@@ -202,7 +202,7 @@ export function HowItWorks({ signedIn }: { signedIn: boolean }) {
                 key={o.title}
                 className="border-b border-paper/20 py-6 pr-4 lg:border-b-0 lg:border-l lg:px-6 lg:first:border-l-0 lg:first:pl-0"
               >
-                <span className="fb-display fb-num block text-[clamp(3.5rem,6vw,5.5rem)] text-crimson">
+                <span className="fb-display fb-num block text-[clamp(2.8rem,4.55vw,4.15rem)] text-crimson">
                   {two(i + 1)}
                 </span>
                 <p className="fb-display mt-4 text-2xl">{o.title}</p>
@@ -359,7 +359,7 @@ export function HowItWorks({ signedIn }: { signedIn: boolean }) {
         {/* CTA */}
         <section className="grid gap-8 border-t border-rule py-20 lg:grid-cols-12 lg:items-end lg:gap-10 lg:py-28">
           <div className="lg:col-span-7">
-            <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)]">
+            <h2 className="fb-display text-[clamp(2.2rem,4.65vw,3.9rem)]">
               Ready to Start Your Fitness Journey?
             </h2>
             <p className="mt-6 max-w-xl text-lg text-mute">

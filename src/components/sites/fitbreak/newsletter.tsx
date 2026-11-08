@@ -11,7 +11,7 @@ export function Newsletter({ source = "homepage" }: { source?: NewsletterSource 
     <section className="border-t border-rule bg-paper py-20 lg:py-28">
       <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end`}>
         <div className="lg:col-span-6">
-          <h2 className="fb-display text-[clamp(2.5rem,5.5vw,4.5rem)]">
+          <h2 className="fb-display text-[clamp(2.2rem,4.4vw,3.6rem)]">
             Get Fitness Tips in Your Inbox
           </h2>
           <p className="mt-5 max-w-md text-lg text-mute">

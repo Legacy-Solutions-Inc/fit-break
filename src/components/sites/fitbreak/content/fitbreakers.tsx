@@ -59,7 +59,7 @@ function Chapter({
             <p aria-hidden="true" className="fb-label fb-num mb-4 text-mute">
               {num(index)}
             </p>
-            <h2 className="fb-display text-[clamp(2.25rem,4.5vw,4rem)]">{title}</h2>
+            <h2 className="fb-display text-[clamp(2.05rem,3.75vw,3.35rem)]">{title}</h2>
           </div>
         </div>
         <div className="max-w-[44rem] lg:col-span-7 lg:col-start-6">{children}</div>
@@ -94,10 +94,10 @@ export function Fitbreakers() {
       {/* Opening */}
       <header className={`${wrap} pt-16 pb-14 lg:pt-28 lg:pb-20`}>
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <h1 className="fb-display max-w-[12ch] text-[clamp(3rem,8vw,7rem)] lg:col-span-8">
+          <h1 className="fb-display max-w-[14ch] text-[clamp(2.5rem,5.7vw,5rem)] lg:col-span-8">
             Who Are the FitBreakers?
           </h1>
-          <p className="fb-display text-[clamp(1.75rem,3.2vw,3rem)] text-mute lg:col-span-4 lg:pb-2">
+          <p className="fb-display text-[clamp(1.75rem,2.95vw,2.8rem)] text-mute lg:col-span-4 lg:pb-2">
             The Story Behind the Name
           </p>
         </div>
@@ -119,7 +119,7 @@ export function Fitbreakers() {
 
           <blockquote
             data-reveal
-            className="fb-display text-[clamp(1.9rem,3.4vw,3rem)] leading-[0.98] lg:col-span-5 lg:col-start-8 lg:row-span-2"
+            className="fb-display text-[clamp(1.85rem,3.15vw,2.8rem)] leading-[0.98] lg:col-span-5 lg:col-start-8 lg:row-span-2"
           >
             <span aria-hidden="true" className="mb-6 block h-1 w-16 bg-crimson" />
             <p>
@@ -160,7 +160,7 @@ export function Fitbreakers() {
 
         <p
           data-reveal
-          className="fb-display my-12 border-y border-ink/20 py-10 text-[clamp(2rem,4vw,3.5rem)] leading-[0.95]"
+          className="fb-display my-12 border-y border-ink/20 py-10 text-[clamp(1.9rem,3.5vw,3.05rem)] leading-[0.95]"
         >
           They are defined by a decision:
           <br />
@@ -281,7 +281,7 @@ export function Fitbreakers() {
       <section className="fb-grain bg-ink py-20 text-paper lg:py-32">
         <div className={`${wrap} relative z-10 grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-5">
-            <h2 className="fb-display mb-8 text-[clamp(2.25rem,4.5vw,4rem)]">
+            <h2 className="fb-display mb-8 text-[clamp(2.05rem,3.75vw,3.35rem)]">
               This Is What It Means to Be a FitBreaker
             </h2>
             <p className="max-w-md text-lg leading-relaxed text-paper/75">
@@ -292,7 +292,7 @@ export function Fitbreakers() {
           </div>
           <div
             data-reveal
-            className="fb-display text-[clamp(4rem,11vw,10rem)] leading-[0.85] lg:col-span-6 lg:col-start-7"
+            className="fb-display text-[clamp(3.1rem,7.3vw,6.65rem)] leading-[0.85] lg:col-span-6 lg:col-start-7"
           >
             <p>Strong.</p>
             <p>Capable.</p>
@@ -304,7 +304,7 @@ export function Fitbreakers() {
       {/* Welcome + booking */}
       <section className="py-20 lg:py-32">
         <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-10`}>
-          <div className="fb-display text-[clamp(2.5rem,6vw,5.25rem)] leading-[0.92] lg:col-span-8">
+          <div className="fb-display text-[clamp(2.2rem,4.6vw,4rem)] leading-[0.92] lg:col-span-8">
             <p>Welcome to FitBreak.</p>
             <p className="text-mute">Welcome to the community.</p>
             <p className="text-crimson">You are a FitBreaker.</p>

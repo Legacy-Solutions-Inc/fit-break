@@ -85,7 +85,7 @@ export function Programs() {
                   </span>
                   <h3
                     data-program-name
-                    className="fb-display text-[clamp(2.25rem,6vw,5.25rem)] transition-[color,translate] duration-300 group-hover:translate-x-2 group-hover:text-crimson lg:col-span-6"
+                    className="fb-display text-[clamp(2.05rem,4.6vw,4rem)] transition-[color,translate] duration-300 group-hover:translate-x-2 group-hover:text-crimson lg:col-span-6"
                   >
                     {c.name}
                   </h3>

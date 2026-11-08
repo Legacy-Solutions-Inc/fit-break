@@ -20,7 +20,7 @@ export function TimetableStrip({ className }: { className?: string }) {
             <li key={t} className="border-l border-rule pr-3 pl-4">
               <span className="sr-only">{t}</span>
               <span aria-hidden="true" className="block">
-                <span className="fb-display fb-num block text-[clamp(2.75rem,5vw,4.25rem)]">
+                <span className="fb-display fb-num block text-[clamp(2.35rem,4.05vw,3.45rem)]">
                   {start}
                 </span>
                 <span className="fb-label mt-2 block text-mute">to {end}</span>

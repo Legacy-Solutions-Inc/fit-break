@@ -61,7 +61,7 @@ const faqs: ReadonlyArray<{ q: string; a: ReactNode }> = [
 export function HowItWorksFaq() {
   return (
     <section className="grid gap-10 border-t border-rule py-20 lg:grid-cols-12 lg:gap-10 lg:py-28">
-      <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)] lg:col-span-4">
+      <h2 className="fb-display text-[clamp(2.2rem,4.65vw,3.9rem)] lg:col-span-4">
         Frequently Asked Questions
       </h2>
       <div data-reveal className="border-y-2 border-ink lg:col-span-7 lg:col-start-6">

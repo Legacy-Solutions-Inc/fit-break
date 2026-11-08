@@ -75,7 +75,7 @@ export function LeadPost({ post, priority = false }: { post: BlogPost; priority?
         />
         <div className="lg:col-span-5 lg:pb-2">
           <Meta post={post} />
-          <h2 className="fb-display mt-5 text-[clamp(2.5rem,4.6vw,4.25rem)] transition-colors group-hover:text-crimson-deep">
+          <h2 className="fb-display mt-5 text-[clamp(2.2rem,3.75vw,3.45rem)] transition-colors group-hover:text-crimson-deep">
             {post.title}
           </h2>
           <p className="mt-6 line-clamp-3 max-w-lg text-lg leading-relaxed text-mute">

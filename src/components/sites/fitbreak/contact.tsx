@@ -15,7 +15,7 @@ export function Contact() {
     >
       <div className={`${wrap} grid gap-12 lg:grid-cols-12 lg:gap-10`}>
         <div className="lg:col-span-5">
-          <h2 className="fb-display mb-10 text-[clamp(2.75rem,7vw,5.75rem)]">Visit Us</h2>
+          <h2 className="fb-display mb-10 text-[clamp(2.35rem,5.2vw,4.3rem)]">Visit Us</h2>
           <dl className="divide-y divide-ink/15 border-y border-ink/15">
             <div className="grid grid-cols-[8rem_1fr] gap-4 py-5">
               <dt className="fb-label pt-1 text-mute">Location</dt>

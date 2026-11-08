@@ -54,7 +54,9 @@ export function ClubRules() {
       {/* Opening */}
       <header className={`${wrap} pt-16 pb-14 lg:pt-28 lg:pb-20`}>
         <div className="grid gap-6 lg:grid-cols-12 lg:items-end lg:gap-10">
-          <h1 className="fb-display text-[clamp(3rem,8vw,7rem)] lg:col-span-8">Club House Rules</h1>
+          <h1 className="fb-display text-[clamp(2.5rem,5.7vw,5rem)] lg:col-span-8">
+            Club House Rules
+          </h1>
           <p className="max-w-md text-xl leading-snug text-mute lg:col-span-4 lg:pb-2">
             A safe, empowering, and respectful space for every woman.
           </p>
@@ -72,7 +74,7 @@ export function ClubRules() {
             >
               <span
                 aria-hidden="true"
-                className="fb-display fb-num row-span-2 w-[2.1ch] text-[clamp(3.5rem,9vw,7.5rem)] leading-[0.8] lg:col-span-2 lg:row-span-1"
+                className="fb-display fb-num row-span-2 w-[2.1ch] text-[clamp(2.8rem,6.3vw,5.25rem)] leading-[0.8] lg:col-span-2 lg:row-span-1"
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -90,7 +92,7 @@ export function ClubRules() {
       {/* Thank-you note + booking */}
       <section className="border-t border-rule bg-bone/60 py-20 lg:py-28">
         <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10`}>
-          <p className="fb-display max-w-[22ch] text-[clamp(2rem,4.5vw,3.75rem)] leading-[0.95] lg:col-span-8">
+          <p className="fb-display max-w-[22ch] text-[clamp(1.9rem,3.85vw,3.2rem)] leading-[0.95] lg:col-span-8">
             Thank you for helping keep FitBreak a safe, supportive, and empowering space for all
             women!
           </p>

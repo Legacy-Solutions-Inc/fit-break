@@ -23,7 +23,7 @@ export function WeeklyTimetable() {
       <section className="bg-paper pt-16 pb-16 lg:pt-24 lg:pb-24">
         <div className={`${wrap} grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-10`}>
           <div className="lg:col-span-7">
-            <h1 className="fb-display text-[clamp(3rem,8vw,7rem)]">Class Schedule</h1>
+            <h1 className="fb-display text-[clamp(2.5rem,5.7vw,5rem)]">Class Schedule</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
               Classes run Monday to Saturday. Message us to book your spot.
             </p>
@@ -49,7 +49,7 @@ export function WeeklyTimetable() {
           >
             <div>
               <p className="fb-label mb-2 text-mute">Ready to join a class?</p>
-              <p className="fb-display text-[clamp(2rem,4vw,3.25rem)]">
+              <p className="fb-display text-[clamp(1.9rem,3.6vw,2.9rem)]">
                 Message us to book your spot
               </p>
               <p className="mt-3 text-mute">
@@ -76,7 +76,7 @@ export function WeeklyTimetable() {
         <div className={wrap}>
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-10">
             <div className="lg:col-span-7">
-              <h2 className="fb-display text-[clamp(2.5rem,6vw,5rem)]">Monday – Saturday</h2>
+              <h2 className="fb-display text-[clamp(2.2rem,4.65vw,3.9rem)]">Monday – Saturday</h2>
               <p className="mt-4 text-mute">Every program at every time • 60 min • {COACH_NAME}</p>
             </div>
             {/* Week summary */}
@@ -153,7 +153,7 @@ export function WeeklyTimetable() {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div className="lg:col-span-5">
-                  <h3 className="fb-display text-[clamp(2rem,4.5vw,3.75rem)]">{program.name}</h3>
+                  <h3 className="fb-display text-[clamp(1.9rem,3.85vw,3.2rem)]">{program.name}</h3>
                   <p className="mt-2 text-mute">{program.description}</p>
                 </div>
                 <ul

@@ -6,7 +6,7 @@ import { Scene } from "./motion/home-scenes";
 
 /**
  * Full-bleed poster hero (ADR 0009): the studio photo edge to edge under a dark
- * scrim, a huge condensed headline, one crimson action and one text link.
+ * scrim, a large condensed headline, one crimson action and one text link.
  */
 export function Hero() {
   return (
@@ -39,7 +39,7 @@ export function Hero() {
 
           <h1
             data-hero-title
-            className="fb-display max-w-[14ch] text-[clamp(3.5rem,10.5vw,9.5rem)] text-paper"
+            className="fb-display max-w-[14ch] text-[clamp(2.8rem,7vw,6.35rem)] text-paper"
           >
             FitBreak: For Every Moment You <span className="text-crimson">Choose Yourself</span>
           </h1>
